@@ -1,0 +1,15 @@
+FRETE_FIXO = 15.0
+FRETE_GRATIS_A_PARTIR_DE = 200.0
+
+
+def frete(valor_da_compra):
+    if valor_da_compra >= FRETE_GRATIS_A_PARTIR_DE:
+        return 0.0
+    return FRETE_FIXO
+
+
+def total_carrinho(itens):
+    valor_total = 0
+    for preco, quantidade in itens:
+        valor_total += preco * quantidade
+    return valor_total

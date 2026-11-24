@@ -1,13 +1,9 @@
-const produtos = [
-  { nome: "Camiseta básica", preco: 39.90, tamanho: "M" },
-  { nome: "Calça jeans", preco: 129.90, tamanho: "G" },
-  { nome: "Moletom", preco: 159.90, tamanho: "P" },
-];
+const API = "http://127.0.0.1:8000";
+let produtos = [];
 
 const vitrine = document.querySelector("#vitrine");
 const busca = document.querySelector("#busca");
-const formulario = document.querySelector("#form-produto");
-const aviso = document.querySelector("#aviso");
+const estado = document.querySelector("#estado");
 
 function montarCard(produto) {
   const cartao = document.createElement("article");
@@ -36,31 +32,31 @@ function filtrarProdutos() {
     produto.nome.toLowerCase().includes(termo)
   );
   renderizarVitrine(produtosEncontrados);
+  if (produtos.length === 0) {
+    estado.textContent = "Nenhum produto cadastrado ainda.";
+  } else {
+    estado.textContent = produtosEncontrados.length === 0 ? "Nenhum produto encontrado." : "";
+  }
 }
 
-if (busca) {
-  busca.addEventListener("input", filtrarProdutos);
-}
-
-if (formulario) {
-  formulario.addEventListener("submit", evento => {
-    evento.preventDefault();
-    const nome = document.querySelector("#nome").value.trim();
-    const preco = Number(document.querySelector("#preco").value);
-    const tamanho = document.querySelector("#tamanho").value;
-    if (nome === "") {
-      aviso.textContent = "Informe o nome do produto.";
-      return;
+async function buscarProdutos() {
+  estado.textContent = "Carregando produtos...";
+  busca.disabled = true;
+  try {
+    const resposta = await fetch(`${API}/produtos`);
+    if (!resposta.ok) {
+      throw new Error(`A API respondeu ${resposta.status}`);
     }
-    if (!(preco > 0)) {
-      aviso.textContent = "O preço precisa ser maior que zero.";
-      return;
-    }
-    produtos.push({ nome, preco, tamanho });
+    produtos = await resposta.json();
+    filtrarProdutos();
+    busca.disabled = false;
+  } catch (erro) {
+    produtos = [];
     renderizarVitrine(produtos);
-    formulario.reset();
-    aviso.textContent = "Produto cadastrado nesta sessão. Os dados são temporários.";
-  });
+    estado.textContent = "Não foi possível falar com a API. Ela está ligada?";
+    console.error(erro);
+  }
 }
 
-renderizarVitrine(produtos);
+busca.addEventListener("input", filtrarProdutos);
+buscarProdutos();

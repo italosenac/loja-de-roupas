@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from typing import Literal
 
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from sqlmodel import Session
@@ -51,6 +52,12 @@ async def ciclo_de_vida(app):
 
 
 app = FastAPI(title="Loja de Roupas", lifespan=ciclo_de_vida)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:5500", "http://localhost:5500"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
+)
 
 
 def obter_sessao():

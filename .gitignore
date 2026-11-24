@@ -6,3 +6,4 @@ __pycache__/
 loja.db
 loja.db-*
 .env
+.backup-aws/

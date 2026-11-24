@@ -1,4 +1,6 @@
-const API = "http://127.0.0.1:8000";
+const API = location.hostname.endsWith("amazonaws.com")
+  ? "http://32.194.222.146:8000"
+  : "http://127.0.0.1:8000";
 const formulario = document.querySelector("#form-produto");
 const aviso = document.querySelector("#aviso");
 const botaoCadastrar = formulario.querySelector("button");

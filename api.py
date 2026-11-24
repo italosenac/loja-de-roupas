@@ -54,7 +54,10 @@ async def ciclo_de_vida(app):
 app = FastAPI(title="Loja de Roupas", lifespan=ciclo_de_vida)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:5500", "http://localhost:5500"],
+    allow_origins=[
+        "http://127.0.0.1:5500", "http://localhost:5500",
+        "http://loja-roupas-italo-2026.s3-website-us-east-1.amazonaws.com",
+    ],
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
 )

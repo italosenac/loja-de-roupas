@@ -46,8 +46,8 @@ python -m http.server 5500 --bind 127.0.0.1 --directory front
 
 O arquivo `loja.db` é criado automaticamente na pasta de execução da API e não
 vai para o GitHub. Os três produtos iniciais são inseridos quando o catálogo está
-vazio. CORS permite apenas as páginas locais nas origens `127.0.0.1:5500` e
-`localhost:5500`.
+vazio. CORS permite as páginas locais nas origens `127.0.0.1:5500` e
+`localhost:5500`, além do endereço do site no S3.
 
 Para testar, com o ambiente ativado:
 
@@ -59,16 +59,34 @@ São 69 testes, incluindo regras de negócio, CRUD, banco em memória, reabertur
 do SQLite, estrutura HTML e CORS. O workflow `testes` executa o Pytest no GitHub
 Actions. As tags `aula-08` a `aula-13` registram os estados reais de cada aula.
 
-A infraestrutura AWS anterior está preservada em `us-east-1`:
+A versão completa está implantada em `us-east-1`:
 
-- [Site anterior no S3](http://loja-roupas-italo-2026.s3-website-us-east-1.amazonaws.com)
-- [API anterior](https://txxvpco9jh.execute-api.us-east-1.amazonaws.com/produtos)
+- [Vitrine no S3](http://loja-roupas-italo-2026.s3-website-us-east-1.amazonaws.com)
+- [Cadastro no S3](http://loja-roupas-italo-2026.s3-website-us-east-1.amazonaws.com/cadastro.html)
+- [Swagger da API FastAPI](http://32.194.222.146:8000/docs)
 
-Esses endereços ainda correspondem à versão anterior. A publicação da versão
-com FastAPI e SQLite depende de hospedagem com disco persistente e da autorização
-dos custos adicionais. A Lambda atual não oferece esse armazenamento local
-persistente. O código e as configurações anteriores foram copiados para
-`.backup-aws/2026-11-24/`, fora do controle de versão.
+A API executa como usuário `loja`, pelo serviço systemd `loja`, na EC2
+`i-0e264386c9e6c6397` (t4g.micro, Ubuntu 24.04 ARM64). O banco fica em
+`/opt/loja-de-roupas/app/loja.db`, no EBS gp3 criptografado de 8 GB.
+O IPv4 é fixo. A porta 8000 aceita somente o IP autorizado do aluno; portanto,
+o catálogo e o cadastro dependem desse acesso. Não há porta SSH aberta;
+a administração usa Systems Manager. Se o IP do aluno mudar, atualize a regra
+do grupo `loja-roupas-fastapi` para o novo endereço /32.
+
+O site usa HTTP, adequado à demonstração acadêmica sem dados sensíveis.
+A estimativa autorizada para 730 horas é US$ 10,42/mês, antes de impostos e
+tráfego: EC2 US$ 0,0084/h, IPv4 US$ 0,005/h e 8 GB gp3 a US$ 0,08/GB-mês.
+Parar a instância mantém cobranças do EBS e do IPv4 reservado.
+
+A Lambda `loja-api` e o API Gateway anteriores permanecem preservados:
+[API anterior](https://txxvpco9jh.execute-api.us-east-1.amazonaws.com/produtos).
+Os arquivos e as configurações anteriores estão em `.backup-aws/2026-11-24/`,
+fora do controle de versão.
+
+Validação: 69 testes passaram localmente e na EC2; o cadastro persistiu após
+reiniciar o serviço. Os dois HTMLs passaram no W3C sem mensagens e obtiveram
+100/100 em acessibilidade no Lighthouse. A navegação por Tab/Enter e o layout
+de uma coluna em 390 px também foram verificados no navegador.
 
 Referências: materiais de Coding do professor Sebastião Rogério:
 

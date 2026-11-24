@@ -1,5 +1,7 @@
 # Loja de Roupas
 
+![testes](https://github.com/italosenac/loja-de-roupas/actions/workflows/testes.yml/badge.svg)
+
 Projeto acadêmico da Faculdade Senac Pernambuco, curso de Análise e
 Desenvolvimento de Sistemas, 4º módulo, disciplina Coding, semestre 2026.2.
 

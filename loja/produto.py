@@ -16,6 +16,14 @@ class Produto:
     def descricao(self):
         return f"{self.nome} {self.tamanho}: R$ {self.preco:.2f}"
 
+    def para_dict(self):
+        return {
+            "tipo": type(self).__name__,
+            "nome": self.nome,
+            "preco": self.preco,
+            "tamanho": self.tamanho,
+        }
+
 
 class Camiseta(Produto):
     MANGAS = ("curta", "longa")
@@ -29,6 +37,11 @@ class Camiseta(Produto):
     def descricao(self):
         return f"{super().descricao()} · manga {self.manga}"
 
+    def para_dict(self):
+        dados = super().para_dict()
+        dados["manga"] = self.manga
+        return dados
+
 
 class Calca(Produto):
     def __init__(self, nome, preco, tamanho, modelagem):
@@ -37,3 +50,8 @@ class Calca(Produto):
 
     def descricao(self):
         return f"{super().descricao()} · {self.modelagem}"
+
+    def para_dict(self):
+        dados = super().para_dict()
+        dados["modelagem"] = self.modelagem
+        return dados

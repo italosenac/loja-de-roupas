@@ -17,7 +17,7 @@
       <img src="img/logo.svg" alt="" width="40" height="40">
       <span>loja<span class="marca-detalhe">de roupas.</span></span>
     </a>
-    <nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html" aria-current="page">Gerenciar produtos</a></nav>
+    <nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html" aria-current="page">Gerenciar produtos</a><a href="cloud.html">Vitrine Cloud</a><a href="docs.html">Docs</a></nav>
     <span class="cabecalho-nota">O seu estilo começa aqui.</span>
   </header>
   <main class="cadastro-conteudo" id="conteudo">
@@ -30,6 +30,10 @@
       <div class="painel-titulo"><h2 id="titulo-formulario">Cadastrar produto</h2><span>CATÁLOGO</span></div>
       <form id="form-produto" class="formulario">
         <fieldset disabled>
+        <div class="campo largura-total" id="campo-id-cloud" hidden>
+          <label for="id-cloud">ID do produto Cloud</label>
+          <input id="id-cloud" name="id-cloud" type="number" min="1" step="1">
+        </div>
         <div class="campo largura-total">
           <label for="nome">Nome da peça <span aria-hidden="true">*</span></label>
           <input id="nome" name="nome" type="text" placeholder="Como a peça se chama?" required>

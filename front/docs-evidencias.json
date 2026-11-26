@@ -1,0 +1,243 @@
+{
+  "verificado_em": "2026-11-26T19:45:00Z",
+  "fonte": "Chamadas reais AWS SDK pelo conector AWS e requisições HTTPS; dados sanitizados.",
+  "s3": {
+    "situacao": "implementado e testado",
+    "prefixo": "laboratorio/aula10-20261126/",
+    "objetos": 10,
+    "bytes_logs": 1333340,
+    "foto_fria": "STANDARD_IA",
+    "regras": [
+      {
+        "Expiration": {
+          "Days": 365
+        },
+        "ID": "logs-ciclo-aula10-20261126",
+        "Filter": {
+          "Prefix": "laboratorio/aula10-20261126/logs/"
+        },
+        "Status": "Enabled",
+        "Transitions": [
+          {
+            "Days": 30,
+            "StorageClass": "STANDARD_IA"
+          },
+          {
+            "Days": 90,
+            "StorageClass": "GLACIER"
+          }
+        ],
+        "AbortIncompleteMultipartUpload": {
+          "DaysAfterInitiation": 7
+        }
+      },
+      {
+        "Expiration": {
+          "Days": 7
+        },
+        "ID": "temp-ciclo-aula10-20261126",
+        "Filter": {
+          "Prefix": "laboratorio/aula10-20261126/temp/"
+        },
+        "Status": "Enabled"
+      }
+    ],
+    "transicoes_ocorreram": false,
+    "limpeza": "concluída: dez amostras e duas regras temporárias removidas; bucket preservado"
+  },
+  "dynamodb": {
+    "situacao": "implementado e testado",
+    "catalogo": "loja-produtos",
+    "chave": "id Number",
+    "capacidade": "PAY_PER_REQUEST",
+    "produtos_copiados": 3,
+    "pedidos": "loja-pedidos-processados",
+    "http_status": [
+      200,
+      404,
+      201,
+      409,
+      422
+    ]
+  },
+  "rede": {
+    "situacao": "implementado e testado",
+    "sub_redes": 4,
+    "azs": 2,
+    "tabelas_rotas": 3,
+    "nat": 0,
+    "endpoints_gateway": [
+      "S3",
+      "DynamoDB"
+    ],
+    "entrada_sg": 0,
+    "saida_sg": "HTTPS somente para prefixos S3/DynamoDB",
+    "laboratorio_antes": 500,
+    "laboratorio_depois": 200,
+    "nota": "O HTTP API retornou 500, não o 502 ilustrado no material. A prova foi isolada; a loja Coding permaneceu disponível."
+  },
+  "carga": {
+    "enviados": 100,
+    "paralelismo": 5,
+    "inicio_epoch": 1795721360.5861943,
+    "fim_epoch": 1795721367.0128655,
+    "status": {
+      "202": 100
+    },
+    "latencia_min_ms": 224.64,
+    "latencia_max_ms": 1552.25,
+    "latencia_media_ms": 318.76,
+    "abaixo_1_segundo": 98,
+    "nota": "Paralelismo 5 escolhido pela cota real de 10 execuções Lambda na conta. Limite solicitado: até 20. Não foram ajustadas cotas da conta."
+  },
+  "consumidor": {
+    "lote": 1,
+    "concorrencia_configurada": 2,
+    "concorrencia_observada": 2,
+    "timeout_s": 5,
+    "visibilidade_s": 30,
+    "max_recebimentos": 3,
+    "concluidos": 101,
+    "logs_processados": 101,
+    "logs_duplicata": 1,
+    "efeitos_apos_duplicata": 101,
+    "falhas_99": 3,
+    "dlq_mensagens": 1,
+    "nota": "Único efeito: registro final condicional no DynamoDB. Não há pagamento, nota fiscal ou baixa real de estoque."
+  },
+  "alarmes": {
+    "alarms": [
+      {
+        "name": "loja-pedido-atrasado",
+        "state": "OK",
+        "updated": "2026-11-26T19:13:33.086000+00:00"
+      },
+      {
+        "name": "loja-pedido-perdido",
+        "state": "ALARM",
+        "updated": "2026-11-26T19:34:01.988000+00:00"
+      }
+    ],
+    "history": [
+      {
+        "timestamp": "2026-11-26T19:34:01.988000+00:00",
+        "summary": "Alarm updated from OK to ALARM"
+      },
+      {
+        "timestamp": "2026-11-26T19:13:01.988000+00:00",
+        "summary": "Alarm updated from INSUFFICIENT_DATA to OK"
+      }
+    ],
+    "sns_pending": true,
+    "acoes": [
+      {
+        "timestamp": "2026-11-26T19:34:02.030000+00:00",
+        "summary": "SNS acionado"
+      }
+    ],
+    "entrega_email_comprovada": false
+  },
+  "seguranca": {
+    "publico_externo": {
+      "isolamento": true,
+      "cookie_forjado_rejeitado": true,
+      "cookie_secure_httponly": true,
+      "sem_cache_compartilhado": true,
+      "operacoes_restritas": [
+        {
+          "rota": "/api/openapi.json",
+          "status": 403
+        },
+        {
+          "rota": "/api/produtos/99999999",
+          "status": 403
+        },
+        {
+          "rota": "/cloud-api/produtos",
+          "status": 403
+        },
+        {
+          "rota": "/cloud-api/laboratorio/pedidos",
+          "status": 403
+        }
+      ],
+      "cloud_publico": true
+    },
+    "edge_checks": 10,
+    "chave_browser": false,
+    "api_cache": "CachingDisabled + no-store",
+    "limite_pedido_publico": {
+      "taxa_por_segundo": 1,
+      "burst": 5
+    }
+  },
+  "testes": {
+    "pytest": 159,
+    "pytest_falhas": 0,
+    "navegador_coding_https": 38,
+    "navegador_docs_local": 20,
+    "w3c_paginas": 2,
+    "w3c_erros": 0,
+    "w3c_avisos": 0,
+    "navegador_docs_https": 20,
+    "navegador_cloud_https": 15
+  },
+  "precos": {
+    "consultados_em": "2026-11-26",
+    "regiao": "us-east-1",
+    "moeda": "USD",
+    "s3_gb_mes": {
+      "Standard": 0.023,
+      "Standard_IA": 0.0125,
+      "Glacier_Flexible": 0.0036
+    },
+    "dynamodb_milhao": {
+      "leituras": 0.125,
+      "escritas": 0.625
+    },
+    "sqs_milhao": 0.4,
+    "lambda_gb_s_x86": 0.0000166667,
+    "alarme_padrao_mes": 0.1,
+    "logs_gb_ingestao": 0.5,
+    "nota": "Preços de lista, antes de franquias, impostos, recuperação e transferência. Free Tier da conta mostrou franquias de Lambda e CloudWatch disponíveis na consulta; isso não garante fatura futura zero."
+  },
+  "orcamento": {
+    "nome": "loja-cloud-aulas-10-14",
+    "limite_usd": 1,
+    "alerta_percentual": 80,
+    "filtro": "Project=loja-de-roupas",
+    "tag_ativada": true,
+    "nota": "Tag de custo recém-ativada pode demorar a aparecer no faturamento. Orçamento não bloqueia consumo. Orçamentos globais preservados."
+  },
+  "limpeza": {
+    "s3": {
+      "removed_synthetic_objects": 10,
+      "remaining_prefix_objects": 0,
+      "removed_lab_rules": 2,
+      "previous_rules_preserved": 0,
+      "bucket_preserved": true,
+      "versioning_was_enabled": false
+    },
+    "rede": {
+      "temporary_network_lambda_removed": true,
+      "temporary_route_removed": true,
+      "temporary_logs_removed": true,
+      "deployment_zip_removed": true,
+      "production_services_preserved": true
+    },
+    "dados": {
+      "removed_owned_synthetic_orders": 102,
+      "removed_owned_temporary_product": true,
+      "remaining_product_ids": [
+        1,
+        2,
+        3
+      ],
+      "other_orders_untouched": 0
+    },
+    "dlq": {
+      "removed_identified_poison_message": 1,
+      "purge_executed": false
+    }
+  }
+}

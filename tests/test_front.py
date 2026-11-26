@@ -4,7 +4,7 @@ from pathlib import Path
 import pytest
 
 PASTA_FRONT = Path(__file__).resolve().parents[1] / "front"
-PAGINAS = ["index.html", "cadastro.html", "carrinho.html", "gerenciamento.html"]
+PAGINAS = ["index.html", "cadastro.html", "carrinho.html", "gerenciamento.html", "docs.html", "cloud.html"]
 
 
 class LeitorHTML(HTMLParser):

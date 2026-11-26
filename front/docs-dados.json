@@ -1,0 +1,1029 @@
+{
+  "versao": 1,
+  "consultado_em": "2026-11-26",
+  "sha": "1d0f89004448bf7b52d70533da530a8a9ddf0c96",
+  "nota": "Enunciados parafraseados e referências de estudo elaboradas para o projeto; não são respostas pessoais do estudante.",
+  "aulas": [
+    {
+      "numero": 10,
+      "titulo": "Armazenamento distribuído",
+      "arquivo": "aula-10-cloud-armazenamento-distribuido",
+      "slides": 67,
+      "resumo": "S3 guarda objetos; EBS oferece disco e EFS compartilha arquivos. Durabilidade preserva dados e disponibilidade permite acessá-los. Classes e ciclo de vida devem acompanhar frequência de leitura, retenção e custo total, incluindo recuperação, transições e permanência mínima.",
+      "objetivos": [
+        "Distinguir durabilidade, disponibilidade e consistência.",
+        "Escolher armazenamento e classe pelo uso.",
+        "Aplicar ciclo de vida somente a amostras isoladas e calcular economia."
+      ],
+      "checklist": [
+        "3-1: nove amostras sintéticas maiores que 128 KB; uma em Standard-IA.",
+        "3-2: logs aos 30/90/365 dias; temp expira em 7 dias; imagens sem expiração.",
+        "3-3: guardar evidências, conferir custos e remover somente as amostras e regras do laboratório."
+      ],
+      "questoes": [
+        {
+          "id": "10-9-inicio",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "inicio",
+          "enunciado": "Por que distribuir um arquivo protege contra a falha de um disco ou prédio?",
+          "referencia": "Cópias em locais independentes permitem recuperar o conteúdo quando uma parte falha. Isso não substitui backup contra exclusão humana."
+        },
+        {
+          "id": "10-13-a",
+          "fase": "1-1",
+          "slide": 13,
+          "item": "a",
+          "enunciado": "Durante manutenção de 2 minutos no S3, a imagem não abre. Qual propriedade está afetada?",
+          "referencia": "Disponibilidade: o objeto pode continuar preservado, mas sua leitura está temporariamente indisponível."
+        },
+        {
+          "id": "10-13-b",
+          "fase": "1-1",
+          "slide": 13,
+          "item": "b",
+          "enunciado": "Um disco queima, mas o arquivo permanece intacto. Qual propriedade foi demonstrada?",
+          "referencia": "Durabilidade: outras cópias impediram a perda do dado."
+        },
+        {
+          "id": "10-13-c",
+          "fase": "1-1",
+          "slide": 13,
+          "item": "c",
+          "enunciado": "Um objeto é apagado por engano, sem versionamento. Isso caracteriza qual falha?",
+          "referencia": "Erro humano: o serviço cumpriu a exclusão. Versionamento e políticas de backup ajudam a recuperar exclusões; cópias internas não são backup."
+        },
+        {
+          "id": "10-17-a",
+          "fase": "1-2",
+          "slide": 17,
+          "item": "a",
+          "enunciado": "Onde guardar fotos de produtos acessadas por milhares de visitantes?",
+          "referencia": "S3, armazenamento de objetos acessível por HTTP, adequado ao conteúdo estático."
+        },
+        {
+          "id": "10-17-b",
+          "fase": "1-2",
+          "slide": 17,
+          "item": "b",
+          "enunciado": "Qual armazenamento serve ao disco da EC2 que hospeda um banco?",
+          "referencia": "EBS fornece volumes de bloco para o sistema operacional e os arquivos do banco."
+        },
+        {
+          "id": "10-17-c",
+          "fase": "1-2",
+          "slide": 17,
+          "item": "c",
+          "enunciado": "Três servidores precisam ler e escrever a mesma pasta de relatórios. Qual serviço escolher?",
+          "referencia": "EFS oferece um sistema de arquivos compartilhado que várias instâncias podem montar."
+        },
+        {
+          "id": "10-18-conceito",
+          "fase": "1-3",
+          "slide": 18,
+          "item": "conceito",
+          "enunciado": "Com várias cópias, toda leitura necessariamente vê o mesmo dado imediatamente?",
+          "referencia": "Depende do contrato de consistência. No S3, após a escrita confirmada, GET e listagem refletem a nova versão; caches do cliente ou CDN são uma camada separada."
+        },
+        {
+          "id": "10-23-a",
+          "fase": "1-3",
+          "slide": 23,
+          "item": "a",
+          "enunciado": "Após gravar um produto como objeto no S3, uma listagem um segundo depois o inclui?",
+          "referencia": "Sim, depois da confirmação da escrita, a consistência forte do S3 garante sua presença na listagem."
+        },
+        {
+          "id": "10-23-b",
+          "fase": "1-3",
+          "slide": 23,
+          "item": "b",
+          "enunciado": "As cópias entre AZs mantêm o conteúdo acessível se toda us-east-1 cair?",
+          "referencia": "Não garantem isso. Resistir à região exige estratégia em outra região, como CRR com destino e aplicação preparados; há custos e atraso de replicação."
+        },
+        {
+          "id": "10-29-a",
+          "fase": "2-1",
+          "slide": 29,
+          "item": "a",
+          "enunciado": "Qual classe combina com fotos do catálogo abertas continuamente?",
+          "referencia": "Standard evita tarifa de recuperação para conteúdo frequentemente consultado."
+        },
+        {
+          "id": "10-29-b",
+          "fase": "2-1",
+          "slide": 29,
+          "item": "b",
+          "enunciado": "Qual classe atende logs com mais de um ano retidos para auditoria?",
+          "referencia": "Deep Archive ou Flexible, se a espera de recuperação for aceitável. Verifique retenção e custo de recuperação."
+        },
+        {
+          "id": "10-29-c",
+          "fase": "2-1",
+          "slide": 29,
+          "item": "c",
+          "enunciado": "Qual classe pode atender miniaturas que podem ser recriadas?",
+          "referencia": "One Zone-IA pode servir se o acesso for raro e a perda de uma AZ for aceitável, pois as miniaturas são refazíveis."
+        },
+        {
+          "id": "10-29-d",
+          "fase": "2-1",
+          "slide": 29,
+          "item": "d",
+          "enunciado": "Notas fiscais de três meses são raramente lidas, mas devem abrir imediatamente. Qual classe usar?",
+          "referencia": "Standard-IA ou Glacier Instant Retrieval: comparar armazenamento, recuperação e permanência mínima antes de decidir."
+        },
+        {
+          "id": "10-28-automacao",
+          "fase": "2-1",
+          "slide": 28,
+          "item": "automacao",
+          "enunciado": "Quando escolher Intelligent-Tiering em vez de uma regra por idade?",
+          "referencia": "Quando o padrão de acesso for incerto e o ganho compensar o monitoramento por objeto. Um padrão conhecido de logs pode usar uma regra explícita."
+        },
+        {
+          "id": "10-36-logs",
+          "fase": "2-2",
+          "slide": 36,
+          "item": "logs",
+          "enunciado": "Qual política atende logs lidos no início e retidos por auditoria durante um ano?",
+          "referencia": "Transição para Standard-IA no dia 30, Glacier Flexible no dia 90 e expiração no dia 365, restrita ao prefixo de logs."
+        },
+        {
+          "id": "10-36-imagens",
+          "fase": "2-2",
+          "slide": 36,
+          "item": "imagens",
+          "enunciado": "Qual política atende imagens lidas sempre e que não devem expirar?",
+          "referencia": "Manter em Standard sem regra de expiração. Regras de outros prefixos não devem alcançá-las."
+        },
+        {
+          "id": "10-36-temp",
+          "fase": "2-2",
+          "slide": 36,
+          "item": "temp",
+          "enunciado": "Como tratar uploads temporários úteis por poucos dias?",
+          "referencia": "Expirar em 7 dias, sem classe fria, evitando cobrança por permanência mínima incompatível com sua vida curta."
+        },
+        {
+          "id": "10-38-mil",
+          "fase": "2-3",
+          "slide": 38,
+          "item": "mil",
+          "enunciado": "Explique os US$ 23,00 versus US$ 7,32 do exemplo de 1.000 GB (100/200/700 GB).",
+          "referencia": "Standard: 1.000 × 0,023 = 23. Com regra: 100 × 0,023 + 200 × 0,0125 + 700 × 0,0036 = 7,32. Economia didática: 15,68/mês, antes de requisições e recuperação."
+        },
+        {
+          "id": "10-40-pequenos",
+          "fase": "2-3",
+          "slide": 40,
+          "item": "pequenos",
+          "enunciado": "Por que 1 milhão de objetos de 50 KB pode ficar mais caro em Standard-IA?",
+          "referencia": "Cada objeto tem mínimo cobrável de 128 KB nessa classe, além das transições. A aula estima aproximadamente US$ 1,53/mês contra US$ 1,15 em Standard, mais US$ 10 de transição. Unidades arredondadas do exemplo não são uma fatura."
+        },
+        {
+          "id": "10-41-conta",
+          "fase": "2-3",
+          "slide": 41,
+          "item": "conta",
+          "enunciado": "Calcule a economia para 400 GB: 60 GB recentes, 140 GB intermediários e 200 GB antigos, a 0,023/0,0125/0,0036.",
+          "referencia": "Sem regra: US$ 9,20/mês. Com regra: 1,38 + 1,75 + 0,72 = US$ 3,85. Economia: US$ 5,35/mês, cerca de 58%, sem transições e recuperação."
+        },
+        {
+          "id": "10-58-volume",
+          "fase": "3-3",
+          "slide": 58,
+          "item": "volume",
+          "enunciado": "Qual volume usar na projeção de 500 GB de logs e qual volume registrar como evidência real?",
+          "referencia": "500 GB é uma hipótese didática. O relatório deve registrar separadamente os bytes efetivamente medidos no prefixo de amostras."
+        },
+        {
+          "id": "10-58-faixas",
+          "fase": "3-3",
+          "slide": 58,
+          "item": "faixas",
+          "enunciado": "Distribua os 500 GB por idade em 10%, 25% e 65%.",
+          "referencia": "São 50 GB em Standard, 125 GB em Standard-IA e 325 GB em Glacier Flexible."
+        },
+        {
+          "id": "10-58-custo",
+          "fase": "3-3",
+          "slide": 58,
+          "item": "custo",
+          "enunciado": "Quanto custam esses 500 GB com e sem a regra usando os preços da aula?",
+          "referencia": "Sem regra: 11,50/mês. Com regra: 1,15 + 1,5625 + 1,17 = 3,8825, arredondado para US$ 3,88."
+        },
+        {
+          "id": "10-58-economia",
+          "fase": "3-3",
+          "slide": 58,
+          "item": "economia",
+          "enunciado": "Calcule economia mensal e anual da projeção de 500 GB.",
+          "referencia": "Com precisão integral: 7,6175/mês e 91,41/ano. A aula arredonda primeiro a economia mensal a 7,62 e então apresenta 91,44/ano; explicite a convenção."
+        },
+        {
+          "id": "10-58-decisao",
+          "fase": "3-3",
+          "slide": 58,
+          "item": "decisao",
+          "enunciado": "Escreva uma decisão sobre aplicar essa regra aos logs.",
+          "referencia": "A economia projetada é de aproximadamente 66%; a regra compensa se retenção, recuperação e transições confirmarem o ganho. Não aplicar às fotos da vitrine."
+        },
+        {
+          "id": "10-34-transicoes",
+          "fase": "3-2",
+          "slide": 34,
+          "item": "transicoes",
+          "enunciado": "Como incluir requisições e permanência mínima na economia?",
+          "referencia": "Custo de transição = objetos ÷ 1.000 × preço por mil de cada destino. Subtraia esse custo da economia e considere 30 dias em IA, 90 em Glacier Instant/Flexible e 180 em Deep Archive; excluir antes não elimina a cobrança mínima. Nas configurações novas, o padrão atual all_storage_classes_128K impede transições de objetos menores que 128 KB para qualquer classe; isso é diferente do tamanho mínimo cobrável de cada classe."
+        }
+      ],
+      "fonte": "https://sebastrogers.github.io/assets/materiais/cloud/aula-10-cloud-armazenamento-distribuido.html"
+    },
+    {
+      "numero": 11,
+      "titulo": "A loja ganha banco",
+      "arquivo": "aula-11-cloud-loja-ganha-banco",
+      "slides": 63,
+      "resumo": "O catálogo Cloud pertence ao DynamoDB, enquanto Coding mantém SQLite. A chave determina como consultar. GetItem lê por ID, Scan percorre o catálogo pequeno e precisa de paginação. Gravação condicional evita sobrescrita; IAM limita ações e tabela.",
+      "objetivos": [
+        "Escolher SQL ou NoSQL pelo acesso.",
+        "Ler e cadastrar usando chave e condição.",
+        "Demonstrar persistência e menor privilégio."
+      ],
+      "checklist": [
+        "3-1: tabela loja-produtos ACTIVE, chave id Number e modo sob demanda.",
+        "3-2: variáveis no servidor, Decimal e política GetItem/PutItem/Scan.",
+        "3-3: provar 200/404/201/409/422 e produto novo sem redeploy; preservar dados reais."
+      ],
+      "questoes": [
+        {
+          "id": "11-9-a",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "a",
+          "enunciado": "O disco queimou e o arquivo foi preservado: durabilidade ou disponibilidade?",
+          "referencia": "Durabilidade, graças às outras cópias."
+        },
+        {
+          "id": "11-9-b",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "b",
+          "enunciado": "Qual classe usar nas fotos lidas o dia todo?",
+          "referencia": "S3 Standard, adequado a acesso frequente."
+        },
+        {
+          "id": "11-9-c",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "c",
+          "enunciado": "Onde reter logs de dois anos raramente consultados?",
+          "referencia": "Glacier Deep Archive ou Flexible, conforme o tempo de recuperação tolerável."
+        },
+        {
+          "id": "11-10-problema",
+          "fase": "1-1",
+          "slide": 10,
+          "item": "problema",
+          "enunciado": "Por que retirar o catálogo de dentro do código da função?",
+          "referencia": "Para cadastrar e atualizar dados persistentes sem editar e republicar código. A função mantém regras; o banco mantém produtos."
+        },
+        {
+          "id": "11-17-a",
+          "fase": "1-2",
+          "slide": 17,
+          "item": "a",
+          "enunciado": "Qual modelo atende o carrinho acessado sempre pelo ID da sessão?",
+          "referencia": "Chave-valor NoSQL é adequado ao acesso por sessão; isso não obriga migrar o carrinho Coding nem introduzir outro serviço."
+        },
+        {
+          "id": "11-17-b",
+          "fase": "1-2",
+          "slide": 17,
+          "item": "b",
+          "enunciado": "Qual modelo favorece fechamento contábil cruzando vendas, notas e devoluções?",
+          "referencia": "Relacional, com relacionamentos, JOINs e transações apropriadas."
+        },
+        {
+          "id": "11-17-c",
+          "fase": "1-2",
+          "slide": 17,
+          "item": "c",
+          "enunciado": "Qual modelo atende catálogo buscado por ID e com campos diferentes por produto?",
+          "referencia": "NoSQL de documentos ou chave-valor, como DynamoDB; o esquema de acesso deve orientar a chave."
+        },
+        {
+          "id": "11-19-particao",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "particao",
+          "enunciado": "Por que uma chave distribuída ajuda e uma chave quente prejudica?",
+          "referencia": "O hash distribui valores por partições. Concentração excessiva numa chave pode criar um gargalo, mesmo com muitos itens."
+        },
+        {
+          "id": "11-22-a",
+          "fase": "1-3",
+          "slide": 22,
+          "item": "a",
+          "enunciado": "A listagem pública precisa de leitura eventual ou forte?",
+          "referencia": "Eventual costuma ser suficiente para a vitrine e custa menos; pode haver um breve atraso após uma escrita."
+        },
+        {
+          "id": "11-22-b",
+          "fase": "1-3",
+          "slide": 22,
+          "item": "b",
+          "enunciado": "Ao conferir estoque recém-alterado antes da compra, qual leitura usar?",
+          "referencia": "Forte para ler a última escrita confirmada. Estoque concorrente também precisa de operação condicional ou transação; leitura forte sozinha não evita dupla venda."
+        },
+        {
+          "id": "11-27-a",
+          "fase": "2-1",
+          "slide": 27,
+          "item": "a",
+          "enunciado": "Qual chave escolher para produtos consultados por ID?",
+          "referencia": "Chave de partição id, numérica e única."
+        },
+        {
+          "id": "11-27-b",
+          "fase": "2-1",
+          "slide": 27,
+          "item": "b",
+          "enunciado": "Como modelar avaliações de produto ordenadas da mais nova para a mais antiga?",
+          "referencia": "Partição produto_id e chave de ordenação data, com Query em ordem decrescente. Prever desempate para avaliações no mesmo instante."
+        },
+        {
+          "id": "11-27-c",
+          "fase": "2-1",
+          "slide": 27,
+          "item": "c",
+          "enunciado": "Qual chave atende sessões buscadas por token?",
+          "referencia": "O token é uma chave simples; deve ser imprevisível e protegido como credencial."
+        },
+        {
+          "id": "11-31-query",
+          "fase": "2-2",
+          "slide": 31,
+          "item": "query",
+          "enunciado": "Qual a diferença de custo entre Query e Scan filtrado?",
+          "referencia": "Query restringe pela chave da partição. Scan lê a tabela antes de filtrar; retornar poucos resultados não reduz o volume já lido."
+        },
+        {
+          "id": "11-32-condicao",
+          "fase": "2-2",
+          "slide": 32,
+          "item": "condicao",
+          "enunciado": "Como criar sem sobrescrever outro produto com o mesmo ID?",
+          "referencia": "PutItem condicionado à inexistência de id. Sucesso retorna 201; falha da condição retorna 409, preservando o registro."
+        },
+        {
+          "id": "11-36-modos",
+          "fase": "2-3",
+          "slide": 36,
+          "item": "modos",
+          "enunciado": "Quando usar sob demanda ou capacidade provisionada?",
+          "referencia": "Sob demanda atende uso pequeno ou variável sem reservar capacidade. Provisionado pode compensar carga estável, mas exige dimensionamento."
+        },
+        {
+          "id": "11-37-conta",
+          "fase": "2-3",
+          "slide": 37,
+          "item": "conta",
+          "enunciado": "Estime 1 milhão de GetItem eventuais de 1 KB e 100 mil PutItem de 1 KB.",
+          "referencia": "Leituras: 500 mil unidades × US$ 0,125/milhão = 0,0625. Escritas: 100 mil × 0,625/milhão = 0,0625. Total US$ 0,125, antes de outros custos e franquias."
+        },
+        {
+          "id": "11-37-scan",
+          "fase": "2-3",
+          "slide": 37,
+          "item": "scan",
+          "enunciado": "Por que listar 10 MB por Scan a cada uma de 1 milhão de visitas pode custar muito mais?",
+          "referencia": "Cada visita percorre todos os dados. A aula aproxima o consumo a 1,25 bilhão de unidades eventuais, cerca de US$ 156; paginação limita respostas, mas não torna uma varredura integral gratuita."
+        },
+        {
+          "id": "11-43-atributos",
+          "fase": "3-1",
+          "slide": 43,
+          "item": "atributos",
+          "enunciado": "É possível cadastrar um produto com atributos que os outros não têm?",
+          "referencia": "Sim, DynamoDB permite atributos diferentes fora da chave. A aplicação ainda deve validar os campos exigidos pelo seu contrato."
+        },
+        {
+          "id": "11-51-iam",
+          "fase": "3-2",
+          "slide": 51,
+          "item": "iam",
+          "enunciado": "Como diagnosticar AccessDeniedException ao consultar a tabela?",
+          "referencia": "Conferir papel assumido pela função, ações permitidas, recurso da tabela e eventuais negações. Não resolver com dynamodb:* em todos os recursos."
+        },
+        {
+          "id": "11-51-decimal",
+          "fase": "3-2",
+          "slide": 51,
+          "item": "decimal",
+          "enunciado": "Como evitar erro de serialização de Decimal?",
+          "referencia": "Ler JSON monetário como Decimal e converter explicitamente para número JSON na resposta. Não gravar float diretamente no recurso DynamoDB."
+        },
+        {
+          "id": "11-54-http",
+          "fase": "3-3",
+          "slide": 54,
+          "item": "http",
+          "enunciado": "Quais respostas provam consulta e cadastro condicional?",
+          "referencia": "Consulta existente 200, ausente 404; cadastro válido novo 201 e repetido 409. Nome vazio ou preço inválido deve produzir 422."
+        },
+        {
+          "id": "11-56-projeto",
+          "fase": "3-3",
+          "slide": 56,
+          "item": "projeto",
+          "enunciado": "Justifique a entidade principal, chave e política da trilha Cloud.",
+          "referencia": "Produto é consultado por id numérico estável. A Lambda recebe GetItem, PutItem e Scan somente na tabela do catálogo; os dados Coding permanecem separados."
+        }
+      ],
+      "fonte": "https://sebastrogers.github.io/assets/materiais/cloud/aula-11-cloud-loja-ganha-banco.html"
+    },
+    {
+      "numero": 12,
+      "titulo": "A loja ganha rede",
+      "arquivo": "aula-12-cloud-loja-ganha-rede",
+      "slides": 53,
+      "resumo": "Rotas definem caminhos e grupos de segurança permitem conexões. A função de catálogo usa duas sub-redes privadas e alcança DynamoDB por gateway endpoint. Não precisa de NAT. API Gateway e DynamoDB são serviços regionais fora das sub-redes do cliente.",
+      "objetivos": [
+        "Calcular CIDR e distinguir sub-redes.",
+        "Separar IAM, SG e NACL.",
+        "Validar rede privada sem interromper a loja pública."
+      ],
+      "checklist": [
+        "3-1: VPC sem conflito, quatro sub-redes em duas AZs, três tabelas e IGW; nenhum NAT.",
+        "3-2: função nas privadas, SG sem entrada; falha apenas em laboratório isolado.",
+        "3-3: gateway endpoints, rotas privadas e recuperação validada."
+      ],
+      "questoes": [
+        {
+          "id": "12-9-a",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "a",
+          "enunciado": "Por que usar id como chave em vez do nome do produto?",
+          "referencia": "O ID é único e estável; nomes podem repetir e mudar."
+        },
+        {
+          "id": "12-9-b",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "b",
+          "enunciado": "Para consultar o produto 2, usar Scan ou GetItem?",
+          "referencia": "GetItem pela chave completa, sem percorrer o catálogo."
+        },
+        {
+          "id": "12-9-c",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "c",
+          "enunciado": "O que deixa de funcionar se o papel perder PutItem?",
+          "referencia": "O cadastro falha por falta de permissão; leituras continuam se GetItem e Scan permanecerem autorizados."
+        },
+        {
+          "id": "12-15-a",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "a",
+          "enunciado": "Quantos endereços existem numa sub-rede /24 e quantos são utilizáveis na AWS?",
+          "referencia": "256 no total e 251 utilizáveis, descontando os cinco reservados pela AWS."
+        },
+        {
+          "id": "12-15-b",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "b",
+          "enunciado": "Qual faixa é maior, /16 ou /20?",
+          "referencia": "/16: possui 65.536 endereços, contra 4.096 de /20."
+        },
+        {
+          "id": "12-15-c",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "c",
+          "enunciado": "Quantas sub-redes /20 cabem em 10.0.0.0/16?",
+          "referencia": "16, pois 2 elevado a (20 − 16) é 16."
+        },
+        {
+          "id": "12-15-d",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "d",
+          "enunciado": "Quantos endereços podem ser utilizados numa sub-rede /28 da AWS?",
+          "referencia": "11: dos 16 endereços totais, cinco são reservados."
+        },
+        {
+          "id": "12-19-a",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "a",
+          "enunciado": "Em qual sub-rede colocar o banco de uma clínica veterinária?",
+          "referencia": "Privada, acessível somente às aplicações autorizadas."
+        },
+        {
+          "id": "12-19-b",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "b",
+          "enunciado": "Uma EC2 hospeda sozinha um site institucional diretamente acessado. Pública ou privada?",
+          "referencia": "Pública, com rota ao IGW, endereço público e regras adequadas. Uma arquitetura com balanceador poderia manter o servidor privado."
+        },
+        {
+          "id": "12-19-c",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "c",
+          "enunciado": "Onde colocar um gerador noturno de relatórios que só grava no banco?",
+          "referencia": "Privada; não precisa receber conexões da internet."
+        },
+        {
+          "id": "12-19-d",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "d",
+          "enunciado": "Onde conectar a loja-api?",
+          "referencia": "Nas duas sub-redes privadas. API Gateway invoca o serviço Lambda; não precisa abrir entrada no SG da função."
+        },
+        {
+          "id": "12-23-a",
+          "fase": "2-1",
+          "slide": 23,
+          "item": "a",
+          "enunciado": "Como a função privada deve alcançar a tabela loja-produtos?",
+          "referencia": "Por um gateway endpoint do DynamoDB associado às tabelas de rotas privadas e com política restrita."
+        },
+        {
+          "id": "12-23-b",
+          "fase": "2-1",
+          "slide": 23,
+          "item": "b",
+          "enunciado": "Como a mesma função privada consultaria uma API de frete na internet?",
+          "referencia": "Precisaria de saída apropriada, como NAT Gateway, que é pago. Esta loja não implementa essa integração nem provisiona NAT."
+        },
+        {
+          "id": "12-23-c",
+          "fase": "2-1",
+          "slide": 23,
+          "item": "c",
+          "enunciado": "Qual gateway permite a um servidor público responder pela internet?",
+          "referencia": "Internet Gateway, com rota 0.0.0.0/0, endereço público e SG permitindo o tráfego necessário."
+        },
+        {
+          "id": "12-23-d",
+          "fase": "2-1",
+          "slide": 23,
+          "item": "d",
+          "enunciado": "Como uma instância privada baixa objetos do S3 sem NAT?",
+          "referencia": "Gateway endpoint S3, com rotas, IAM e política do bucket compatíveis."
+        },
+        {
+          "id": "12-27-a",
+          "fase": "2-2",
+          "slide": 27,
+          "item": "a",
+          "enunciado": "O banco permite somente o IP 10.0.128.20, mas a função é recusada. Como corrigir?",
+          "referencia": "Para um banco com SG, referenciar o SG da aplicação em vez de um IP efêmero. DynamoDB usa IAM e endpoint, não SG de banco relacional."
+        },
+        {
+          "id": "12-27-b",
+          "fase": "2-2",
+          "slide": 27,
+          "item": "b",
+          "enunciado": "A consulta sai, mas a NACL só permite saída e a resposta não volta. Qual a causa?",
+          "referencia": "NACL é sem estado: precisa permitir o retorno, incluindo portas efêmeras apropriadas. SG é com estado."
+        },
+        {
+          "id": "12-27-c",
+          "fase": "2-2",
+          "slide": 27,
+          "item": "c",
+          "enunciado": "Visitantes não conseguem iniciar uma conexão de rede com a Lambda privada. Há defeito?",
+          "referencia": "Não: essa é a proteção esperada. A invocação pelo serviço Lambda é independente de uma entrada de rede no SG."
+        },
+        {
+          "id": "12-31-custo",
+          "fase": "2-3",
+          "slide": 31,
+          "item": "custo",
+          "enunciado": "Que peças da rede têm cobrança própria e qual foi evitada?",
+          "referencia": "VPC, sub-redes, rotas, SG, IGW e gateway endpoints não têm tarifa horária própria. NAT e endpoints de interface são pagos e foram excluídos. Serviços e transferência ainda podem cobrar."
+        },
+        {
+          "id": "12-41-timeout",
+          "fase": "3-2",
+          "slide": 41,
+          "item": "timeout",
+          "enunciado": "Por que aumentar o timeout não resolve a ausência de rota ao DynamoDB?",
+          "referencia": "Esperar mais não cria conectividade. É necessário associar o endpoint às rotas corretas; a falha deve ser demonstrada em laboratório isolado."
+        },
+        {
+          "id": "12-46-endpoint",
+          "fase": "3-3",
+          "slide": 46,
+          "item": "endpoint",
+          "enunciado": "A API continua falhando depois de criar o endpoint. O que conferir?",
+          "referencia": "Tipo Gateway, serviço e região corretos, associação às duas tabelas privadas, SG de saída, política do endpoint e IAM. O status HTTP efetivo deve ser registrado, sem assumir 502."
+        },
+        {
+          "id": "12-47-desenho",
+          "fase": "3-3",
+          "slide": 47,
+          "item": "desenho",
+          "enunciado": "Justifique as partes públicas e privadas da arquitetura.",
+          "referencia": "CloudFront atende o navegador; API Gateway é a entrada HTTPS. Catálogo Lambda fica privado e usa endpoint DynamoDB. A porta de pedidos permanece fora da VPC para chamar SQS sem endpoint de interface pago."
+        }
+      ],
+      "fonte": "https://sebastrogers.github.io/assets/materiais/cloud/aula-12-cloud-loja-ganha-rede.html"
+    },
+    {
+      "numero": 13,
+      "titulo": "A loja aguenta o pico",
+      "arquivo": "aula-13-cloud-loja-aguenta-pico",
+      "slides": 58,
+      "resumo": "Concorrência depende de taxa e duração. A fila desacopla recepção e processamento, sem eliminar trabalho. Consumidor limitado protege o serviço lento. Visibilidade, DLQ, idempotência e alarmes tornam falhas observáveis e recuperáveis.",
+      "objetivos": [
+        "Calcular concorrência e identificar gargalos.",
+        "Receber pedidos com 202 e limitar consumo.",
+        "Provar carga, DLQ e alarmes com dados reais."
+      ],
+      "checklist": [
+        "3-1: criar DLQ antes da fila; visibilidade 30 s; máximo de três recebimentos; produtor responde 202.",
+        "3-2: consumidor de 5 s, lote 1, concorrência máxima 2; enviar até 100 pedidos sintéticos com até 20 paralelos.",
+        "3-3: falha 99 protegida, DLQ e alarmes; confirmar SNS e limpar somente mensagens identificadas do teste."
+      ],
+      "questoes": [
+        {
+          "id": "13-9-a",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "a",
+          "enunciado": "O que caracteriza uma sub-rede pública?",
+          "referencia": "Uma rota padrão para Internet Gateway; acesso efetivo também depende de endereço público e regras de segurança."
+        },
+        {
+          "id": "13-9-b",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "b",
+          "enunciado": "Por que a Lambda privada ficou sem resposta antes do endpoint?",
+          "referencia": "Não havia rota ao DynamoDB; a chamada aguardava até o tempo limite."
+        },
+        {
+          "id": "13-9-c",
+          "fase": "1-1",
+          "slide": 9,
+          "item": "c",
+          "enunciado": "Por que a rede do catálogo dispensa NAT?",
+          "referencia": "O destino necessário é DynamoDB, alcançável pelo gateway endpoint sem tarifa horária de NAT."
+        },
+        {
+          "id": "13-15-a",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "a",
+          "enunciado": "Quantas execuções simultâneas atendem 20 pedidos/s com duração de 0,2 s?",
+          "referencia": "20 × 0,2 = 4 execuções, em média, sob condições estáveis."
+        },
+        {
+          "id": "13-15-b",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "b",
+          "enunciado": "E para 20 pedidos/s esperando 4 s por uma dependência?",
+          "referencia": "20 × 4 = 80 execuções simultâneas, em média."
+        },
+        {
+          "id": "13-15-c",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "c",
+          "enunciado": "Se a cota da conta é 10, o que ocorre no caso de 80 execuções necessárias?",
+          "referencia": "A capacidade é insuficiente: novas chamadas podem sofrer throttling e erros. Verificar a cota real e o comportamento do API Gateway."
+        },
+        {
+          "id": "13-15-d",
+          "fase": "1-2",
+          "slide": 15,
+          "item": "d",
+          "enunciado": "Como reduzir a espera síncrona sem reduzir a chegada de pedidos?",
+          "referencia": "Mover o trabalho que pode terminar depois para uma fila; a porta confirma recebimento e o consumidor trabalha com concorrência controlada."
+        },
+        {
+          "id": "13-18-escala",
+          "fase": "1-3",
+          "slide": 18,
+          "item": "escala",
+          "enunciado": "Qual pergunta de arquitetura importa além de saber se a função escala?",
+          "referencia": "Qual dependência limita o conjunto e o que acontece com os pedidos quando ela fica lenta ou falha."
+        },
+        {
+          "id": "13-19-a",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "a",
+          "enunciado": "A vitrine S3 tende a ser o primeiro gargalo com 60 acessos/s?",
+          "referencia": "Não nesse cenário didático: servir arquivos estáticos nessa taxa é compatível com o serviço, respeitando limites e configuração."
+        },
+        {
+          "id": "13-19-b",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "b",
+          "enunciado": "Uma função de carrinho com 0,1 s e 60 chamadas/s precisa de quanta concorrência?",
+          "referencia": "A média estimada é 6 execuções. A capacidade real depende de cotas e duração observada."
+        },
+        {
+          "id": "13-19-c",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "c",
+          "enunciado": "O emissor de nota aceita 5 pedidos/s, mas chegam 60/s. Onde está o gargalo?",
+          "referencia": "No emissor. Sem desacoplamento, o excesso de 55 pedidos/s provoca erros ou espera; a fila absorve o pico temporário."
+        },
+        {
+          "id": "13-19-d",
+          "fase": "1-3",
+          "slide": 19,
+          "item": "d",
+          "enunciado": "DynamoDB sob demanda será necessariamente o primeiro gargalo nesse exemplo?",
+          "referencia": "Não é o gargalo indicado. Sob demanda ainda tem quotas, limites por partição e comportamento de escalada; não significa capacidade infinita."
+        },
+        {
+          "id": "13-22-recebido",
+          "fase": "2-1",
+          "slide": 22,
+          "item": "recebido",
+          "enunciado": "O que 202 confirma e por que não afirmar que o pedido está concluído?",
+          "referencia": "Confirma que a mensagem foi aceita para processamento. Não confirma estoque, pagamento, emissão fiscal nem conclusão."
+        },
+        {
+          "id": "13-23-duplicatas",
+          "fase": "2-1",
+          "slide": 23,
+          "item": "duplicatas",
+          "enunciado": "A entrega pelo menos uma vez permite duplicatas? Como tratá-las?",
+          "referencia": "Sim. Identificar o pedido por ID estável e gravar o efeito durável de modo condicional. FIFO também não torna efeitos externos automaticamente idempotentes."
+        },
+        {
+          "id": "13-28-a",
+          "fase": "2-2",
+          "slide": 28,
+          "item": "a",
+          "enunciado": "A dependência fica indisponível por 40 s. Como a fila pode recuperar?",
+          "referencia": "A mensagem volta após a visibilidade de 30 s e pode ter sucesso numa tentativa posterior, dentro do limite de recebimentos. Não há garantia se a falha durar além desse limite."
+        },
+        {
+          "id": "13-28-b",
+          "fase": "2-2",
+          "slide": 28,
+          "item": "b",
+          "enunciado": "Uma mensagem com quantidade 999 sempre falha. O que acontece?",
+          "referencia": "Após esgotar três recebimentos sem sucesso, a política de redrive a encaminha à DLQ; os outros pedidos podem continuar."
+        },
+        {
+          "id": "13-28-c",
+          "fase": "2-2",
+          "slide": 28,
+          "item": "c",
+          "enunciado": "Qual o risco de visibilidade de 3 s para uma função cujo timeout é 5 s?",
+          "referencia": "A mensagem pode reaparecer enquanto ainda está em processamento. Use pelo menos 30 s nesse cenário e mantenha idempotência."
+        },
+        {
+          "id": "13-28-d",
+          "fase": "2-2",
+          "slide": 28,
+          "item": "d",
+          "enunciado": "A DLQ mostra 12 mensagens na segunda-feira. O que fazer?",
+          "referencia": "Investigar os 12 pedidos, causa e impacto; corrigir, avaliar idade/retenção e autorizar redrive controlado. Não fazer Purge indiscriminado."
+        },
+        {
+          "id": "13-30-sinais",
+          "fase": "2-3",
+          "slide": 30,
+          "item": "sinais",
+          "enunciado": "Como logs, métricas e rastros se complementam?",
+          "referencia": "Logs registram eventos; métricas mostram tendências numéricas; rastros acompanham o caminho da requisição. Não publicar logs com segredos ou dados pessoais."
+        },
+        {
+          "id": "13-32-custo",
+          "fase": "2-3",
+          "slide": 32,
+          "item": "custo",
+          "enunciado": "Qual custo estimar antes da prática, mesmo com possíveis franquias?",
+          "referencia": "SQS por requisição, Lambda por invocação e duração, logs por ingestão/retenção, alarmes e SNS. Franquias dependem da conta; orçamento é alerta, não bloqueio."
+        },
+        {
+          "id": "13-43-carga",
+          "fase": "3-2",
+          "slide": 43,
+          "item": "carga",
+          "enunciado": "O que comprova o teste de 100 pedidos com até 20 paralelos?",
+          "referencia": "Registrar os status efetivos, latências, contagem enviada, fila acumulando e drenando, concorrência máxima e efeitos únicos. Não presumir 100 respostas 202."
+        },
+        {
+          "id": "13-51-operacao",
+          "fase": "3-3",
+          "slide": 51,
+          "item": "operacao",
+          "enunciado": "Qual operação pode ser desacoplada nesta demonstração?",
+          "referencia": "Processamento didático de pedido, sem pagamento ou nota reais. Consulta de preço e totalização permanecem síncronas."
+        },
+        {
+          "id": "13-56-arguicao",
+          "fase": "fechamento",
+          "slide": 56,
+          "item": "arguicao",
+          "enunciado": "O que quebra primeiro se o movimento aumentar dez vezes?",
+          "referencia": "Na trilha Coding, há uma EC2 e um processo: medir CPU, latência e sessões. Na Cloud, o consumidor limitado gera backlog; vigiar idade da mensagem, cotas, custo e dependências antes de aumentar concorrência."
+        }
+      ],
+      "fonte": "https://sebastrogers.github.io/assets/materiais/cloud/aula-13-cloud-loja-aguenta-pico.html"
+    },
+    {
+      "numero": 14,
+      "titulo": "Confiabilidade e concentração de risco",
+      "arquivo": "aula-14-cloud-confiabilidade-risco",
+      "slides": 28,
+      "resumo": "Filas protegem contra picos temporários, mas podem acumular atraso e duplicatas. O incidente regional mostra dependências comuns e recuperação em cascata. Idempotência durável, limites, observabilidade e escolhas conscientes de portabilidade reduzem risco.",
+      "objetivos": [
+        "Analisar fatos do incidente e limites da redundância regional.",
+        "Demonstrar idempotência sem duplicar efeitos.",
+        "Comparar lock-in, custos e alternativas portáveis."
+      ],
+      "checklist": [
+        "Estudar o relatório oficial e registrar diferenças em relação ao resumo dos slides.",
+        "Revisar os dez cenários identificados como SIMULAÇÃO.",
+        "Validar idempotência, idade da fila e plano de redrive.",
+        "Preparar matriz preliminar; documento detalhado do Teams não foi fornecido."
+      ],
+      "questoes": [
+        {
+          "id": "14-3-causa",
+          "fase": "incidente",
+          "slide": 3,
+          "item": "causa",
+          "enunciado": "Qual foi a causa raiz da falha regional de 19–20/10/2025?",
+          "referencia": "Uma corrida entre aplicadores de planos DNS permitiu que um plano antigo sobrescrevesse o novo e fosse removido pela limpeza, deixando vazio o endpoint regional DynamoDB. A automação não conseguiu reparar o estado."
+        },
+        {
+          "id": "14-5-tempo",
+          "fase": "incidente",
+          "slide": 5,
+          "item": "tempo",
+          "enunciado": "Por que restaurar o DNS não recuperou imediatamente todos os serviços?",
+          "referencia": "Dependências acumularam trabalho e sofreram falhas adicionais durante a recuperação. O relatório diferencia DynamoDB, novas EC2, rede, NLB e outros serviços; instâncias EC2 já em execução permaneceram saudáveis."
+        },
+        {
+          "id": "14-6-freio",
+          "fase": "incidente",
+          "slide": 6,
+          "item": "freio",
+          "enunciado": "Qual correção da AWS segue a ideia do máximo de duas consumidoras da loja?",
+          "referencia": "Limitar trabalho admitido conforme o backlog e limitar a velocidade de retirada de capacidade evitam amplificar sobrecarga; ambos aplicam freios à propagação da falha."
+        },
+        {
+          "id": "14-8-backlog",
+          "fase": "padroes",
+          "slide": 8,
+          "item": "backlog",
+          "enunciado": "Quando a fila deixa de conseguir recuperar e qual métrica indica atraso?",
+          "referencia": "Se a entrada permanece acima da saída, o backlog cresce indefinidamente. A idade da mensagem mais antiga indica espera; observar também taxas de entrada e conclusão."
+        },
+        {
+          "id": "14-8-retry",
+          "fase": "padroes",
+          "slide": 8,
+          "item": "retry",
+          "enunciado": "Por que aplicar backoff com jitter e limitar tentativas?",
+          "referencia": "Intervalos crescentes e aleatórios reduzem tentativas sincronizadas. Limitar tempo e tentativas evita amplificar a carga; não repetir a mesma política em todas as camadas."
+        },
+        {
+          "id": "14-12-resposta",
+          "fase": "simulacao-1",
+          "slide": 12,
+          "item": "resposta",
+          "enunciado": "SIMULAÇÃO 1: dois consumidores, 1,6 s por pedido e sem fila. Se a chegada dobrar, o que ocorre com o tempo de resposta?",
+          "referencia": "A capacidade teórica é 2 ÷ 1,6 = 1,25 pedido/s. Próximo ou acima desse limite, a espera cresce e podem ocorrer recusas/timeouts; não é correto afirmar que a latência apenas dobra."
+        },
+        {
+          "id": "14-13-pronto",
+          "fase": "simulacao-2",
+          "slide": 13,
+          "item": "pronto",
+          "enunciado": "SIMULAÇÃO 2: com resposta 202 imediata, o pedido também termina mais rápido?",
+          "referencia": "A confirmação fica rápida, mas o processamento mantém sua duração e pode incluir espera na fila. Recebimento e conclusão são momentos diferentes."
+        },
+        {
+          "id": "14-14-drenagem",
+          "fase": "simulacao-3",
+          "slide": 14,
+          "item": "drenagem",
+          "enunciado": "SIMULAÇÃO 3: o pico chega a 8 pedidos/s entre 3 s e 11 s. Quanto demora para a fila esvaziar?",
+          "referencia": "Com dois consumidores e 1,6 s por pedido, a saída teórica é 1,25/s. Em oito segundos entram 64 e concluem cerca de 10: backlog aproximado 54. Depois, tempo ≈ 54 ÷ (1,25 − taxa normal); só drena se a taxa normal for menor que 1,25/s."
+        },
+        {
+          "id": "14-15-gargalo",
+          "fase": "simulacao-4",
+          "slide": 15,
+          "item": "gargalo",
+          "enunciado": "SIMULAÇÃO 4: dez funções acessam estoque que suporta quatro consultas simultâneas. Qual o novo gargalo?",
+          "referencia": "O estoque. Mais funções não aumentam sua capacidade; podem aumentar contenção, erros e latência."
+        },
+        {
+          "id": "14-16-alarme",
+          "fase": "simulacao-5",
+          "slide": 16,
+          "item": "alarme",
+          "enunciado": "SIMULAÇÃO 5: limitar a três funções protege estoque. Qual alarme mostra que o limite ficou baixo demais?",
+          "referencia": "Alarme sobre a idade da mensagem mais antiga, com limite ligado ao prazo aceitável de atendimento, complementado pelo backlog e taxas."
+        },
+        {
+          "id": "14-17-visibilidade",
+          "fase": "simulacao-6",
+          "slide": 17,
+          "item": "visibilidade",
+          "enunciado": "SIMULAÇÃO 6: uma função cai com mensagem invisível. E se a visibilidade for menor que o processamento?",
+          "referencia": "Outra função pode receber a mesma mensagem antes da primeira terminar. A visibilidade deve cobrir o processamento e as retentativas; idempotência continua necessária."
+        },
+        {
+          "id": "14-18-dlq",
+          "fase": "simulacao-7",
+          "slide": 18,
+          "item": "dlq",
+          "enunciado": "SIMULAÇÃO 7: após três recebimentos, o pedido 99 vai à DLQ. Qual a ação operacional?",
+          "referencia": "Inspecionar causa e dados sanitizados, corrigir, confirmar que o reprocessamento é seguro e autorizar redrive limitado. Preservar evidências; não descartar toda a fila."
+        },
+        {
+          "id": "14-19-campo",
+          "fase": "simulacao-8",
+          "slide": 19,
+          "item": "campo",
+          "enunciado": "SIMULAÇÃO 8: qual campo reconhece uma segunda entrega do mesmo pedido?",
+          "referencia": "O identificador estável do pedido gerado na recepção, preservado durante todas as entregas. O ID de uma nova chamada não substitui o ID da operação original."
+        },
+        {
+          "id": "14-20-duravel",
+          "fase": "simulacao-9",
+          "slide": 20,
+          "item": "duravel",
+          "enunciado": "SIMULAÇÃO 9: onde guardar os IDs processados para sobreviver a reinícios e réplicas?",
+          "referencia": "Em armazenamento durável compartilhado, como DynamoDB com escrita condicional. Nesta demonstração, o registro final é o próprio efeito; pagamentos externos exigiriam idempotência no provedor ou protocolo transacional apropriado."
+        },
+        {
+          "id": "14-21-regiao",
+          "fase": "simulacao-10",
+          "slide": 21,
+          "item": "regiao",
+          "enunciado": "SIMULAÇÃO 10: quanto custa manter a loja em outra região ou provedor?",
+          "referencia": "Duplicar dados e recursos, pagar replicação/transferência e operar testes de failover. Como hipótese com preços iguais, uma segunda pilha Coding acrescentaria cerca de US$ 10,42/mês mais tráfego; isso não é cotação de outra região. Multicloud exige também adaptar APIs e manter consistência e operação."
+        },
+        {
+          "id": "14-23-fatias",
+          "fase": "mercado",
+          "slide": 23,
+          "item": "fatias",
+          "enunciado": "Que concentração de mercado é apresentada no slide de Q3/2026 e como qualificar esses números?",
+          "referencia": "O material atribui 26% à AWS, 19% à Microsoft e 16% ao Google, somando 61%, num mercado de US$ 167,7 bilhões. São dados atribuídos pelo slide à Synergy/TechInsights em 30/10/2026; não tratar como dados atuais independentemente confirmados."
+        },
+        {
+          "id": "14-24-dependencias",
+          "fase": "mercado",
+          "slide": 24,
+          "item": "dependencias",
+          "enunciado": "O que os indicadores Flexera de 2026 dizem sobre migração?",
+          "referencia": "O slide relata 73% de nuvem híbrida, 33% de várias nuvens e 54% citando dependências, numa amostra de 753 respondentes. Categorias têm definições e não devem ser somadas. O ponto de análise é o esforço para desfazer dependências."
+        },
+        {
+          "id": "14-25-lei",
+          "fase": "mercado",
+          "slide": 25,
+          "item": "lei",
+          "enunciado": "Como as regras de troca do Data Act se relacionam à portabilidade e ao Brasil?",
+          "referencia": "O regulamento europeu disciplina contratos e obstáculos à troca; não transforma APIs proprietárias em compatíveis. Em regra, prevê fim de tarifas de switching em 12/01/2027. Não é legislação brasileira; aplicabilidade territorial e exceções devem ser analisadas no texto oficial."
+        },
+        {
+          "id": "14-26-aws",
+          "fase": "atividade",
+          "slide": 26,
+          "item": "aws",
+          "enunciado": "Que evidências preparar para a parte AWS da atividade?",
+          "referencia": "Status dos 100 pedidos, fila/DLQ, configuração do consumidor, falha 99, alarme, assinatura SNS e limpeza identificada. O documento detalhado do Teams não está disponível; não afirmar cumprimento de critérios desconhecidos nem entrega no Teams."
+        },
+        {
+          "id": "14-26-matriz",
+          "fase": "atividade",
+          "slide": 26,
+          "item": "matriz",
+          "enunciado": "Qual serviço seria mais difícil de trocar e por quê?",
+          "referencia": "Nesta matriz preliminar, DynamoDB: chaves, consultas, condições, consistência e permissões afetam dados e código. Migrar exige exportação, novo modelo de acesso e testes; copiar os registros não basta."
+        }
+      ],
+      "fonte": "https://sebastrogers.github.io/assets/materiais/cloud/aula-14-cloud-confiabilidade-risco.html"
+    }
+  ]
+}

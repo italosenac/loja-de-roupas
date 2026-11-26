@@ -217,3 +217,39 @@ button:disabled { opacity: .65; cursor: wait; transform: none; }
   .resumo-sacola { padding: 1.25rem; }
   .dialogo { padding: 1.5rem; }
 }
+.docs { max-width: 1180px; }
+.docs .introducao { max-width: 760px; font-size: 1.25rem; }
+.docs > p, .docs section > p, .docs li { color: var(--texto-suave, #B6B1C8); line-height: 1.7; overflow-wrap: anywhere; }
+.docs h2 { margin-top: 2rem; }
+.docs-ferramentas, .docs-abas { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; margin: 1.5rem 0; }
+.docs-ferramentas input[type=file] { max-width: 260px; }
+.docs-abas button[aria-pressed=true] { background: #4C1D95; border-color: #C4B5FD; color: #F8F8FC; }
+.questao-docs { padding: 1.5rem; margin: 1.25rem 0; border: 1px solid #30283e; border-radius: 12px; background: #111018; }
+.questao-docs h3 { line-height: 1.45; margin-bottom: 1.25rem; }
+.questao-docs label { display: block; margin: 1rem 0 .4rem; }
+.questao-docs textarea { display: block; width: 100%; resize: vertical; background: #08070D; border: 1px solid #45365c; border-radius: 6px; color: #F8F8FC; padding: .8rem; font: inherit; }
+.questao-docs textarea:focus { outline: 2px solid #C4B5FD; outline-offset: 2px; }
+.questao-docs details { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid #30283e; }
+.questao-docs summary { color: #C4B5FD; cursor: pointer; }
+.questao-docs details p { line-height: 1.65; }
+.questao-docs small { color: #B6B1C8; }
+.arquitetura { display: grid; gap: .75rem; text-align: center; margin: 2rem 0; }
+.arquitetura-no { padding: 1.2rem; border: 1px solid #7C3AED; border-radius: 10px; background: #111018; line-height: 1.6; }
+.arquitetura-no small { color: #C4B5FD; }
+.arquitetura-trilhas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.arquitetura-no.planejado { border-style: dashed; border-color: #B6B1C8; }
+.docs .nota { font-size: .9rem; }
+@media (max-width: 700px) {
+  .arquitetura-trilhas { grid-template-columns: 1fr; }
+  .questao-docs { padding: 1rem; }
+  .docs-abas { gap: .5rem; }
+  .docs-abas button { flex: 1 1 130px; }
+}
+.simulador-cloud { margin-top: 3rem; padding: 2rem; border: 1px solid var(--borda); border-radius: 10px; background: var(--painel); }
+.simulador-cloud form { max-width: 650px; margin-top: 1.5rem; }
+.simulador-cloud label { margin-top: 1rem; }
+.simulador-cloud .resumo-financeiro { max-width: 650px; display: grid; grid-template-columns: 1fr auto; gap: .75rem; }
+.simulador-cloud dd { margin: 0; }
+#estado-pedido-cloud { overflow-wrap: anywhere; }
+.cabecalho nav { flex-wrap: wrap; justify-content: center; }
+@media (max-width: 700px) { .simulador-cloud { padding: 1rem; } }

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#08070D">
+  <title>Vitrine Cloud · Loja de Roupas</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml"><link rel="preload" href="fonts/outfit-variable.ttf" as="font" type="font/ttf" crossorigin><link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header class="cabecalho"><a class="marca" href="index.html" aria-label="Loja de Roupas · início"><img src="img/logo.svg" alt="" width="40" height="40"><span>loja<span class="marca-detalhe">de roupas.</span></span></a><nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html">Gerenciar produtos</a><a href="cloud.html" aria-current="page">Vitrine Cloud</a><a href="docs.html">Docs</a></nav></header>
+  <main id="conteudo" class="pagina-interna">
+    <p class="sobretitulo">CLOUD COMPUTING · CATÁLOGO INDEPENDENTE</p><h1>Uma outra trilha.<br><span class="destaque">O mesmo estilo.</span></h1>
+    <p class="introducao">Este catálogo usa DynamoDB pela Lambda. É uma cópia independente dos produtos Coding: alterações aqui não mudam a <a href="index.html">vitrine FastAPI/SQLite</a>. A sacola Coding continua separada.</p>
+    <p id="estado-cloud" class="mensagem" role="status">Consultando o catálogo Cloud...</p>
+    <div class="barra-gerenciamento"><div><label for="busca-cloud">Buscar no catálogo Cloud</label><input id="busca-cloud" type="search" placeholder="Nome da peça" disabled></div><button id="recarregar-cloud" class="botao-secundario" type="button">Atualizar catálogo</button><a href="cadastro.html?catalogo=cloud" class="botao botao-secundario">Cadastro Cloud · acesso administrativo</a></div>
+    <section id="vitrine-cloud" class="grade" aria-label="Produtos reais do catálogo Cloud"></section>
+    <section class="simulador-cloud" aria-labelledby="titulo-demonstracao"><p class="sobretitulo">SEM PAGAMENTO OU RESERVA DE ESTOQUE</p><h2 id="titulo-demonstracao">Demonstração de pedido</h2><p>Selecione uma peça. O total vem da API, usando o preço do banco, 10% de desconto e a regra de frete. Enviar o pedido retorna 202: recebido para processamento, ainda não concluído.</p>
+      <form id="form-cloud"><label for="produto-cloud">Produto Cloud</label><select id="produto-cloud" required disabled><option value="">Carregando...</option></select><label for="quantidade-cloud">Quantidade (1 a 10)</label><input id="quantidade-cloud" type="number" min="1" max="10" step="1" value="1" required><div class="dialogo-acoes"><button id="calcular-cloud" class="botao" type="submit" disabled>Consultar total</button><button id="enviar-cloud" class="botao-secundario" type="button" disabled>Enviar um pedido demonstrativo</button></div></form>
+      <p id="estado-pedido-cloud" class="mensagem" role="status"></p><dl id="resumo-cloud" class="resumo-financeiro" hidden></dl>
+    </section>
+  </main>
+  <footer><span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span></footer>
+  <script src="config.js"></script><script src="comum.js"></script><script src="cloud.js"></script>
+</body>
+</html>

@@ -14,7 +14,7 @@ Projeto acadêmico de Ítalo Rodrigues Pereira, Faculdade Senac Pernambuco, Curs
 | Cadastro Coding | https://d35i4a7nhsg3b0.cloudfront.net/cadastro.html |
 | Vitrine Cloud | https://d35i4a7nhsg3b0.cloudfront.net/cloud.html |
 | Cadastro Cloud | https://d35i4a7nhsg3b0.cloudfront.net/cadastro.html?catalogo=cloud |
-| Docs editável | https://d35i4a7nhsg3b0.cloudfront.net/docs.html |
+| Docs editável | https://d35i4a7nhsg3b0.cloudfront.net/docs.html?v=20261126-2158 |
 | Informações da API Coding | https://d35i4a7nhsg3b0.cloudfront.net/api/ |
 | Produtos Coding | https://d35i4a7nhsg3b0.cloudfront.net/api/produtos |
 | Produtos Cloud | https://d35i4a7nhsg3b0.cloudfront.net/cloud-api/produtos |
@@ -191,6 +191,6 @@ No celular, as tabelas informativas de Docs mostram cada linha como um bloco com
 
 Cadastro, edição e exclusão da demo estão abertos ao público. A Vitrine Cloud também permite cadastro. As mudanças nos catálogos são compartilhadas; as sacolas permanecem individuais. Swagger e laboratório continuam restritos, sem abrir a origem EC2 ou expor a chave interna Cloud. Antes da abertura, foi feito backup consistente do SQLite, com integridade ok e três produtos. [Teste externo real da demo](evidencias/demo-publica.json): POST 201, PUT 200, DELETE 204 em registro temporário; duplicidade Cloud 409; Swagger e laboratório 403; IDs 1, 2 e 3 preservados. Dez casos da CloudFront Function foram aprovados antes da publicação. Nenhum novo recurso AWS foi criado.
 
-Os textos da interface e os resumos foram revisados para uma linguagem mais direta. Os enunciados, as refer?ncias acad?micas e as 115 quest?es foram preservados. O caderno permite editar, salvar, exportar e importar as respostas no navegador; as respostas existentes s?o preservadas. A autoavalia??o fica dispon?vel para preenchimento pessoal.
+Os textos da interface e os resumos foram revisados para uma linguagem mais direta. Os enunciados, as referências acadêmicas e as 115 questões foram preservados. O caderno permite editar, salvar, exportar e importar as respostas no navegador; as respostas existentes são preservadas. A autoavaliação fica disponível para preenchimento pessoal.
 
-No S3, publique documentos `.html` com `Content-Type: text/html; charset=utf-8` e sem `Content-Disposition: attachment`; caso contr?rio, o navegador pode baix?-los em vez de abri-los. A p?gina Docs foi corrigida e validada por HTTPS. Evid?ncia: `evidencias/docs-html-publicacao.json`.
+No S3, publique documentos `.html` com `Content-Type: text/html; charset=utf-8` e sem `Content-Disposition: attachment`; caso contrário, o navegador pode baixá-los em vez de abri-los. Docs também renova a versão do link e do JavaScript para contornar cópias locais antigas, e os recursos dinâmicos ficam com revalidação de cache. Evidência: `evidencias/docs-html-publicacao.json`.

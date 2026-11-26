@@ -2,6 +2,7 @@ import {writeFile} from 'node:fs/promises';
 import {join} from 'node:path';
 const base=process.argv[2]||'http://127.0.0.1:5500';
 const pasta=process.argv[3];
+const caminhoPagina=process.argv[4]||'/docs.html';
 const abas=await (await fetch('http://127.0.0.1:9222/json/list')).json();
 const versao=await (await fetch('http://127.0.0.1:9222/json/version')).json(); const ws=new WebSocket(versao.webSocketDebuggerUrl);
 await new Promise((resolve,reject)=>{ws.addEventListener('open',resolve,{once:true});ws.addEventListener('error',reject,{once:true});});
@@ -19,7 +20,7 @@ try{
  contextoB=(await comando('Target.createBrowserContext')).browserContextId;
  const alvo=(await comando('Target.createTarget',{url:'about:blank',browserContextId:contextoB})).targetId;
  sessaoA=(await comando('Target.attachToTarget',{targetId:alvo,flatten:true})).sessionId;
- await comando('Page.enable');await comando('Runtime.enable');await comando('Log.enable');await navegar('/docs.html');await esperar("!document.querySelector('#importar-arquivo').disabled");await avaliar('document.fonts.ready');
+ await comando('Page.enable');await comando('Runtime.enable');await comando('Log.enable');await navegar(caminhoPagina);await esperar("!document.querySelector('#importar-arquivo').disabled");await avaliar('document.fonts.ready');
  for(const largura of [320,360,375,390,412,430,768,1024,1440,1920]){
   await viewport(largura);
   for(const aula of [10,11,12,13,14]){

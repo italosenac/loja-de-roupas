@@ -1,20 +1,53 @@
 {
   "data": "2026-11-26",
   "objeto": "s3://loja-roupas-italo-2026/docs.html",
-  "causa": "Content-Type era binary/octet-stream, ent?o o navegador baixava o arquivo.",
-  "correcao": {
-    "content_type": "text/html; charset=utf-8",
-    "cache_control": "no-cache, max-age=0, must-revalidate",
-    "content_disposition": "ausente; navegador renderiza inline"
+  "causa": "HTML, JavaScript e JSON de evidências estavam como binary/octet-stream; com nosniff, o navegador móvel bloqueava o JavaScript e mantinha o caderno carregando.",
+  "metadados_s3": {
+    "docs.html": {
+      "content_type": "text/html; charset=utf-8",
+      "content_disposition": "inline",
+      "cache_control": "no-cache, max-age=0, must-revalidate"
+    },
+    "docs.js": {
+      "content_type": "text/javascript; charset=utf-8",
+      "cache_control": "no-cache, max-age=0, must-revalidate"
+    },
+    "docs-evidencias.json": {
+      "content_type": "application/json; charset=utf-8",
+      "cache_control": "no-cache, max-age=0, must-revalidate"
+    }
   },
-  "cloudfront": {
-    "distribuicao": "E3IVPK8DZLEPM9",
-    "invalidacao": "IA8X13J7WJCC1MTCTRQ21IQVTP",
-    "status": "Completed"
+  "cache_busting": {
+    "link": "docs.html?v=20261126-2158",
+    "script_query": "SHA-256 atualizado para a nova URL de docs.js",
+    "evidencias_query": "docs-evidencias.json?v=20261126-2158",
+    "invalidacao_cloudfront": "I1Q9K807FVEV9G09S2UDY4HBG5",
+    "status": "Completed",
+    "min_ttl_cloudfront": 0
   },
-  "verificacao_https": {
-    "status": 200,
-    "content_type": "text/html; charset=utf-8",
-    "content_disposition": null
+  "verificacao_mobile": {
+    "user_agent_android_http": 200,
+    "html": "text/html; charset=utf-8",
+    "content_disposition": "inline",
+    "javascript": "text/javascript; charset=utf-8",
+    "json": "application/json; charset=utf-8"
+  },
+  "verificacao_navegador": {
+    "larguras": [
+      320,
+      360,
+      375,
+      390,
+      412,
+      430,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "checagens": 52,
+    "falhas": 0,
+    "erros_console": 0,
+    "questoes_carregadas": 115
   }
 }

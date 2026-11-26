@@ -1,3 +1,4 @@
+// MIME correto no S3; versao renovada para descartar a copia binaria antiga no navegador.
 let dadosDocs;
 let aulaAtual;
 const respostas = {};
@@ -190,7 +191,7 @@ async function iniciarDocs() {
       document.querySelector("#fontes-docs").append(item);
     }
     document.querySelector("#rastreabilidade").textContent = "Leitura integral em " + dadosDocs.consultado_em + ". Os cinco HTMLs publicados correspondem ao commit " + dadosDocs.sha + " do repositório público de materiais. " + dadosDocs.nota;
-    const retornoEvidencias = await fetch("docs-evidencias.json?v=ui-20261126-2", { cache: "no-cache" });
+    const retornoEvidencias = await fetch("docs-evidencias.json?v=20261126-2158", { cache: "no-cache" });
     if (!retornoEvidencias.ok) throw new Error("Evidências indisponíveis; recarregue a página.");
     const prova = await retornoEvidencias.json();
     const evidencias = [

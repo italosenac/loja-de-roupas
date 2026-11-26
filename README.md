@@ -133,6 +133,11 @@ persistência após recarregar, com layout em uma coluna em 390 e 320 px.
 As 18 verificações no navegador passaram também no endereço HTTPS publicado,
 sem erros de console nem mixed content. Vitrine, cadastro, API, Swagger e
 OpenAPI responderam HTTP 200; o Swagger usa `/api/openapi.json`.
+POST, PUT, DELETE e filtros foram verificados pelo HTTPS. Um produto alterado
+permaneceu no SQLite após reiniciar o serviço na EC2 e foi removido ao concluir
+o teste. De outro IP, cinco requisições reais confirmaram GET público e resposta
+403 para POST, PUT, DELETE e Swagger, inclusive com `X-Forwarded-For` forjado.
+O CloudFront chegou a `Deployed` e a invalidação de `/*` foi concluída.
 Sete casos no teste nativo de CloudFront Functions confirmaram leitura pública,
 escrita e Swagger autorizados e bloqueio de escrita e Swagger para outro IP,
 mesmo com um cabeçalho `X-Forwarded-For` forjado.

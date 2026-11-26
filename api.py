@@ -98,7 +98,7 @@ carrinho = novo_carrinho()
 
 @app.get("/")
 def inicio():
-    return {"loja": "Loja de Roupas", "documentacao": "/docs"}
+    return {"loja": "Loja de Roupas", "documentacao": f"{app.root_path}/docs"}
 
 
 @app.get("/produtos")

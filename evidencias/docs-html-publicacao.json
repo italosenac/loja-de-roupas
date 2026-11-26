@@ -1,0 +1,20 @@
+{
+  "data": "2026-11-26",
+  "objeto": "s3://loja-roupas-italo-2026/docs.html",
+  "causa": "Content-Type era binary/octet-stream, ent?o o navegador baixava o arquivo.",
+  "correcao": {
+    "content_type": "text/html; charset=utf-8",
+    "cache_control": "no-cache, max-age=0, must-revalidate",
+    "content_disposition": "ausente; navegador renderiza inline"
+  },
+  "cloudfront": {
+    "distribuicao": "E3IVPK8DZLEPM9",
+    "invalidacao": "IA8X13J7WJCC1MTCTRQ21IQVTP",
+    "status": "Completed"
+  },
+  "verificacao_https": {
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "content_disposition": null
+  }
+}

@@ -2,159 +2,170 @@
 
 ![testes](https://github.com/italosenac/loja-de-roupas/actions/workflows/testes.yml/badge.svg)
 
-Projeto acadêmico da Faculdade Senac Pernambuco, curso de Análise e
-Desenvolvimento de Sistemas, 4º módulo, disciplina Coding, semestre 2026.2.
+Projeto acadêmico de Ítalo Rodrigues Pereira, Faculdade Senac Pernambuco, Curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas, 4º módulo, semestre 2026.2. Professor: Sebastião Rogério. Integra as disciplinas Coding (aulas 08–13) e Cloud Computing (aulas 10–14), com implementação própria e sem acesso ao gabarito.
 
-Professor: Sebastião Rogério. Aluno: Ítalo Rodrigues Pereira.
+## Acesso público
 
-Implementação própria das aulas 08 a 13, com Python, Pytest, FastAPI, Pydantic,
-SQLModel, SQLite, HTML, CSS e JavaScript puro. O catálogo permite cadastrar,
-consultar, filtrar, alterar e excluir produtos. A vitrine consulta a API e o
-formulário grava os produtos no banco.
+| Página | Endereço |
+| --- | --- |
+| Vitrine Coding | https://d35i4a7nhsg3b0.cloudfront.net |
+| Minha sacola Coding | https://d35i4a7nhsg3b0.cloudfront.net/carrinho.html |
+| Gerenciamento | https://d35i4a7nhsg3b0.cloudfront.net/gerenciamento.html |
+| Cadastro Coding | https://d35i4a7nhsg3b0.cloudfront.net/cadastro.html |
+| Vitrine Cloud | https://d35i4a7nhsg3b0.cloudfront.net/cloud.html |
+| Cadastro Cloud | https://d35i4a7nhsg3b0.cloudfront.net/cadastro.html?catalogo=cloud |
+| Docs editável | https://d35i4a7nhsg3b0.cloudfront.net/docs.html |
+| Informações da API Coding | https://d35i4a7nhsg3b0.cloudfront.net/api/ |
+| Produtos Coding | https://d35i4a7nhsg3b0.cloudfront.net/api/produtos |
+| Produtos Cloud | https://d35i4a7nhsg3b0.cloudfront.net/cloud-api/produtos |
+| Swagger Coding, restrito | https://d35i4a7nhsg3b0.cloudfront.net/api/docs |
 
-O carrinho usa composição e promoções com contrato abstrato. Na API, o desconto
-é de 10%; o frete custa R$ 15 abaixo de R$ 200, considerando o valor após o
-desconto. O catálogo fica no SQLite; o carrinho permanece em memória, como na aula.
+Cadastro, edição, exclusão e Swagger exigem o acesso administrativo autorizado na infraestrutura. Visitantes podem consultar as duas vitrines e usar sua sacola Coding. A vitrine Cloud permite totalização e um pedido demonstrativo, sem pagamento, emissão fiscal ou reserva de estoque.
 
-Os arquivos em `loja/` contêm os cálculos, as classes, o banco, o repositório e
-o serviço. `api.py` contém as rotas HTTP, `front/` contém as páginas e
-`tests/` reúne os testes. `vitrine.py` preserva o primeiro exercício com coleções.
+## Duas trilhas e dois catálogos
 
-Para instalar no PowerShell, na pasta do projeto, use Python 3.12 ou superior:
+- **Coding:** FastAPI, Pydantic, SQLModel e SQLite na EC2 existente. CRUD, consulta individual, filtros de tamanho/preço, busca por nome e sacola individual. O banco original foi preservado.
+- **Cloud:** API Gateway HTTP e Lambda `loja-api` existentes, DynamoDB `loja-produtos`, VPC privada e gateway endpoints. Foram copiados os IDs 1, 2 e 3 e todos os campos existentes. Esse catálogo é independente: não há sincronização bidirecional nem migração definitiva do SQLite.
+- **Pedidos Cloud:** Lambda `loja-pedidos` envia ao SQS; `loja-processa` consome em lote de um, com concorrência máxima dois. A DLQ recebe falhas persistentes; CloudWatch aciona SNS.
+- **Docs:** 115 questões próprias de estudo, parafraseadas a partir dos 269 slides oficiais, com subitens separados, referências ocultas, autoavaliação, rascunhos locais, progresso e exportação/importação JSON/TXT.
+
+A identidade visual mantém preto, roxo, Outfit local com licença OFL, SVGs e responsividade. O rodapé de todas as páginas contém somente o nome do aluno e a instituição.
+
+## Execução local
+
+Python 3.12 ou superior, sem Node ou framework de frontend:
 
 ```powershell
 python -m venv .venv
 .venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+pip install -r requirements.txt -r cloud/requirements.txt
+uvicorn api:app --host 127.0.0.1 --port 8000 --workers 1
 ```
 
-Execute a API em um terminal com o ambiente ativado:
-
-```powershell
-fastapi dev api.py
-```
-
-Em outro terminal, execute as páginas:
+Em outro terminal:
 
 ```powershell
 python -m http.server 5500 --bind 127.0.0.1 --directory front
 ```
 
-- Vitrine: http://127.0.0.1:5500
-- Cadastro: http://127.0.0.1:5500/cadastro.html
-- Swagger: http://127.0.0.1:8000/docs
+Abra http://127.0.0.1:5500. A API local fica em http://127.0.0.1:8000 e o Swagger em /docs. A demonstração Cloud usa a infraestrutura AWS publicada; não há emulador ou dados simulados para encobrir indisponibilidade.
 
-O arquivo `loja.db` é criado automaticamente na pasta de execução da API e não
-vai para o GitHub. Os três produtos iniciais são inseridos quando o catálogo está
-vazio. CORS permite as páginas locais nas origens `127.0.0.1:5500` e
-`localhost:5500`, além do endereço do site no S3.
+O SQLite local `loja.db` não é versionado. Os produtos iniciais só são inseridos se o catálogo estiver vazio. CORS permite as origens locais autorizadas. `COOKIE_SECURE=true` é obrigatório no serviço HTTPS; deixe essa variável ausente no desenvolvimento HTTP.
 
-Para testar, com o ambiente ativado:
+## Sacola e regras financeiras
+
+Cada visitante recebe um token aleatório assinado pelo servidor em cookie HttpOnly, SameSite=Lax e Secure em produção. Alterar o identificador ou a assinatura não permite escolher a sacola de outro visitante. As respostas da API usam `Cache-Control: no-store`; os comportamentos dinâmicos do CloudFront usam CachingDisabled e encaminham cookies.
+
+As sessões ficam em memória: expiração por inatividade de 30 minutos e limite de 1.000 sessões. **Use um único processo/worker.** Ao atingir a capacidade, a API responde 503 em vez de crescer indefinidamente. Reiniciar o serviço perde as sacolas, mas preserva produtos no SQLite. A chave de assinatura também é renovada no reinício.
+
+A adição aceita de 1 a 10 unidades **por requisição**. Adições sucessivas podem resultar em mais de dez unidades do mesmo produto. Atualização e remoção individuais são atômicas no processo; não esvaziam e reconstroem a sacola.
+
+O domínio Python calcula 10% de desconto e frete de R$ 15 quando o subtotal **após desconto** é inferior a R$ 200. A interface apenas apresenta os valores do servidor. O contrato acadêmico do carrinho vazio permanece com total R$ 15; a página mostra estado vazio e oculta o resumo, sem simular uma cobrança.
+
+## Endpoints
+
+Prefixo publicado Coding: `/api`. No desenvolvimento, os mesmos caminhos ficam sem prefixo.
+
+| Método | Caminho Coding | Função |
+| --- | --- | --- |
+| GET | / | Informações |
+| GET | /produtos | Listar; parâmetros tamanho e preco_max combináveis |
+| GET | /produtos/{id} | Consultar |
+| POST | /produtos | Cadastrar |
+| PUT | /produtos/{id} | Editar |
+| DELETE | /produtos/{id} | Excluir |
+| POST | /carrinho/itens | Adicionar produto_id e quantidade |
+| GET | /carrinho/itens | Listar itens da sessão |
+| GET | /carrinho/total | Itens, quantidade, desconto, frete e total |
+| PUT | /carrinho/itens/{id} | Alterar quantidade |
+| DELETE | /carrinho/itens/{id} | Remover |
+| DELETE | /carrinho | Esvaziar a sessão |
+
+Prefixo Cloud: `/cloud-api`.
+
+| Método | Caminho Cloud | Função |
+| --- | --- | --- |
+| GET | /produtos | Scan paginado do catálogo pequeno |
+| GET | /produtos/{id} | GetItem; 200 ou 404 |
+| POST | /produtos | Cadastro administrativo condicional; 201, 409 ou 422 |
+| GET | /promocoes | Regras vigentes |
+| POST | /carrinho/total | Lista itens com produto_id e quantidade; preços do DynamoDB |
+| POST | /pedidos | Um pedido demonstrativo; 202 significa recebido |
+| POST | /laboratorio/pedidos | Laboratório restrito, aceita a falha sintética 99 |
+
+A chave `CHAVE_LOJA` fica na configuração do servidor e no cabeçalho de origem do CloudFront, nunca no bundle ou no navegador. A Lambda rejeita acessos sem chave, inclusive leituras diretas pelo endpoint AWS. CloudFront restringe escritas de produtos e laboratório usando o IP real da conexão. Não confia em cabeçalhos de IP enviados pelo visitante e rejeita caminhos ambíguos ou com dupla codificação. CORS não substitui autenticação.
+
+O produtor limita JSON a 8 KB e quantidades públicas a 1–10. O estágio tem limite padrão de 50 requisições/s e burst 100; pedidos públicos têm limite específico de 1/s e burst 5. O laboratório é protegido e não tem botão público de carga ou falha.
+
+## Idempotência e recuperação
+
+O consumidor simula um segundo de trabalho sem efeito externo. Só depois grava o registro final em `loja-pedidos-processados`, condicionado à inexistência do ID. Essa gravação é o único efeito da demonstração: duas entregas produzem uma conclusão. Uma interrupção antes da gravação permite nova tentativa; depois da gravação, uma nova entrega é reconhecida.
+
+Isso não implementa uma transação com pagamento ou estoque externos. Uma integração real exigiria idempotência no serviço externo ou coordenação transacional adequada.
+
+O SDK usa timeouts de conexão/leitura e até duas tentativas no modo standard, com backoff e jitter nativos. SQS controla nova entrega e DLQ após três recebimentos. A visibilidade é 30 s, seis vezes o timeout de 5 s do consumidor. O catálogo e a porta usam 256 MB e timeout de 5 s; um primeiro cold start do catálogo com 128 MB excedeu o timeout anterior de 3 s, motivando essa margem.
+
+Ao receber alerta, confira atraso, logs sanitizados e DLQ, corrija a causa e autorize redrive limitado. Não use Purge em produção. O alarme de idade vigia 120 s; o de DLQ usa Maximum de um minuto maior que zero.
+
+## Testes e evidências reais
 
 ```powershell
-pytest -v
+pytest -q
 ```
 
-São 69 testes, incluindo regras de negócio, CRUD, banco em memória, reabertura
-do SQLite, estrutura HTML e CORS. O workflow `testes` executa o Pytest no GitHub
-Actions. As tags `aula-08` a `aula-13` registram os estados reais de cada aula.
+Suíte atual: **159 testes aprovados, zero reprovados**. Há testes de domínio, filtros, CRUD, duplicidade, SQLite reaberto, duas sessões independentes, assinatura manipulada, expiração/capacidade, cookies, CORS, frontend, paginação DynamoDB, preço adulterado, condições, idempotência e cobertura dos subitens dos slides. Os testes Cloud usam objetos controlados; os smoke tests AWS são evidências separadas.
 
-A loja usa CloudFront com HTTPS, com origens em `us-east-1`:
+Verificações de navegador em HTTPS: 38 fluxos Coding, 20 de Docs e 15 de Cloud. Incluem desktop/celular, exportação/importação, persistência, XSS, cadastro temporário Cloud e aparecimento na vitrine sem redeploy. Os dois HTMLs autorizados passaram no W3C sem erros ou avisos.
 
-- [Vitrine](https://d35i4a7nhsg3b0.cloudfront.net)
-- [Cadastro](https://d35i4a7nhsg3b0.cloudfront.net/cadastro.html)
-- [Produtos da API](https://d35i4a7nhsg3b0.cloudfront.net/api/produtos)
-- [Swagger, para o IP autorizado](https://d35i4a7nhsg3b0.cloudfront.net/api/docs)
-- [Endereço anterior do S3](http://loja-roupas-italo-2026.s3-website-us-east-1.amazonaws.com)
+Resultados AWS de 26/11/2026:
 
-A identidade visual usa preto e roxo, a fonte aberta Outfit hospedada localmente
-(licença em `front/fonts/OFL.txt`) e ilustrações SVG próprias por tipo de peça.
-Os nomes, preços, tamanhos e tipos dos cards vêm exclusivamente da API.
-Os campos de manga e modelagem aparecem conforme o tipo escolhido no cadastro.
+- Catálogo DynamoDB ACTIVE, id numérico, PAY_PER_REQUEST e cópia dos três produtos.
+- VPC com quatro sub-redes, duas AZs, três tabelas de rotas e nenhum NAT; SG sem entrada e saída HTTPS limitada aos prefixos S3/DynamoDB.
+- No laboratório isolado de rede, HTTP **500 antes** e **200 depois** do endpoint. O 502 dos slides não foi observado neste HTTP API.
+- Carga protegida de 100 pedidos: **100 respostas 202**, paralelismo cinco pela cota real de dez execuções da conta. Média 318,76 ms; máximo 1.552,25 ms; 98 respostas abaixo de um segundo.
+- 101 pedidos válidos concluídos, contando o pedido inicial. Entrega duplicada manteve 101 efeitos e gerou um registro de duplicata. Concorrência observada no CloudWatch: máximo dois.
+- Quantidade 99 falhou três vezes e foi à DLQ. Alarme passou de OK para ALARM em 26/11/2026 19:34:01 UTC e executou ação SNS. Confirmação de assinatura/e-mail permanece pendente.
+- Amostras S3 isoladas: dez objetos, uma cópia em Standard-IA e regras Enabled para logs 30/90/365 dias e temporários sete dias. Não houve transição futura antecipada.
 
-A fotografia da boutique mencionada no pedido não foi encontrada no projeto.
-O fundo permanece escuro, sem substituição por imagem externa. Para concluir
-essa parte, é necessário fornecer o arquivo original; o destino previsto é
-`front/img/boutique-4k.webp`, em 3840 × 2160. Não houve ampliação de imagem.
+As evidências públicas, sanitizadas e datadas ficam em [docs-evidencias.json](front/docs-evidencias.json). O gráfico em [fila-cloud.svg](front/img/fila-cloud.svg) deriva de métricas reais por minuto; não é captura de console. Os contadores SQS são aproximados e têm atraso. Backups e respostas operacionais completas ficam fora do Git.
 
-A API executa como usuário `loja`, pelo serviço systemd `loja`, na EC2
-`i-0e264386c9e6c6397` (t4g.micro, Ubuntu 24.04 ARM64). O banco fica em
-`/opt/loja-de-roupas/app/loja.db`, no EBS gp3 criptografado de 8 GB.
-O IPv4 é fixo. A porta 8000 preserva a regra do IP autorizado do aluno e permite
-também o grupo gerenciado da origem privada CloudFront. Não há regra pública
-`0.0.0.0/0` de entrada nem porta SSH aberta; a administração usa Systems Manager.
+`tools/carga_cloud.py --quantidade 100 --paralelismo 5` executa apenas o laboratório protegido e gera relatório local ignorado pelo Git. Não execute sem intenção de gerar carga e custo. `tools/verificar_publico.py` deve ser executado em ambiente fora do acesso administrativo para conferir os bloqueios 403, sem alterar produtos reais.
 
-A distribuição exclusiva `E3IVPK8DZLEPM9` entrega os arquivos pelo endpoint REST
-do S3 com OAC e redireciona HTTP para HTTPS. A leitura pública anterior do bucket
-foi preservada durante a migração, conforme solicitado. O endereço antigo da
-hospedagem estática redireciona para o HTTPS da loja. O certificado é o padrão
-do CloudFront; não foi contratado domínio ou certificado adicional.
+## Infraestrutura e publicação
 
-O JavaScript público utiliza a URL relativa `/api`, sem endereço HTTP da EC2.
-Os caminhos `/api` e `/api/*` usam a origem privada VPC
-`vo_GgfdGPzBJb2EENlqkMjrNN`, com cache desabilitado, parâmetros e corpos
-encaminhados à API. A função `infra/cloudfront-api.js` remove o prefixo `/api`
-e permite escrita (POST, PUT, DELETE e PATCH) e documentação apenas ao IPv4
-autorizado `168.0.55.1`. A listagem é pública pelo HTTPS. O cliente não escolhe
-o IP usado nessa verificação: a função usa `event.viewer.ip`.
+Tudo foi integrado à loja existente em us-east-1: S3 `loja-roupas-italo-2026`, CloudFront `E3IVPK8DZLEPM9`, EC2 `loja-roupas-fastapi`, Lambda `loja-api` e API Gateway existentes. Não foi criado outro repositório, bucket, EC2 ou CloudFront.
 
-Se o IP autorizado mudar, atualize a função do CloudFront e a regra /32 do
-Security Group `loja-roupas-fastapi`. A distribuição usa IPv4 para manter essa
-restrição consistente. A configuração da distribuição está em
-`infra/cloudfront.json`. As tags acadêmicas anteriores foram preservadas.
+Recursos Cloud adicionais: tabelas `loja-produtos` e `loja-pedidos-processados`; VPC `loja-vpc`; filas `loja-pedidos` e `loja-pedidos-dlq`; Lambdas `loja-pedidos` e `loja-processa`; tópico `loja-alertas`; alarmes `loja-pedido-perdido` e `loja-pedido-atrasado`. Recursos novos têm tags Project/Lesson. Logs ficam por sete dias. Foram removidos a Lambda temporária de diagnóstico, sua rota/integração e seus logs, o ZIP de implantação, dez amostras S3 e duas regras temporárias. Também foram excluídos somente os 102 pedidos sintéticos identificados desta execução, o produto temporário e a mensagem 99, sem Purge. Os três produtos reais e os serviços de produção foram preservados.
 
-Na EC2, `/etc/systemd/system/loja.service.d/cloudfront.conf` define
-`API_ROOT_PATH=/api`, para que o Swagger use o endereço correto do proxy.
-O desenvolvimento local continua usando `http://127.0.0.1:8000`.
+CloudFront mantém OAC, origem S3 e origem privada EC2, acrescentando /cloud-api e /cloud-api/* para API Gateway. Nenhuma regra pública da porta 8000 ou SSH foi criada. A leitura anterior do S3 não foi ampliada. Os outros projetos e suas distribuições não foram alterados.
 
-A estimativa autorizada para 730 horas é US$ 10,42/mês, antes de impostos e
-tráfego: EC2 US$ 0,0084/h, IPv4 US$ 0,005/h e 8 GB gp3 a US$ 0,08/GB-mês.
-Parar a instância mantém cobranças do EBS e do IPv4 reservado.
+O serviço EC2 usa usuário `loja`, pasta `/opt/loja-de-roupas/app`, virtualenv `/opt/loja-de-roupas/venv` e SQLite no diretório da aplicação. Antes da implantação foram feitos backup consistente pelo SQLite, verificação de integridade, cópia de código e unidade systemd. Não houve substituição do banco por testes.
 
-O CloudFront usa cobrança por consumo, sem mensalidade fixa adicional neste
-modelo. Referência conservadora na América do Sul: US$ 0,110/GB e US$ 0,022
-por 10 mil requisições HTTPS. A função custa até US$ 0,10 por milhão de
-execuções após a faixa gratuita. Um exemplo com 10 GB, 100 mil requisições
-HTTPS e 10 mil execuções da função equivale a US$ 1,32, antes de franquias,
-impostos, requisições e armazenamento no S3. Não foi contratado WAF, load
-balancer, NAT Gateway ou outro servidor.
-[Preços do CloudFront](https://aws.amazon.com/cloudfront/pricing/).
+Rollback: preservar o banco atual, restaurar código/configuração do backup ou checkout do commit anterior com alterações locais previamente protegidas, executar testes e reiniciar somente `loja.service`. Restaurar distribuição/função a partir do backup de configuração se necessário. Não usar reset --hard nem recriar o banco.
 
-A Lambda `loja-api` e o API Gateway anteriores permanecem preservados:
-[API anterior](https://txxvpco9jh.execute-api.us-east-1.amazonaws.com/produtos).
-Os arquivos e as configurações anteriores estão em `.backup-aws/2026-11-24/`
-e `.backup-aws/2026-11-26/`,
-fora do controle de versão.
+`infra/cloudfront.json` é um retrato sanitizado. Marcadores `__CONTA_AWS__`, `__DNS_PRIVADO_EC2__`, `__CHAVE_LOJA_SERVIDOR__` e `__IP_ADMINISTRATIVO__` precisam ser resolvidos no ambiente autorizado; não publicar esses valores. O arquivo não deve ser aplicado literalmente. `tools/empacotar_cloud.py` empacota somente módulos necessários às Lambdas, sem banco ou credenciais.
 
-Validação do redesign: 69 testes passaram localmente e na EC2. Os dois HTMLs
-passaram no W3C sem mensagens. Foram verificadas a fonte, a paleta, os produtos
-reais, a busca, a navegação por teclado, os campos específicos, o cadastro e a
-persistência após recarregar, com layout em uma coluna em 390 e 320 px.
-As 18 verificações no navegador passaram também no endereço HTTPS publicado,
-sem erros de console nem mixed content. Vitrine, cadastro, API, Swagger e
-OpenAPI responderam HTTP 200; o Swagger usa `/api/openapi.json`.
-POST, PUT, DELETE e filtros foram verificados pelo HTTPS. Um produto alterado
-permaneceu no SQLite após reiniciar o serviço na EC2 e foi removido ao concluir
-o teste. De outro IP, cinco requisições reais confirmaram GET público e resposta
-403 para POST, PUT, DELETE e Swagger, inclusive com `X-Forwarded-For` forjado.
-O CloudFront chegou a `Deployed` e a invalidação de `/*` foi concluída.
-Sete casos no teste nativo de CloudFront Functions confirmaram leitura pública,
-escrita e Swagger autorizados e bloqueio de escrita e Swagger para outro IP,
-mesmo com um cabeçalho `X-Forwarded-For` forjado.
+## Custos e pendências
 
-Na versão inicial de 24/11/2026, as duas páginas obtiveram 100/100 em
-acessibilidade no Lighthouse; esse resultado se refere ao visual anterior.
+Custos adicionais foram autorizados pelo usuário em 26/11/2026. Para uso didático baixo, a estimativa é até US$ 1/mês adicional, não um teto. Dois alarmes padrão custam US$ 0,20/mês antes das franquias; consumo de Lambda, SQS (incluindo polling), DynamoDB, logs, SNS, API Gateway e S3 varia. A consulta Free Tier mostrou franquias disponíveis de Lambda/CloudWatch, sem garantir custo futuro zero. Não há NAT ou endpoint de interface pago.
 
-Referências: materiais de Coding do professor Sebastião Rogério:
+Preços de lista consultados em 26/11/2026, us-east-1: [S3](https://aws.amazon.com/s3/pricing/) Standard 0,023, Standard-IA 0,0125 e Glacier Flexible 0,0036 USD/GB-mês; [DynamoDB](https://aws.amazon.com/dynamodb/pricing/) 0,125 por milhão de unidades de leitura e 0,625 de escrita; [SQS](https://aws.amazon.com/sqs/pricing/) Standard 0,40 por milhão no primeiro nível; [Lambda](https://aws.amazon.com/lambda/pricing/) x86 0,0000166667 USD/GB-s no primeiro nível; [CloudWatch](https://aws.amazon.com/cloudwatch/pricing/) alarme padrão 0,10/mês e logs Standard 0,50/GB ingerido. Inclua recuperação, permanência mínima, requisições, impostos e transferência na estimativa final.
 
-- `aula-08-loja-de-roupas.pdf`
-- `aula-09-loja-abre-as-portas.pdf`
-- `aula-10-loja-nao-esquece.pdf`
-- `aula-11-loja-ganha-vitrine.pdf`
-- `aula-12-vitrine-ganha-vida.pdf`
-- `aula-13-vitrine-conversa-api.pdf`
+O orçamento mensal `loja-cloud-aulas-10-14` é US$ 1, alerta a 80%, filtrado por Project=loja-de-roupas. A tag de custo foi ativada e pode demorar a aparecer no faturamento. Os orçamentos globais existentes foram preservados. Orçamento não bloqueia consumo. A pilha Coding já existente tem estimativa anterior de US$ 10,42/mês para EC2, EBS e IPv4 em 730 horas, além de tráfego.
 
-Também foram usados princípios básicos de legibilidade e responsabilidade única
-de Robert C. Martin, *Clean Code: A Handbook of Agile Software Craftsmanship*,
-2008. O projeto foi desenvolvido com assistência de IA (Codex) na implementação
-e na validação. O repositório gabarito do professor não foi consultado.
+Pendências externas: confirmação da assinatura SNS e prova de recebimento do e-mail; documento detalhado da atividade no Teams e eventual envio; capturas do console AWS (há evidência textual real); fotografia original da boutique, ainda não fornecida/localizada. Nenhuma imagem foi inventada nem ampliada para ser chamada de 4K nativa.
+
+## Referências acadêmicas
+
+Coding: os seis PDFs `aula-08-loja-de-roupas.pdf`, `aula-09-loja-abre-as-portas.pdf`, `aula-10-loja-nao-esquece.pdf`, `aula-11-loja-ganha-vitrine.pdf`, `aula-12-vitrine-ganha-vida.pdf` e `aula-13-vitrine-conversa-api.pdf`. As tags históricas aula-08 a aula-13 foram preservadas.
+
+Cloud: leitura integral dos cinco HTMLs oficiais (269 slides). Os arquivos publicados foram comparados com o commit **1d0f89004448bf7b52d70533da530a8a9ddf0c96** do repositório público de materiais; todos corresponderam byte a byte:
+
+- [Aula 10 · armazenamento](https://sebastrogers.github.io/assets/materiais/cloud/aula-10-cloud-armazenamento-distribuido.html)
+- [Aula 11 · banco](https://sebastrogers.github.io/assets/materiais/cloud/aula-11-cloud-loja-ganha-banco.html)
+- [Aula 12 · rede](https://sebastrogers.github.io/assets/materiais/cloud/aula-12-cloud-loja-ganha-rede.html)
+- [Aula 13 · pico](https://sebastrogers.github.io/assets/materiais/cloud/aula-13-cloud-loja-aguenta-pico.html)
+- [Aula 14 · confiabilidade](https://sebastrogers.github.io/assets/materiais/cloud/aula-14-cloud-confiabilidade-risco.html)
+
+[Relatório oficial AWS de outubro/2025](https://aws.amazon.com/message/101925/), [Builders’ Library](https://aws.amazon.com/builders-library/) e [Data Act europeu](https://eur-lex.europa.eu/eli/reg/2023/2854/oj) complementam o estudo. Dados de mercado são atribuídos aos slides e suas datas, sem alegar confirmação independente. A matriz de seis serviços é preliminar; o documento detalhado do Teams não foi acessado. Respostas de referência não são apresentadas como autoria pessoal do aluno.
+

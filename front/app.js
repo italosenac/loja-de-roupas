@@ -1,83 +1,84 @@
 let produtos = [];
-
+let falhaCarregamento = false;
 const vitrine = document.querySelector("#vitrine");
 const busca = document.querySelector("#busca");
 const estado = document.querySelector("#estado");
 const quantidade = document.querySelector("#quantidade");
+const filtros = document.querySelector("#filtros");
 
 function montarCard(produto) {
-  const cartao = document.createElement("article");
-  cartao.className = "produto";
-  const visual = document.createElement("div");
-  visual.className = "produto-visual";
-  const imagem = document.createElement("img");
-  imagem.src = produto.tipo === "Calca" ? "img/calca.svg" : "img/camiseta.svg";
-  imagem.alt = "";
-  imagem.width = 112;
-  imagem.height = 112;
-  const tipo = document.createElement("span");
-  tipo.className = "produto-tipo";
-  tipo.textContent = produto.tipo === "Calca" ? "Calça" : produto.tipo;
-  visual.append(imagem, tipo);
-  const informacao = document.createElement("div");
-  informacao.className = "produto-informacao";
-  const titulo = document.createElement("h3");
-  titulo.textContent = produto.nome;
-  const tamanho = document.createElement("p");
-  tamanho.className = "tamanho";
-  tamanho.textContent = `Tamanho ${produto.tamanho}`;
-  const preco = document.createElement("p");
-  preco.className = "preco";
-  const destaque = document.createElement("strong");
-  destaque.textContent = `R$ ${produto.preco.toFixed(2).replace(".", ",")}`;
-  preco.append(destaque);
-  const detalhes = document.createElement("div");
-  detalhes.className = "produto-detalhes";
-  detalhes.append(tamanho, preco);
-  informacao.append(titulo, detalhes);
+  const cartao = criarElemento("article", "produto");
+  const visual = criarElemento("div", "produto-visual");
+  visual.append(imagemProduto(produto),
+    criarElemento("span", "produto-tipo", produto.tipo === "Calca" ? "Calça" : produto.tipo));
+  const informacao = criarElemento("div", "produto-informacao");
+  informacao.append(criarElemento("h3", "", produto.nome));
+  const detalhes = criarElemento("div", "produto-detalhes");
+  detalhes.append(criarElemento("p", "tamanho", "Tamanho " + produto.tamanho),
+    criarElemento("p", "preco", formatarDinheiro(produto.preco)));
+  const acoes = criarElemento("div", "produto-acoes");
+  const consultar = criarElemento("button", "botao-secundario", "Ver detalhes");
+  consultar.type = "button";
+  consultar.onclick = () => mostrarDetalhes(produto.id);
+  const adicionar = criarElemento("button", "", "Adicionar à sacola");
+  adicionar.type = "button";
+  adicionar.onclick = async () => {
+    adicionar.disabled = true;
+    const mensagem = document.querySelector("#estado-acao");
+    try {
+      await adicionarProduto(produto.id);
+      mostrarMensagem(mensagem, produto.nome + " adicionado à sua sacola.", "sucesso");
+    } catch (erro) {
+      mostrarMensagem(mensagem, erro.message);
+    } finally {
+      adicionar.disabled = false;
+    }
+  };
+  acoes.append(consultar, adicionar);
+  informacao.append(detalhes, acoes);
   cartao.append(visual, informacao);
   return cartao;
 }
 
-function renderizarVitrine(lista) {
-  vitrine.innerHTML = "";
-  lista.forEach(produto => vitrine.append(montarCard(produto)));
-  quantidade.textContent = `${lista.length} ${lista.length === 1 ? "peça" : "peças"}`;
-}
-
 function filtrarProdutos() {
-  const termo = busca.value.toLowerCase();
-  const produtosEncontrados = produtos.filter(produto =>
-    produto.nome.toLowerCase().includes(termo)
-  );
-  renderizarVitrine(produtosEncontrados);
-  if (produtos.length === 0) {
-    estado.textContent = "Nenhum produto cadastrado ainda.";
-  } else {
-    estado.textContent = produtosEncontrados.length === 0 ? "Nenhum produto encontrado." : "";
-  }
+  if (falhaCarregamento) return;
+  const termo = busca.value.trim().toLowerCase();
+  const encontrados = produtos.filter(produto => produto.nome.toLowerCase().includes(termo));
+  vitrine.replaceChildren(...encontrados.map(montarCard));
+  quantidade.textContent = encontrados.length + (encontrados.length === 1 ? " peça" : " peças");
+  const temFiltro = termo || document.querySelector("#filtro-tamanho").value || document.querySelector("#filtro-preco").value;
+  estado.textContent = encontrados.length ? "" : temFiltro
+    ? "Nenhum produto encontrado. Experimente outros filtros."
+    : "Nenhum produto cadastrado ainda.";
+  estado.dataset.estado = "pronto";
 }
 
 async function buscarProdutos() {
-  estado.textContent = "Carregando produtos...";
-  estado.dataset.estado = "carregando";
   busca.disabled = true;
+  mostrarMensagem(estado, "Carregando produtos...", "carregando");
+  filtros.querySelectorAll("input, select, button").forEach(campo => campo.disabled = true);
   try {
-    const resposta = await fetch(`${API}/produtos`);
-    if (!resposta.ok) {
-      throw new Error(`A API respondeu ${resposta.status}`);
-    }
-    produtos = await resposta.json();
-    estado.dataset.estado = "pronto";
+    const parametros = new URLSearchParams();
+    const tamanho = document.querySelector("#filtro-tamanho").value;
+    const preco = document.querySelector("#filtro-preco").value;
+    if (tamanho) parametros.set("tamanho", tamanho);
+    if (preco !== "") parametros.set("preco_max", preco);
+    produtos = await requisitar("/produtos?" + parametros);
+    falhaCarregamento = false;
     filtrarProdutos();
-    busca.disabled = false;
   } catch (erro) {
     produtos = [];
-    renderizarVitrine(produtos);
-    estado.textContent = "Não foi possível carregar a coleção. Tente recarregar a página em instantes.";
-    estado.dataset.estado = "erro";
+    falhaCarregamento = true;
+    vitrine.replaceChildren();
+    quantidade.textContent = "";
+    mostrarMensagem(estado, erro.message);
+  } finally {
+    busca.disabled = false;
+    filtros.querySelectorAll("input, select, button").forEach(campo => campo.disabled = false);
   }
 }
 
 busca.addEventListener("input", filtrarProdutos);
+filtros.addEventListener("submit", evento => { evento.preventDefault(); buscarProdutos(); });
+document.querySelector("#limpar-filtros").onclick = () => { filtros.reset(); busca.value = ""; buscarProdutos(); };
 buscarProdutos();

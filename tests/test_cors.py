@@ -24,3 +24,14 @@ def test_nao_libera_origem_desconhecida():
     })
     assert resposta.status_code == 400
     assert "access-control-allow-origin" not in resposta.headers
+
+
+@pytest.mark.parametrize("metodo", ["POST", "PUT", "DELETE"])
+def test_sessao_local_permite_credenciais_e_operacoes_do_carrinho(metodo):
+    resposta = cliente.options("/carrinho/itens/1", headers={
+        "Origin": "http://127.0.0.1:5500", "Access-Control-Request-Method": metodo,
+        "Access-Control-Request-Headers": "content-type",
+    })
+    assert resposta.status_code == 200
+    assert resposta.headers["access-control-allow-credentials"] == "true"
+    assert resposta.headers["access-control-allow-origin"] == "http://127.0.0.1:5500"

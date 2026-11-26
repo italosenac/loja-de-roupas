@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08070D">
+  <title>Minha sacola · Loja de Roupas</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/outfit-variable.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header class="cabecalho">
+    <a class="marca" href="index.html" aria-label="Loja de Roupas · início"><img src="img/logo.svg" alt="" width="40" height="40"><span>loja<span class="marca-detalhe">de roupas.</span></span></a>
+    <nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html" aria-current="page">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html">Gerenciar produtos</a></nav>
+    <span class="cabecalho-nota">O seu estilo começa aqui.</span>
+  </header>
+  <main id="conteudo" class="pagina-interna">
+    <p class="sobretitulo">SUAS ESCOLHAS, SEU ESTILO</p><h1>Minha sacola.</h1>
+    <p id="estado-sacola" class="mensagem" role="status"></p>
+    <div id="sacola-vazia" class="sacola-vazia" hidden><h2>Sua sacola está vazia.</h2><p>Encontre a peça que combina com seu momento.</p><a class="botao" href="index.html#colecao">Continuar comprando</a></div>
+    <div id="conteudo-sacola" class="layout-sacola" hidden>
+      <section aria-label="Itens da sacola"><div id="itens-sacola"></div><div class="sacola-acoes"><a href="index.html#colecao">Continuar comprando</a><button type="button" id="esvaziar-sacola" class="botao-secundario">Esvaziar sacola</button></div></section>
+      <aside class="resumo-sacola" aria-labelledby="titulo-resumo"><h2 id="titulo-resumo">Suas escolhas em resumo</h2>
+        <dl><div><dt>Quantidade de peças</dt><dd id="resumo-pecas"></dd></div><div><dt>Subtotal</dt><dd id="resumo-subtotal"></dd></div><div class="desconto"><dt>Desconto <span id="resumo-percentual"></span></dt><dd id="resumo-desconto"></dd></div><div><dt>Subtotal após desconto</dt><dd id="resumo-liquido"></dd></div><div><dt>Frete</dt><dd id="resumo-frete"></dd></div><div class="linha-total"><dt>Total</dt><dd id="resumo-total"></dd></div></dl>
+        <p id="economia" class="economia"></p><p id="progresso-frete" class="aviso-frete"></p>
+        <p class="nota-sacola">A sacola é individual e temporária. Não há pagamento nesta demonstração.</p>
+      </aside>
+    </div>
+  </main>
+  <footer><span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span></footer>
+  <script src="config.js"></script>
+  <script src="comum.js"></script>
+  <script src="carrinho.js"></script>
+</body>
+</html>

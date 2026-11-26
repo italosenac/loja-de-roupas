@@ -1,9 +1,11 @@
 const formulario = document.querySelector("#form-produto");
 const aviso = document.querySelector("#aviso");
 const botaoCadastrar = formulario.querySelector("button");
+const campos = formulario.querySelector("fieldset");
+const produtoId = new URLSearchParams(location.search).get("id");
 
 function lerCampo(nome) {
-  return document.querySelector(`#${nome}`).value;
+  return document.querySelector("#" + nome).value;
 }
 
 function atualizarCampos() {
@@ -12,62 +14,63 @@ function atualizarCampos() {
   document.querySelector("#modelagem").required = lerCampo("tipo") === "Calca";
 }
 
+async function prepararFormulario() {
+  campos.disabled = true;
+  try {
+    await requisitar("/openapi.json");
+    if (produtoId) {
+      const produto = await requisitar("/produtos/" + produtoId);
+      for (const campo of ["nome", "tipo", "preco", "tamanho", "manga", "modelagem"]) {
+        document.querySelector("#" + campo).value = produto[campo] ?? "";
+      }
+      document.querySelector("h1").textContent = "Uma nova versão da sua peça.";
+      document.querySelector("#titulo-formulario").textContent = "Editar produto";
+      document.title = "Editar produto · Loja de Roupas";
+      botaoCadastrar.textContent = "Salvar alterações";
+    }
+    atualizarCampos();
+    campos.disabled = false;
+  } catch (erro) {
+    mostrarMensagem(aviso, erro.message);
+  }
+}
+
 async function cadastrarProduto(evento) {
   evento.preventDefault();
-  aviso.dataset.estado = "erro";
-  const dados = {
-    tipo: lerCampo("tipo"),
-    nome: lerCampo("nome").trim(),
-    preco: Number(lerCampo("preco")),
-    tamanho: lerCampo("tamanho"),
-  };
-  if (dados.nome === "") {
-    aviso.textContent = "Informe o nome do produto.";
+  const dados = { tipo: lerCampo("tipo"), nome: lerCampo("nome").trim(),
+    preco: Number(lerCampo("preco")), tamanho: lerCampo("tamanho") };
+  if (!dados.nome || !(dados.preco > 0)) {
+    mostrarMensagem(aviso, "Informe um nome e um preço maior que zero.");
     return;
   }
-  if (!(dados.preco > 0)) {
-    aviso.textContent = "O preço precisa ser maior que zero.";
-    return;
-  }
-  if (dados.tipo === "Camiseta") {
-    dados.manga = lerCampo("manga");
-  }
+  if (dados.tipo === "Camiseta") dados.manga = lerCampo("manga");
   if (dados.tipo === "Calca") {
     dados.modelagem = lerCampo("modelagem").trim();
-    if (dados.modelagem === "") {
-      aviso.textContent = "Informe a modelagem da calça.";
+    if (!dados.modelagem) {
+      mostrarMensagem(aviso, "Informe a modelagem da calça.");
       return;
     }
   }
   botaoCadastrar.disabled = true;
-  aviso.textContent = "Cadastrando produto...";
-  aviso.dataset.estado = "carregando";
+  mostrarMensagem(aviso, produtoId ? "Salvando alterações..." : "Cadastrando produto...", "carregando");
   try {
-    const resposta = await fetch(`${API}/produtos`, {
-      method: "POST",
+    const produto = await requisitar("/produtos" + (produtoId ? "/" + produtoId : ""), {
+      method: produtoId ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dados),
     });
-    const corpo = await resposta.json();
-    if (!resposta.ok) {
-      const detalhe = typeof corpo.detail === "string" ? corpo.detail : "Verifique os campos do produto.";
-      aviso.textContent = resposta.status === 403
-        ? "O cadastro está disponível apenas para o acesso autorizado da loja."
-        : `Não cadastrou: ${detalhe}`;
-      aviso.dataset.estado = "erro";
-    } else {
-      aviso.textContent = `${corpo.nome} cadastrado com o número ${corpo.id}.`;
+    mostrarMensagem(aviso, produto.nome + (produtoId ? " atualizado com sucesso." : " cadastrado com o número " + produto.id + "."), "sucesso");
+    if (!produtoId) {
       formulario.reset();
       atualizarCampos();
-      aviso.dataset.estado = "sucesso";
     }
   } catch (erro) {
-    aviso.textContent = "Não foi possível concluir o cadastro. Verifique sua conexão e tente novamente.";
-    aviso.dataset.estado = "erro";
+    mostrarMensagem(aviso, erro.message);
+  } finally {
+    botaoCadastrar.disabled = false;
   }
-  botaoCadastrar.disabled = false;
 }
 
 formulario.addEventListener("submit", cadastrarProduto);
 document.querySelector("#tipo").addEventListener("change", atualizarCampos);
-atualizarCampos();
+prepararFormulario();

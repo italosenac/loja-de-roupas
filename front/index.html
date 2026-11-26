@@ -17,7 +17,7 @@
       <img src="img/logo.svg" alt="" width="40" height="40">
       <span>loja<span class="marca-detalhe">de roupas.</span></span>
     </a>
-    <nav aria-label="Principal"><a href="index.html" aria-current="page">Vitrine</a><a href="cadastro.html">Cadastrar produto</a></nav>
+    <nav aria-label="Principal"><a href="index.html" aria-current="page">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html">Gerenciar produtos</a></nav>
     <span class="cabecalho-nota">O seu estilo começa aqui.</span>
   </header>
   <main id="conteudo">
@@ -45,14 +45,21 @@
           </div>
         </div>
       </div>
+      <form id="filtros" class="filtros">
+        <div><label for="filtro-tamanho">Tamanho</label><select id="filtro-tamanho" name="tamanho"><option value="">Todos</option><option>PP</option><option>P</option><option>M</option><option>G</option><option>GG</option></select></div>
+        <div><label for="filtro-preco">Preço máximo (R$)</label><input id="filtro-preco" name="preco_max" type="number" min="0" step="0.01" placeholder="Sem limite"></div>
+        <button type="submit">Filtrar coleção</button><button id="limpar-filtros" class="botao-secundario" type="button">Limpar filtros</button>
+      </form>
+      <p id="estado-acao" class="mensagem" role="status"></p>
       <div class="colecao-informacao"><span>COLEÇÃO ESSENCIAL</span><span id="quantidade"></span></div>
       <p id="estado" class="mensagem" role="status"></p>
       <div id="vitrine" class="grade"></div>
     </section>
     <aside class="assinatura"><span>Vista quem você é.</span><p>O estilo está nas escolhas. A próxima é sua.</p><a href="#colecao">Descubra a coleção</a></aside>
   </main>
-  <footer><p>loja <span>de roupas.</span></p><span>Projeto acadêmico · Senac Pernambuco · 2026.2</span><a href="cadastro.html">Cadastrar produto</a></footer>
+  <footer><span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span></footer>
   <script src="config.js"></script>
+  <script src="comum.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -17,7 +17,7 @@
       <img src="img/logo.svg" alt="" width="40" height="40">
       <span>loja<span class="marca-detalhe">de roupas.</span></span>
     </a>
-    <nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="cadastro.html" aria-current="page">Cadastrar produto</a></nav>
+    <nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html" aria-current="page">Gerenciar produtos</a></nav>
     <span class="cabecalho-nota">O seu estilo começa aqui.</span>
   </header>
   <main class="cadastro-conteudo" id="conteudo">
@@ -29,6 +29,7 @@
     <section class="painel-cadastro" aria-labelledby="titulo-formulario">
       <div class="painel-titulo"><h2 id="titulo-formulario">Cadastrar produto</h2><span>CATÁLOGO</span></div>
       <form id="form-produto" class="formulario">
+        <fieldset disabled>
         <div class="campo largura-total">
           <label for="nome">Nome da peça <span aria-hidden="true">*</span></label>
           <input id="nome" name="nome" type="text" placeholder="Como a peça se chama?" required>
@@ -53,14 +54,16 @@
           <label for="modelagem">Modelagem da calça <span aria-hidden="true">*</span></label>
           <input id="modelagem" name="modelagem" type="text" placeholder="Ex.: reta">
         </div>
-        <div class="formulario-acoes largura-total"><button type="submit">Cadastrar produto</button><a href="index.html">Voltar à vitrine</a></div>
+        <div class="formulario-acoes largura-total"><button type="submit">Cadastrar produto</button><a href="gerenciamento.html">Voltar ao gerenciamento</a></div>
+      </fieldset>
       </form>
       <p id="aviso" class="mensagem" role="status"></p>
       <p class="formulario-nota">Os campos com * são obrigatórios. O cadastro está disponível para o acesso autorizado da loja.</p>
     </section>
   </main>
-  <footer><p>loja <span>de roupas.</span></p><span>Projeto acadêmico · Senac Pernambuco · 2026.2</span><a href="index.html">Explorar a coleção</a></footer>
+  <footer><span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span></footer>
   <script src="config.js"></script>
+  <script src="comum.js"></script>
   <script src="cadastro.js"></script>
 </body>
 </html>

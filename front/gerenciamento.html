@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08070D">
+  <title>Gerenciar produtos · Loja de Roupas</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/outfit-variable.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header class="cabecalho">
+    <a class="marca" href="index.html" aria-label="Loja de Roupas · início"><img src="img/logo.svg" alt="" width="40" height="40"><span>loja<span class="marca-detalhe">de roupas.</span></span></a>
+    <nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html" aria-current="page">Gerenciar produtos</a></nav>
+    <span class="cabecalho-nota">O seu estilo começa aqui.</span>
+  </header>
+  <main id="conteudo" class="pagina-interna">
+    <p class="sobretitulo">CURADORIA DA COLEÇÃO</p><h1>Gerenciar produtos.</h1>
+    <p id="estado-gerenciamento" class="mensagem" role="status">Verificando acesso administrativo...</p>
+    <section id="area-administrativa" aria-label="Gerenciamento do catálogo" hidden>
+      <div class="barra-gerenciamento"><div><label for="busca-gerenciamento">Buscar produto pelo nome</label><input id="busca-gerenciamento" type="search" placeholder="Encontre uma peça"></div><a class="botao" href="cadastro.html">Cadastrar produto</a></div>
+      <div class="tabela-responsiva"><table><caption class="sr-only">Produtos do catálogo</caption><thead><tr><th scope="col">ID</th><th scope="col">Nome</th><th scope="col">Tipo</th><th scope="col">Tamanho</th><th scope="col">Preço</th><th scope="col">Ações</th></tr></thead><tbody id="lista-produtos"></tbody></table></div>
+      <details class="informacoes-tecnicas"><summary>Informações da API</summary><pre id="informacoes-api"></pre><a id="link-swagger" href="#">Abrir documentação da API</a></details>
+    </section>
+    <dialog id="confirmacao-exclusao" class="dialogo" aria-labelledby="titulo-exclusao"><h2 id="titulo-exclusao">Excluir produto?</h2><p>A peça <strong id="nome-exclusao"></strong> será removida do catálogo. Confirme somente se deseja excluí-la.</p><p id="estado-exclusao" class="mensagem" role="status"></p><div class="dialogo-acoes"><button type="button" id="cancelar-exclusao" class="botao-secundario" autofocus>Cancelar</button><button type="button" id="confirmar-exclusao" class="botao-perigo">Confirmar exclusão</button></div></dialog>
+  </main>
+  <footer><span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span></footer>
+  <script src="config.js"></script>
+  <script src="comum.js"></script>
+  <script src="gerenciamento.js"></script>
+</body>
+</html>

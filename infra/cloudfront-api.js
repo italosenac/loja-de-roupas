@@ -1,13 +1,22 @@
 function handler(event) {
   var request = event.request;
   var ipAutorizado = "168.0.55.1";
-  var caminho = request.uri;
+  var caminho;
+  try {
+    caminho = decodeURIComponent(request.uri);
+  } catch (erro) {
+    return { statusCode: 400, statusDescription: "Bad Request" };
+  }
   var leitura = request.method === "GET" || request.method === "HEAD" || request.method === "OPTIONS";
   var documentacao = caminho.indexOf("/api/docs") === 0
     || caminho.indexOf("/api/redoc") === 0
     || caminho.indexOf("/api/openapi.json") === 0;
+  var itemDaSacola = /^\/api\/carrinho\/itens\/[0-9]+$/.test(caminho);
+  var escritaNaSacola = (request.method === "POST" && caminho === "/api/carrinho/itens")
+    || (request.method === "PUT" && itemDaSacola)
+    || (request.method === "DELETE" && (itemDaSacola || caminho === "/api/carrinho"));
 
-  if ((!leitura || documentacao) && event.viewer.ip !== ipAutorizado) {
+  if (((!leitura && !escritaNaSacola) || documentacao) && event.viewer.ip !== ipAutorizado) {
     return {
       statusCode: 403,
       statusDescription: "Forbidden",

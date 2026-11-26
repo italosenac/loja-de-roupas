@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 PASTA_FRONT = Path(__file__).resolve().parents[1] / "front"
+PAGINAS = ["index.html", "cadastro.html", "carrinho.html", "gerenciamento.html"]
 
 
 class LeitorHTML(HTMLParser):
@@ -21,7 +22,7 @@ def ler(nome):
     return leitor.elementos
 
 
-@pytest.mark.parametrize("pagina", ["index.html", "cadastro.html"])
+@pytest.mark.parametrize("pagina", PAGINAS)
 def test_estrutura_semantica(pagina):
     nomes = [tag for tag, atributos in ler(pagina)]
     for tag in ("header", "nav", "main", "footer"):
@@ -30,14 +31,14 @@ def test_estrutura_semantica(pagina):
     assert nomes.count("h1") == 1
 
 
-@pytest.mark.parametrize("pagina", ["index.html", "cadastro.html"])
+@pytest.mark.parametrize("pagina", PAGINAS)
 def test_toda_imagem_tem_alt(pagina):
     for tag, atributos in ler(pagina):
         if tag == "img":
             assert "alt" in atributos
 
 
-@pytest.mark.parametrize("pagina", ["index.html", "cadastro.html"])
+@pytest.mark.parametrize("pagina", PAGINAS)
 def test_idioma_viewport_e_estilo(pagina):
     elementos = ler(pagina)
     assert any(tag == "html" and atributos.get("lang") == "pt-BR" for tag, atributos in elementos)
@@ -62,3 +63,11 @@ def test_preco_e_nome_tem_validacao_html():
     assert "required" in campos["preco"]
     assert campos["preco"]["min"] == "0.01"
     assert campos["preco"]["step"] == "0.01"
+
+
+@pytest.mark.parametrize("pagina", PAGINAS)
+def test_rodape_contem_apenas_nome_e_instituicao(pagina):
+    texto = (PASTA_FRONT / pagina).read_text(encoding="utf-8")
+    rodape = texto.split("<footer>")[1].split("</footer>")[0]
+    assert rodape == "<span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span>"
+    assert "<a " not in rodape

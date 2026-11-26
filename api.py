@@ -1,4 +1,5 @@
 from contextlib import asynccontextmanager
+from os import getenv
 from typing import Literal
 
 from fastapi import Depends, FastAPI
@@ -51,7 +52,8 @@ async def ciclo_de_vida(app):
     yield
 
 
-app = FastAPI(title="Loja de Roupas", lifespan=ciclo_de_vida)
+app = FastAPI(title="Loja de Roupas", lifespan=ciclo_de_vida,
+              root_path=getenv("API_ROOT_PATH", ""))
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

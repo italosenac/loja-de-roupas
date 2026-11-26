@@ -3,30 +3,56 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Vitrine · Loja de Roupas</title>
+  <meta name="description" content="Peças essenciais, personalidade em cada escolha. Conheça a coleção da Loja de Roupas.">
+  <meta name="theme-color" content="#08070D">
+  <title>Loja de Roupas · O essencial, do seu jeito</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/outfit-variable.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-  <header>
-    <img src="img/logo.svg" alt="Logotipo da Loja de Roupas: uma camiseta" width="48" height="48">
-    <p>Loja de Roupas</p>
-    <nav aria-label="Principal">
-      <a href="index.html" aria-current="page">Vitrine</a>
-      <a href="cadastro.html">Cadastrar produto</a>
-    </nav>
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header class="cabecalho">
+    <a class="marca" href="index.html" aria-label="Loja de Roupas · início">
+      <img src="img/logo.svg" alt="" width="40" height="40">
+      <span>loja<span class="marca-detalhe">de roupas.</span></span>
+    </a>
+    <nav aria-label="Principal"><a href="index.html" aria-current="page">Vitrine</a><a href="cadastro.html">Cadastrar produto</a></nav>
+    <span class="cabecalho-nota">O seu estilo começa aqui.</span>
   </header>
-  <main>
-    <h1>Vitrine</h1>
-    <p>Promoção da semana: 10% no carrinho. Frete grátis a partir de R$ 200 após o desconto.</p>
-    <label for="busca">Buscar produto pelo nome</label>
-    <input id="busca" type="search" placeholder="Ex.: camiseta">
-    <section aria-labelledby="titulo-produtos">
-      <h2 id="titulo-produtos">Produtos</h2>
-      <p id="estado" role="status"></p>
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="titulo-principal">
+      <div class="hero-conteudo">
+        <p class="sobretitulo">ESSÊNCIA CONTEMPORÂNEA</p>
+        <h1 id="titulo-principal">O essencial.<br><span>Do seu jeito.</span></h1>
+        <p class="hero-texto">Menos excesso. Mais você.<br>Encontre as peças que fazem parte da sua história.</p>
+        <a class="botao" href="#colecao">Explorar a coleção</a>
+      </div>
+      <div class="hero-rodape"><span>PERSONALIDADE EM CADA ESCOLHA</span><span>Loja de Roupas</span></div>
+    </section>
+    <div class="faixa-promocao">
+      <p><strong>10% de desconto no carrinho</strong><span>O essencial fica ainda melhor.</span></p>
+      <p>Frete grátis a partir de <strong>R$ 200</strong> após o desconto.</p>
+    </div>
+    <section class="colecao" id="colecao" aria-labelledby="titulo-produtos">
+      <div class="colecao-cabecalho">
+        <div><p class="sobretitulo">ESCOLHAS QUE FICAM</p><h2 id="titulo-produtos">Sua próxima peça.</h2></div>
+        <div class="campo-busca">
+          <label for="busca">Encontre seu essencial</label>
+          <div class="busca-controle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+            <input id="busca" type="search" placeholder="Busque pelo nome da peça" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="colecao-informacao"><span>COLEÇÃO ESSENCIAL</span><span id="quantidade"></span></div>
+      <p id="estado" class="mensagem" role="status"></p>
       <div id="vitrine" class="grade"></div>
     </section>
+    <aside class="assinatura"><span>Vista quem você é.</span><p>O estilo está nas escolhas. A próxima é sua.</p><a href="#colecao">Descubra a coleção</a></aside>
   </main>
-  <footer>Loja de Roupas · Projeto acadêmico · Senac Pernambuco · 2026.2</footer>
+  <footer><p>loja <span>de roupas.</span></p><span>Projeto acadêmico · Senac Pernambuco · 2026.2</span><a href="cadastro.html">Cadastrar produto</a></footer>
+  <script src="config.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

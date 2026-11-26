@@ -3,51 +3,64 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Adicione uma nova peça ao catálogo da Loja de Roupas.">
+  <meta name="theme-color" content="#08070D">
   <title>Cadastrar produto · Loja de Roupas</title>
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="preload" href="fonts/outfit-variable.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="estilo.css">
 </head>
-<body>
-  <header>
-    <img src="img/logo.svg" alt="Logotipo da Loja de Roupas: uma camiseta" width="48" height="48">
-    <p>Loja de Roupas</p>
-    <nav aria-label="Principal">
-      <a href="index.html">Vitrine</a>
-      <a href="cadastro.html" aria-current="page">Cadastrar produto</a>
-    </nav>
+<body class="pagina-cadastro">
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+  <header class="cabecalho">
+    <a class="marca" href="index.html" aria-label="Loja de Roupas · início">
+      <img src="img/logo.svg" alt="" width="40" height="40">
+      <span>loja<span class="marca-detalhe">de roupas.</span></span>
+    </a>
+    <nav aria-label="Principal"><a href="index.html">Vitrine</a><a href="cadastro.html" aria-current="page">Cadastrar produto</a></nav>
+    <span class="cabecalho-nota">O seu estilo começa aqui.</span>
   </header>
-  <main>
-    <h1>Cadastrar produto</h1>
-    <p>Preencha os dados da peça para adicioná-la à vitrine.</p>
-    <form id="form-produto" class="formulario">
-      <label for="tipo">Tipo</label>
-      <select id="tipo" name="tipo">
-        <option value="Produto">Produto</option>
-        <option value="Camiseta">Camiseta</option>
-        <option value="Calca">Calça</option>
-      </select>
-      <label for="nome">Nome</label>
-      <input id="nome" name="nome" type="text" required>
-      <label for="preco">Preço (R$)</label>
-      <input id="preco" name="preco" type="number" min="0.01" step="0.01" required>
-      <label for="tamanho">Tamanho</label>
-      <select id="tamanho" name="tamanho" required>
-        <option value="">Selecione o tamanho</option>
-        <option>PP</option><option>P</option><option selected>M</option>
-        <option>G</option><option>GG</option>
-      </select>
-      <label for="manga">Manga (para camiseta)</label>
-      <select id="manga" name="manga">
-        <option value="curta">Curta</option>
-        <option value="longa">Longa</option>
-      </select>
-      <label for="modelagem">Modelagem (para calça)</label>
-      <input id="modelagem" name="modelagem" type="text" placeholder="Ex.: reta">
-      <button type="submit">Cadastrar</button>
-    </form>
-    <p id="aviso" role="status"></p>
-    <p><a href="index.html">Voltar à vitrine</a></p>
+  <main class="cadastro-conteudo" id="conteudo">
+    <div class="cadastro-introducao">
+      <p class="sobretitulo">CURADORIA DA COLEÇÃO</p>
+      <h1>Uma nova peça.<br><span>Mais possibilidades.</span></h1>
+      <p>Preencha os detalhes para adicionar um produto à vitrine.</p>
+    </div>
+    <section class="painel-cadastro" aria-labelledby="titulo-formulario">
+      <div class="painel-titulo"><h2 id="titulo-formulario">Cadastrar produto</h2><span>CATÁLOGO</span></div>
+      <form id="form-produto" class="formulario">
+        <div class="campo largura-total">
+          <label for="nome">Nome da peça <span aria-hidden="true">*</span></label>
+          <input id="nome" name="nome" type="text" placeholder="Como a peça se chama?" required>
+        </div>
+        <div class="campo">
+          <label for="tipo">Tipo de produto</label>
+          <select id="tipo" name="tipo"><option value="Produto">Produto</option><option value="Camiseta">Camiseta</option><option value="Calca">Calça</option></select>
+        </div>
+        <div class="campo">
+          <label for="tamanho">Tamanho <span aria-hidden="true">*</span></label>
+          <select id="tamanho" name="tamanho" required><option value="">Selecione o tamanho</option><option>PP</option><option>P</option><option selected>M</option><option>G</option><option>GG</option></select>
+        </div>
+        <div class="campo largura-total">
+          <label for="preco">Preço (R$) <span aria-hidden="true">*</span></label>
+          <input id="preco" name="preco" type="number" min="0.01" step="0.01" placeholder="0,00" required>
+        </div>
+        <div class="campo largura-total" id="campo-manga" hidden>
+          <label for="manga">Manga da camiseta</label>
+          <select id="manga" name="manga"><option value="curta">Curta</option><option value="longa">Longa</option></select>
+        </div>
+        <div class="campo largura-total" id="campo-modelagem" hidden>
+          <label for="modelagem">Modelagem da calça <span aria-hidden="true">*</span></label>
+          <input id="modelagem" name="modelagem" type="text" placeholder="Ex.: reta">
+        </div>
+        <div class="formulario-acoes largura-total"><button type="submit">Cadastrar produto</button><a href="index.html">Voltar à vitrine</a></div>
+      </form>
+      <p id="aviso" class="mensagem" role="status"></p>
+      <p class="formulario-nota">Os campos com * são obrigatórios. O cadastro está disponível para o acesso autorizado da loja.</p>
+    </section>
   </main>
-  <footer>Loja de Roupas · Projeto acadêmico · Senac Pernambuco · 2026.2</footer>
+  <footer><p>loja <span>de roupas.</span></p><span>Projeto acadêmico · Senac Pernambuco · 2026.2</span><a href="index.html">Explorar a coleção</a></footer>
+  <script src="config.js"></script>
   <script src="cadastro.js"></script>
 </body>
 </html>

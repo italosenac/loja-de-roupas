@@ -51,3 +51,27 @@ def test_finalizacao_protege_o_carrinho():
     carrinho.finalizar()
     with pytest.raises(CarrinhoFinalizadoError):
         carrinho.adicionar(Produto("Moletom", 159.90, "P"))
+
+
+@pytest.mark.parametrize("preco,esperado", [(200, 15), (222.22, 15), (222.23, 0)])
+def test_limiar_de_frete_depois_do_desconto(preco, esperado):
+    from loja.promocao import Percentual
+    carrinho = Carrinho(Percentual(10))
+    carrinho.adicionar(Produto("Peça", preco, "M"))
+    resumo = carrinho.resumo()
+    assert resumo["frete"] == esperado
+    assert resumo["frete_gratis"] is (esperado == 0)
+    if preco == 222.22:
+        assert resumo["falta_para_frete_gratis"] == 0.01
+
+
+def test_mutacoes_preservam_finalizacao():
+    carrinho = carrinho_exemplo()
+    produto = carrinho.itens[0][0]
+    carrinho.finalizar()
+    with pytest.raises(CarrinhoFinalizadoError):
+        carrinho.atualizar_quantidade(produto, 2)
+    with pytest.raises(CarrinhoFinalizadoError):
+        carrinho.remover(1)
+    with pytest.raises(CarrinhoFinalizadoError):
+        carrinho.esvaziar()

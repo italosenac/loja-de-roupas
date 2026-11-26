@@ -58,7 +58,8 @@ def test_adicionar_item_da_201():
 def test_total_com_promocao_sem_frete():
     cliente.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 3})
     cliente.post("/carrinho/itens", json={"produto_id": 2, "quantidade": 1})
-    assert cliente.get("/carrinho/total").json() == {
+    resumo = cliente.get("/carrinho/total").json()
+    assert {campo: resumo[campo] for campo in ("pecas", "subtotal", "total")} == {
         "pecas": 4, "subtotal": 249.6, "total": 224.64
     }
 
@@ -105,3 +106,109 @@ def test_remove_produto_sem_corpo_e_trata_inexistente():
     assert resposta.content == b""
     assert cliente.get("/produtos/1").status_code == 404
     assert cliente.delete("/produtos/1").status_code == 404
+
+
+def test_filtros_por_preco_e_combinados():
+    assert [p["id"] for p in cliente.get("/produtos?preco_max=100").json()] == [1]
+    assert [p["id"] for p in cliente.get("/produtos?tamanho=G&preco_max=150").json()] == [2]
+    assert cliente.get("/produtos?tamanho=G&preco_max=100").json() == []
+
+
+def test_sacola_vazia_preserva_regra_e_nao_tem_itens():
+    dados = cliente.get("/carrinho/total").json()
+    assert dados["pecas"] == 0
+    assert dados["itens"] == []
+    assert dados["subtotal"] == dados["valor_desconto"] == 0
+    assert dados["frete"] == dados["total"] == 15
+
+
+def test_dois_visitantes_tem_sacolas_independentes():
+    primeiro, segundo = TestClient(app), TestClient(app)
+    primeiro.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 2})
+    assert segundo.get("/carrinho/total").json()["pecas"] == 0
+    segundo.post("/carrinho/itens", json={"produto_id": 2, "quantidade": 1})
+    assert primeiro.get("/carrinho/total").json()["subtotal"] == 79.8
+    assert segundo.get("/carrinho/total").json()["subtotal"] == 129.9
+    primeiro.delete("/carrinho")
+    assert primeiro.get("/carrinho/total").json()["pecas"] == 0
+    assert segundo.get("/carrinho/total").json()["pecas"] == 1
+
+
+def test_cookie_adulterado_nao_acessa_outra_sacola():
+    primeiro, segundo = TestClient(app), TestClient(app)
+    primeiro.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 1})
+    segundo.get("/carrinho/total")
+    cookie_primeiro = primeiro.cookies.get("loja_sessao")
+    cookie_segundo = segundo.cookies.get("loja_sessao")
+    identificador = cookie_primeiro.split(".")[0]
+    assinatura_alheia = cookie_segundo.split(".")[1]
+    invasor = TestClient(app)
+    invasor.cookies.set("loja_sessao", f"{identificador}.{assinatura_alheia}")
+    assert invasor.get("/carrinho/total").json()["pecas"] == 0
+    invasor.cookies.set("loja_sessao", identificador)
+    assert invasor.get("/carrinho/total").json()["pecas"] == 0
+    assert primeiro.get("/carrinho/total?session_id=" + cookie_segundo).json()["pecas"] == 1
+
+
+def test_cookie_https_e_resposta_individual_sem_cache(monkeypatch):
+    monkeypatch.setenv("COOKIE_SECURE", "true")
+    visitante = TestClient(app, base_url="https://testserver")
+    resposta = visitante.get("/carrinho/total")
+    cookie = resposta.headers["set-cookie"].lower()
+    assert "httponly" in cookie and "secure" in cookie and "samesite=lax" in cookie
+    assert "max-age=1800" in cookie
+    assert resposta.headers["cache-control"] == "no-store"
+    visitante.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 1})
+    assert visitante.get("/carrinho/total").json()["pecas"] == 1
+
+
+def test_mesmo_produto_soma_e_pode_ter_mais_de_dez_unidades():
+    for _ in range(2):
+        assert cliente.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 10}).status_code == 201
+    itens = cliente.get("/carrinho/itens").json()
+    assert len(itens) == 1 and itens[0]["quantidade"] == 20
+    resposta = cliente.put("/carrinho/itens/1", json={"quantidade": 11})
+    assert resposta.status_code == 200
+    assert resposta.json()["pecas"] == 11
+
+
+@pytest.mark.parametrize("quantidade", [0, -1, 11, 1.5])
+def test_adicao_recusa_quantidade_invalida(quantidade):
+    assert cliente.post("/carrinho/itens", json={"produto_id": 1, "quantidade": quantidade}).status_code == 422
+
+
+@pytest.mark.parametrize("quantidade", [0, -1, 1.5])
+def test_alteracao_recusa_quantidade_invalida(quantidade):
+    cliente.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 1})
+    assert cliente.put("/carrinho/itens/1", json={"quantidade": quantidade}).status_code == 422
+    assert cliente.get("/carrinho/total").json()["pecas"] == 1
+
+
+def test_atualizacao_remocao_e_esvaziamento():
+    cliente.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 1})
+    cliente.post("/carrinho/itens", json={"produto_id": 2, "quantidade": 1})
+    dados = cliente.put("/carrinho/itens/1", json={"quantidade": 3}).json()
+    assert dados["pecas"] == 4 and dados["subtotal"] == 249.6
+    assert dados["valor_desconto"] == 24.96 and dados["subtotal_com_desconto"] == 224.64
+    assert dados["frete_gratis"] and dados["frete"] == 0 and dados["total"] == 224.64
+    assert dados["falta_para_frete_gratis"] == 0
+    assert cliente.delete("/carrinho/itens/1").status_code == 204
+    assert cliente.get("/carrinho/itens").json()[0]["id"] == 2
+    assert cliente.delete("/carrinho").status_code == 204
+    assert cliente.get("/carrinho/itens").json() == []
+
+
+def test_sacola_trata_produto_e_item_inexistentes():
+    assert cliente.post("/carrinho/itens", json={"produto_id": 99, "quantidade": 1}).status_code == 404
+    assert cliente.put("/carrinho/itens/99", json={"quantidade": 1}).status_code == 404
+    assert cliente.put("/carrinho/itens/1", json={"quantidade": 1}).status_code == 404
+    assert cliente.delete("/carrinho/itens/99").status_code == 404
+
+
+def test_resumo_com_frete_e_valor_faltante():
+    cliente.post("/carrinho/itens", json={"produto_id": 1, "quantidade": 1})
+    dados = cliente.get("/carrinho/total").json()
+    assert dados["percentual_desconto"] == 10 and dados["valor_desconto"] == 3.99
+    assert dados["subtotal_com_desconto"] == 35.91
+    assert dados["frete"] == 15 and dados["falta_para_frete_gratis"] == 164.09
+    assert dados["total"] == 50.91

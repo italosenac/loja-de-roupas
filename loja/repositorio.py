@@ -8,10 +8,13 @@ CAMPOS = ("tipo", "nome", "preco", "tamanho", "manga", "modelagem")
 
 def para_dominio(registro):
     if registro.tipo == "Camiseta":
-        return Camiseta(registro.nome, registro.preco, registro.tamanho, registro.manga)
-    if registro.tipo == "Calca":
-        return Calca(registro.nome, registro.preco, registro.tamanho, registro.modelagem)
-    return Produto(registro.nome, registro.preco, registro.tamanho)
+        produto = Camiseta(registro.nome, registro.preco, registro.tamanho, registro.manga)
+    elif registro.tipo == "Calca":
+        produto = Calca(registro.nome, registro.preco, registro.tamanho, registro.modelagem)
+    else:
+        produto = Produto(registro.nome, registro.preco, registro.tamanho)
+    produto.id = registro.id
+    return produto
 
 
 def para_registro(produto):

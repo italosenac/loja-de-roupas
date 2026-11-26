@@ -2,15 +2,15 @@ from contextlib import asynccontextmanager
 from os import getenv
 from typing import Literal
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from sqlmodel import Session
 
 from loja.banco import criar_engine, criar_tabelas
-from loja.carrinho import Carrinho
-from loja.promocao import Percentual
+from loja.carrinho import Carrinho, ItemNaoEncontradoError
+from loja.sessoes import LimiteSessoesError, SessoesCarrinho
 from loja.repositorio import RepositorioProdutos
 from loja.servico import (
     DadosInvalidos, ProdutoJaExiste, ProdutoNaoEncontrado, ServicoCatalogo, com_id,
@@ -27,7 +27,7 @@ CATALOGO_INICIAL = [
 class ProdutoEntrada(BaseModel):
     tipo: Literal["Produto", "Camiseta", "Calca"] = "Produto"
     nome: str
-    preco: float
+    preco: float = Field(gt=0, allow_inf_nan=False)
     tamanho: str
     manga: str | None = None
     modelagem: str | None = None
@@ -36,6 +36,10 @@ class ProdutoEntrada(BaseModel):
 class ItemPedido(BaseModel):
     produto_id: int
     quantidade: int = Field(gt=0, le=10)
+
+
+class QuantidadePedido(BaseModel):
+    quantidade: int = Field(gt=0)
 
 
 def popular_se_vazio(servico):
@@ -60,9 +64,17 @@ app.add_middleware(
         "http://127.0.0.1:5500", "http://localhost:5500",
         "http://loja-roupas-italo-2026.s3-website-us-east-1.amazonaws.com",
     ],
-    allow_methods=["GET", "POST"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["Content-Type"],
+    allow_credentials=True,
 )
+
+
+@app.middleware("http")
+async def impedir_cache_da_api(request, call_next):
+    resposta = await call_next(request)
+    resposta.headers["Cache-Control"] = "no-store"
+    return resposta
 
 
 def obter_sessao():
@@ -75,6 +87,7 @@ def obter_servico(sessao: Session = Depends(obter_sessao)):
 
 
 @app.exception_handler(ProdutoNaoEncontrado)
+@app.exception_handler(ItemNaoEncontradoError)
 def nao_encontrado(request, erro):
     return JSONResponse(status_code=404, content={"detail": str(erro)})
 
@@ -89,11 +102,20 @@ def dados_invalidos(request, erro):
     return JSONResponse(status_code=422, content={"detail": str(erro)})
 
 
-def novo_carrinho():
-    return Carrinho(Percentual(10))
+sessoes_carrinho = SessoesCarrinho()
 
 
-carrinho = novo_carrinho()
+@app.exception_handler(LimiteSessoesError)
+def limite_de_sessoes(request, erro):
+    return JSONResponse(status_code=503, content={"detail": str(erro)})
+
+
+async def obter_carrinho(request: Request, response: Response):
+    cookie, carrinho = sessoes_carrinho.obter(request.cookies.get("loja_sessao"))
+    response.set_cookie("loja_sessao", cookie, max_age=sessoes_carrinho.duracao,
+                        httponly=True, secure=getenv("COOKIE_SECURE") == "true"
+                        or request.url.scheme == "https", samesite="lax")
+    return carrinho
 
 
 @app.get("/")
@@ -129,7 +151,8 @@ def remover_produto(produto_id: int, servico=Depends(obter_servico)):
 
 
 @app.post("/carrinho/itens", status_code=201)
-def adicionar_item(item: ItemPedido, servico=Depends(obter_servico)):
+async def adicionar_item(item: ItemPedido, servico=Depends(obter_servico),
+                         carrinho: Carrinho = Depends(obter_carrinho)):
     produto = servico.produto(item.produto_id)
     carrinho.adicionar(produto, item.quantidade)
     return {
@@ -140,15 +163,28 @@ def adicionar_item(item: ItemPedido, servico=Depends(obter_servico)):
 
 
 @app.get("/carrinho/total")
-def total_do_carrinho():
-    return {
-        "pecas": carrinho.quantidade_de_pecas,
-        "subtotal": round(carrinho.subtotal, 2),
-        "total": round(carrinho.total, 2),
-    }
+async def total_do_carrinho(carrinho: Carrinho = Depends(obter_carrinho)):
+    return carrinho.resumo()
+
+
+@app.get("/carrinho/itens")
+async def listar_itens(carrinho: Carrinho = Depends(obter_carrinho)):
+    return carrinho.resumo()["itens"]
+
+
+@app.put("/carrinho/itens/{produto_id}")
+async def atualizar_item(produto_id: int, dados: QuantidadePedido,
+                         servico=Depends(obter_servico),
+                         carrinho: Carrinho = Depends(obter_carrinho)):
+    carrinho.atualizar_quantidade(servico.produto(produto_id), dados.quantidade)
+    return carrinho.resumo()
+
+
+@app.delete("/carrinho/itens/{produto_id}", status_code=204)
+async def remover_item(produto_id: int, carrinho: Carrinho = Depends(obter_carrinho)):
+    carrinho.remover(produto_id)
 
 
 @app.delete("/carrinho", status_code=204)
-def esvaziar_carrinho():
-    global carrinho
-    carrinho = novo_carrinho()
+async def esvaziar_carrinho(carrinho: Carrinho = Depends(obter_carrinho)):
+    carrinho.esvaziar()

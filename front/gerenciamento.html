@@ -7,21 +7,21 @@
   <title>Gerenciar produtos · Loja de Roupas</title>
   <link rel="icon" href="img/logo.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/outfit-variable.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="estilo.css?v=9b328740953c">
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
   <header class="cabecalho">
     <a class="marca" href="index.html" aria-label="Loja de Roupas · início"><img src="img/logo.svg" alt="" width="40" height="40"><span>loja <span class="marca-detalhe">de roupas.</span></span></a>
-    <div class="cabecalho-acoes">
+    <div class="cabecalho-acoes" hidden>
       <a class="sacola-compacta" href="carrinho.html"><svg width="22" height="24" viewBox="0 0 24 26" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 8h16l2 15H2L4 8Z"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg><span class="sr-only">Minha sacola: </span><span data-contador>…</span></a>
       <button class="menu-alternar" type="button" aria-expanded="false" aria-controls="navegacao-principal" aria-label="Abrir menu"><svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
     </div>
-    <nav id="navegacao-principal" aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html" aria-current="page">Gerenciar produtos</a><a href="cloud.html">Vitrine Cloud</a><a href="docs.html">Docs</a></nav>
+    <nav id="navegacao-principal" aria-label="Principal" hidden><a href="index.html">Vitrine</a><a href="carrinho.html">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html" aria-current="page">Gerenciar produtos</a><a href="cloud.html">Vitrine Cloud</a><a href="docs.html">Docs</a></nav>
   </header>
   <main id="conteudo" class="pagina-interna">
     <p class="sobretitulo">CURADORIA DA COLEÇÃO</p><h1>Gerenciar produtos.</h1>
-    <p id="estado-gerenciamento" class="mensagem" role="status">Verificando acesso administrativo...</p>
+    <p id="estado-gerenciamento" class="mensagem" role="status">Consultando o catálogo...</p>
     <section id="area-administrativa" aria-label="Gerenciamento do catálogo" hidden>
       <div class="barra-gerenciamento"><div><label for="busca-gerenciamento">Buscar produto pelo nome</label><input id="busca-gerenciamento" type="search" placeholder="Encontre uma peça"></div><a class="botao" href="cadastro.html">Cadastrar produto</a></div>
       <div class="tabela-responsiva"><table><caption class="sr-only">Produtos do catálogo</caption><thead><tr><th scope="col">ID</th><th scope="col">Nome</th><th scope="col">Tipo</th><th scope="col">Tamanho</th><th scope="col">Preço</th><th scope="col">Ações</th></tr></thead><tbody id="lista-produtos"></tbody></table></div>
@@ -30,8 +30,8 @@
     <dialog id="confirmacao-exclusao" class="dialogo" aria-labelledby="titulo-exclusao"><h2 id="titulo-exclusao">Excluir produto?</h2><p>A peça <strong id="nome-exclusao"></strong> será removida do catálogo. Confirme somente se deseja excluí-la.</p><p id="estado-exclusao" class="mensagem" role="status"></p><div class="dialogo-acoes"><button type="button" id="cancelar-exclusao" class="botao-secundario" autofocus>Cancelar</button><button type="button" id="confirmar-exclusao" class="botao-perigo">Confirmar exclusão</button></div></dialog>
   </main>
   <footer><span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span></footer>
-  <script src="config.js"></script>
-  <script src="comum.js"></script>
-  <script src="gerenciamento.js"></script>
+  <script src="config.js?v=b6a184c7e11d"></script>
+  <script src="comum.js?v=a46b524a19ff"></script>
+  <script src="gerenciamento.js?v=850bea423f63"></script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+{
+  "data": "2026-11-26",
+  "mudanca": "Cadastro e gerenciamento abertos para testar a demo, conforme pedido do aluno.",
+  "backup_sqlite_antes_da_abertura": {"integridade": "ok", "produtos": 3},
+  "origem_do_teste": "Cliente HTTPS executado na EC2, fora do IP administrativo. Produtos temporários removidos ao terminar.",
+  "http_real": {
+    "cadastro_publico": 201,
+    "edicao_publica": 200,
+    "exclusao_publica": 204,
+    "cadastro_cloud_publico_id_ja_existente": 409,
+    "swagger_externo": 403,
+    "ids_originais_preservados": [1, 2, 3]
+  },
+  "seguranca_real": {
+    "isolamento": true,
+    "cookie_forjado_rejeitado": true,
+    "cookie_secure_httponly": true,
+    "sem_cache_compartilhado": true,
+    "laboratorio_externo": 403
+  },
+  "cloudfront_test_function": {
+    "casos_aprovados": 10,
+    "casos_reprovados": 0,
+    "viewer": "IP de documentacao, fora do acesso administrativo",
+    "verificacoes": ["POST produtos Coding permitido", "PUT produto Coding permitido", "DELETE produto Coding permitido", "POST produtos Cloud permitido", "OpenAPI restrito", "Swagger restrito", "Laboratorio restrito", "Rota de escrita desconhecida restrita", "DELETE Cloud inexistente restrito", "Sacola publica preservada"],
+    "cabecalhos_forjados_cloud_removidos": true
+  },
+  "infraestrutura": "Origem privada, security groups e chave interna da API Cloud preservados; nenhum novo recurso criado."
+}

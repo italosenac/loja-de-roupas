@@ -7,6 +7,12 @@ import pytest
 FRONT = Path(__file__).resolve().parents[1] / "front"
 DADOS = json.loads((FRONT / "docs-dados.json").read_text(encoding="utf-8"))
 
+
+def test_todas_as_questoes_tem_resposta_inicial_editavel():
+    questoes = [questao for aula in DADOS["aulas"] for questao in aula["questoes"]]
+    assert len(questoes) == 115
+    assert all(isinstance(q.get("resposta_inicial"), str) and len(q["resposta_inicial"].strip()) >= 15 for q in questoes)
+
 # Subitens identificados nos diagnósticos dos HTMLs oficiais, commit registrado no caderno.
 SUBITENS_FONTE = {
     10: {13: "abc", 17: "abc", 23: "ab", 29: "abcd"},

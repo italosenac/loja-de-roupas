@@ -19,7 +19,7 @@ async function requisitar(caminho, opcoes = {}) {
   const dados = resposta.status === 204 ? null : await resposta.json().catch(() => null);
   if (!resposta.ok) {
     let mensagem = typeof dados?.detail === "string" ? dados.detail : "Verifique os dados informados.";
-    if (resposta.status === 403) mensagem = "Esta operação está disponível apenas para o acesso autorizado da administração.";
+    if (resposta.status === 403) mensagem = "Esta operação não está disponível neste acesso.";
     if (resposta.status >= 500) mensagem = "A loja está temporariamente indisponível. Tente novamente em instantes.";
     const erro = new Error(mensagem);
     erro.status = resposta.status;
@@ -130,7 +130,10 @@ async function mostrarDetalhes(produtoId) {
 const botaoMenu = document.querySelector(".menu-alternar");
 const cabecalho = document.querySelector(".cabecalho");
 const navegacaoPrincipal = document.querySelector("#navegacao-principal");
+const acoesCabecalho = document.querySelector(".cabecalho-acoes");
+const telaDesktop = matchMedia("(min-width: 1100px)");
 function alternarMenu(aberto, devolverFoco = false) {
+  navegacaoPrincipal.hidden = !telaDesktop.matches && !aberto;
   cabecalho.classList.toggle("menu-aberto", aberto);
   botaoMenu.setAttribute("aria-expanded", String(aberto));
   botaoMenu.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
@@ -143,4 +146,9 @@ navegacaoPrincipal.addEventListener("click", evento => {
 document.addEventListener("keydown", evento => {
   if (evento.key === "Escape" && botaoMenu.getAttribute("aria-expanded") === "true") alternarMenu(false, true);
 });
-matchMedia("(min-width: 1100px)").addEventListener("change", () => alternarMenu(false));
+function ajustarNavegacao() {
+  acoesCabecalho.hidden = telaDesktop.matches;
+  alternarMenu(false);
+}
+telaDesktop.addEventListener("change", ajustarNavegacao);
+ajustarNavegacao();

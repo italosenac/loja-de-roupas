@@ -170,7 +170,8 @@
     "limite_pedido_publico": {
       "taxa_por_segundo": 1,
       "burst": 5
-    }
+    },
+    "nota_historica": "Resultados da implantacao inicial. Cadastro e gerenciamento foram abertos posteriormente; politica atual em revisao_visual e evidencias/demo-publica.json."
   },
   "testes": {
     "pytest": 159,
@@ -412,5 +413,70 @@
         "avisos": 0
       }
     }
+  },
+  "revisao_visual": {
+    "verificado_em": "2026-11-26T21:23:25.047666+00:00",
+    "pytest": 172,
+    "navegador_https": {
+      "responsividade": 538,
+      "fluxos": 18,
+      "docs": 20,
+      "tabelas": 4
+    },
+    "total_https": 580,
+    "falhas": 0,
+    "erros_console": 0,
+    "menu": "Uma navegacao, visibilidade explicita por tamanho; Escape, foco e redimensionamento conferidos",
+    "tabelas_docs": "Todas as colunas legiveis em blocos verticais abaixo de 900 px; sem arrastar lateralmente",
+    "tabela_gerenciamento": "Layout preservado conforme pedido do aluno",
+    "cache": "CSS e JS versionados pelo SHA-256; HTML e arquivos alterados com no-cache, max-age=0, must-revalidate",
+    "demo_publica": {
+      "data": "2026-11-26",
+      "mudanca": "Cadastro e gerenciamento abertos para testar a demo, conforme pedido do aluno.",
+      "backup_sqlite_antes_da_abertura": {
+        "integridade": "ok",
+        "produtos": 3
+      },
+      "origem_do_teste": "Cliente HTTPS executado na EC2, fora do IP administrativo. Produtos temporários removidos ao terminar.",
+      "http_real": {
+        "cadastro_publico": 201,
+        "edicao_publica": 200,
+        "exclusao_publica": 204,
+        "cadastro_cloud_publico_id_ja_existente": 409,
+        "swagger_externo": 403,
+        "ids_originais_preservados": [
+          1,
+          2,
+          3
+        ]
+      },
+      "seguranca_real": {
+        "isolamento": true,
+        "cookie_forjado_rejeitado": true,
+        "cookie_secure_httponly": true,
+        "sem_cache_compartilhado": true,
+        "laboratorio_externo": 403
+      },
+      "cloudfront_test_function": {
+        "casos_aprovados": 10,
+        "casos_reprovados": 0,
+        "viewer": "IP de documentacao, fora do acesso administrativo",
+        "verificacoes": [
+          "POST produtos Coding permitido",
+          "PUT produto Coding permitido",
+          "DELETE produto Coding permitido",
+          "POST produtos Cloud permitido",
+          "OpenAPI restrito",
+          "Swagger restrito",
+          "Laboratorio restrito",
+          "Rota de escrita desconhecida restrita",
+          "DELETE Cloud inexistente restrito",
+          "Sacola publica preservada"
+        ],
+        "cabecalhos_forjados_cloud_removidos": true
+      },
+      "infraestrutura": "Origem privada, security groups e chave interna da API Cloud preservados; nenhum novo recurso criado."
+    },
+    "textos": "Textos revisados para fluidez; termos t?cnicos e 115 quest?es preservados."
   }
 }

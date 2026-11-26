@@ -20,7 +20,7 @@ Projeto acadêmico de Ítalo Rodrigues Pereira, Faculdade Senac Pernambuco, Curs
 | Produtos Cloud | https://d35i4a7nhsg3b0.cloudfront.net/cloud-api/produtos |
 | Swagger Coding, restrito | https://d35i4a7nhsg3b0.cloudfront.net/api/docs |
 
-Cadastro, edição, exclusão e Swagger exigem o acesso administrativo autorizado na infraestrutura. Visitantes podem consultar as duas vitrines e usar sua sacola Coding. A vitrine Cloud permite totalização e um pedido demonstrativo, sem pagamento, emissão fiscal ou reserva de estoque.
+Cadastro, edição e exclusão estão abertos para qualquer pessoa testar a demo, para facilitar os testes. As alterações no catálogo são compartilhadas; as sacolas continuam individuais. Swagger e rotas de laboratório permanecem restritos. A vitrine Cloud permite totalização e um pedido demonstrativo, sem pagamento, emissão fiscal ou reserva de estoque.
 
 ## Duas trilhas e dois catálogos
 
@@ -87,7 +87,7 @@ Prefixo Cloud: `/cloud-api`.
 | --- | --- | --- |
 | GET | /produtos | Scan paginado do catálogo pequeno |
 | GET | /produtos/{id} | GetItem; 200 ou 404 |
-| POST | /produtos | Cadastro administrativo condicional; 201, 409 ou 422 |
+| POST | /produtos | Cadastro público da demo, condicional; 201, 409 ou 422 |
 | GET | /promocoes | Regras vigentes |
 | POST | /carrinho/total | Lista itens com produto_id e quantidade; preços do DynamoDB |
 | POST | /pedidos | Um pedido demonstrativo; 202 significa recebido |
@@ -113,7 +113,7 @@ Ao receber alerta, confira atraso, logs sanitizados e DLQ, corrija a causa e aut
 pytest -q
 ```
 
-Suíte atual: **166 testes aprovados, zero reprovados**. Há testes de domínio, filtros, CRUD, duplicidade, SQLite reaberto, duas sessões independentes, assinatura manipulada, expiração/capacidade, cookies, CORS, frontend, paginação DynamoDB, preço adulterado, condições, idempotência e cobertura dos subitens dos slides. Os testes Cloud usam objetos controlados; os smoke tests AWS são evidências separadas.
+Suíte atual: **172 testes aprovados, zero reprovados**. Há testes de domínio, filtros, CRUD, duplicidade, SQLite reaberto, duas sessões independentes, assinatura manipulada, expiração/capacidade, cookies, CORS, frontend, paginação DynamoDB, preço adulterado, condições, idempotência e cobertura dos subitens dos slides. Os testes Cloud usam objetos controlados; os smoke tests AWS são evidências separadas.
 
 Verificações de navegador em HTTPS: 38 fluxos Coding, 20 de Docs e 15 de Cloud. Incluem desktop/celular, exportação/importação, persistência, XSS, cadastro temporário Cloud e aparecimento na vitrine sem redeploy. Os dois HTMLs autorizados passaram no W3C sem erros ou avisos.
 
@@ -174,10 +174,21 @@ Cloud: leitura integral dos cinco HTMLs oficiais (269 slides). Os arquivos publi
 
 ## Refinamento global de interface (26/11/2026)
 
-As seis páginas compartilham menu compacto abaixo de 1100 px, botão acessível, fechamento com Escape e devolução do foco. O conteúdo usa largura máxima centralizada e margens laterais de 16 a 48 px. Campos, botões e painéis usam espaçamentos comuns; tabelas rolam somente em seu contêiner. Não se oculta overflow horizontal da página.
+As seis páginas compartilham menu compacto abaixo de 1100 px, botão acessível, fechamento com Escape e devolução do foco. O conteúdo usa largura máxima centralizada e margens laterais de 16 a 48 px. Campos, botões e painéis usam espaçamentos comuns; tabelas informativas de Docs viram blocos verticais abaixo de 900 px, com rótulos e todas as colunas. A tabela administrativa mantém o layout anterior, conforme solicitado. Não se oculta overflow horizontal da página.
 
-Validação real em HTTPS: **433 verificações aprovadas, zero falhas e zero erros no console**, sendo 395 da matriz de seis páginas nas larguras 320, 360, 375, 390, 412, 430, 768, 1024, 1440 e 1920 px; 18 fluxos de busca, filtros, detalhes, quantidades, carrinho isolado, consulta administrativa e total Cloud; 20 verificações de Docs. A matriz verifica menu aberto/fechado, foco, margens, IDs e ausência de overflow. W3C novamente sem erros ou avisos para index/cadastro. Carga e falhas AWS anteriores não foram repetidas.
+Validação real em HTTPS: **580 verificações aprovadas, zero falhas e zero erros no console**, sendo 538 da matriz de seis páginas nas larguras 320, 360, 375, 390, 412, 430, 768, 1024, 1440 e 1920 px; 18 fluxos de busca, filtros, detalhes, quantidades, carrinho isolado, consulta administrativa e total Cloud; 20 verificações de Docs e quatro conferências das tabelas totalmente carregadas. A matriz verifica menu aberto/fechado, foco, margens, IDs e ausência de overflow. W3C novamente sem erros ou avisos para index/cadastro. Carga e falhas AWS anteriores não foram repetidas.
 
 [Resultados detalhados](evidencias/interface-2026-11-26.json), [Docs mobile](evidencias/docs-mobile.png), [menu mobile](evidencias/menu-mobile.png), [sacola mobile](evidencias/sacola-mobile.png) e [vitrine desktop](evidencias/vitrine-desktop.png). O script `tools/verificar_interface.mjs` usa o protocolo nativo de um Edge/Chromium aberto em modo de teste com porta 9222; recebe URL base e pasta de capturas como argumentos. Sem dependências npm.
 
 Codificação: arquivos UTF-8 e Content-Type explícito no S3. As duas APIs foram conferidas por decodificação UTF-8. Os nomes dos IDs 1 e 2 estavam corrompidos somente no DynamoDB; houve backup dos itens e atualização condicional apenas do atributo nome, preservando todos os demais campos. SQLite permaneceu intacto. As evidências históricas mantêm suas datas; `revisao_ui` registra a assinatura SNS confirmada e a auditoria atual, com filas vazias e alarmes OK.
+
+
+## Revisão final da demo
+
+O CSS foi consolidado para remover regras concorrentes. Busca, tamanho, preço e ações seguem a proposta de layout, com espaçamentos de 8 a 24 px entre controles e margens simétricas. O menu usa uma única navegação, com visibilidade explícita no HTML e no JavaScript. `python tools/versionar_front.py` atualiza as URLs de CSS e JS pelo hash do conteúdo; execute depois de editar esses arquivos. Os arquivos publicados revalidam o cache para evitar mistura de versões.
+
+No celular, as tabelas informativas de Docs mostram cada linha como um bloco com os nomes das colunas, sem ocultar dados nem exigir rolagem lateral. No desktop, continuam em colunas. A tabela de gerenciamento foi mantida como estava. [Tabela Docs no celular](evidencias/docs-tabelas-mobile.png), [tabela Docs no desktop](evidencias/docs-tabelas-desktop.png) e [filtros no celular](evidencias/filtros-mobile.png).
+
+Cadastro, edição e exclusão da demo estão abertos ao público. A Vitrine Cloud também permite cadastro. As mudanças nos catálogos são compartilhadas; as sacolas permanecem individuais. Swagger e laboratório continuam restritos, sem abrir a origem EC2 ou expor a chave interna Cloud. Antes da abertura, foi feito backup consistente do SQLite, com integridade ok e três produtos. [Teste externo real da demo](evidencias/demo-publica.json): POST 201, PUT 200, DELETE 204 em registro temporário; duplicidade Cloud 409; Swagger e laboratório 403; IDs 1, 2 e 3 preservados. Dez casos da CloudFront Function foram aprovados antes da publicação. Nenhum novo recurso AWS foi criado.
+
+Os textos da interface e os resumos foram revisados para uma linguagem mais direta. Os enunciados, as refer?ncias acad?micas e as 115 quest?es foram preservados. O caderno permite editar, salvar, exportar e importar as respostas no navegador; as respostas existentes s?o preservadas. A autoavalia??o fica dispon?vel para preenchimento pessoal.

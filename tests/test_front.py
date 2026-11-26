@@ -43,7 +43,7 @@ def test_idioma_viewport_e_estilo(pagina):
     elementos = ler(pagina)
     assert any(tag == "html" and atributos.get("lang") == "pt-BR" for tag, atributos in elementos)
     assert any(tag == "meta" and atributos.get("name") == "viewport" for tag, atributos in elementos)
-    assert any(tag == "link" and atributos.get("href") == "estilo.css" for tag, atributos in elementos)
+    assert any(tag == "link" and atributos.get("href", "").split("?")[0] == "estilo.css" for tag, atributos in elementos)
 
 
 def test_campos_do_cadastro_tem_label_e_nome():
@@ -83,6 +83,22 @@ def test_menu_acessivel_sem_ids_duplicados(pagina):
     assert botoes[0]["aria-expanded"] == "false"
     assert botoes[0]["aria-label"] == "Abrir menu"
     assert "navegacao-principal" in ids
+    navegacoes = [a for tag, a in elementos if tag == "nav" and a.get("id") == "navegacao-principal"]
+    assert len(navegacoes) == 1
+    assert "hidden" in navegacoes[0]
+
+
+@pytest.mark.parametrize("pagina", PAGINAS)
+def test_versao_dos_estilos_e_scripts_corresponde_aos_arquivos(pagina):
+    import hashlib
+    from urllib.parse import parse_qs, urlsplit
+
+    for tag, atributos in ler(pagina):
+        referencia = atributos.get("href" if tag == "link" else "src", "")
+        url = urlsplit(referencia)
+        if url.path.endswith((".css", ".js")):
+            esperado = hashlib.sha256((PASTA_FRONT / url.path).read_bytes()).hexdigest()[:12]
+            assert parse_qs(url.query).get("v") == [esperado]
 
 
 def test_arquivos_publicados_sao_utf8_sem_texto_corrompido():

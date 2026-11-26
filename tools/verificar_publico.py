@@ -44,14 +44,15 @@ def main():
     assert requisitar(cliente_b, "/api/carrinho/total")[1]["pecas"] == 1
     requisitar(cliente_b, "/api/carrinho", "DELETE")
     protegidas = [("/api/openapi.json", "GET", None),
-                  ("/api/produtos/99999999", "DELETE", None),
-                  ("/cloud-api/produtos", "POST", {"id": 1, "nome": "Camiseta básica", "preco": 39.9}),
                   ("/cloud-api/laboratorio/pedidos", "POST", {"produto": 1, "quantidade": 99})]
     resultados = []
     for caminho, metodo, corpo in protegidas:
         codigo = requisitar(visitante, caminho, metodo, corpo)[0]
         resultados.append({"rota": caminho, "status": codigo})
         assert codigo == 403
+    assert requisitar(visitante, "/api/produtos/99999999", "DELETE")[0] == 404
+    assert requisitar(visitante, "/cloud-api/produtos", "POST",
+                      {"id": 1, "nome": "Camiseta básica", "preco": 39.9})[0] == 409
     assert requisitar(visitante, "/cloud-api/produtos")[0] == 200
     assert requisitar(visitante, "/cloud-api/pedidos", "POST", {"produto": 1, "quantidade": 99})[0] == 422
     print(json.dumps({"isolamento": True, "cookie_forjado_rejeitado": True,

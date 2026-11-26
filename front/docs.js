@@ -5,12 +5,25 @@ const avaliacoes = ["", "Preciso revisar", "Entendi parcialmente", "Consigo expl
 const estadoDocs = document.querySelector("#estado-docs");
 const chaveResposta = id => "loja.docs.v1." + id;
 
-function lerResposta(id) {
+function identificarColunas() {
+  document.querySelectorAll(".docs .tabela-responsiva table").forEach(tabela => {
+    tabela.setAttribute("role", "table");
+    const rotulos = [...tabela.querySelectorAll("thead th")].map(coluna => coluna.textContent.trim());
+    tabela.querySelectorAll("tbody tr").forEach(linha => {
+      [...linha.cells].forEach((celula, indice) => { celula.dataset.rotulo = rotulos[indice]; });
+    });
+  });
+}
+
+function lerResposta(id, respostaInicial) {
+  const inicial = { resposta: respostaInicial, avaliacao: "", feedback: "" };
   try {
     const registro = JSON.parse(localStorage.getItem(chaveResposta(id)) || "null");
-    return registro && registroValido(registro) ? registro : { resposta: "", avaliacao: "", feedback: "" };
+    if (registro && registroValido(registro)) return registro;
+    localStorage.setItem(chaveResposta(id), JSON.stringify(inicial));
+    return inicial;
   } catch {
-    return { resposta: "", avaliacao: "", feedback: "" };
+    return inicial;
   }
 }
 
@@ -52,7 +65,13 @@ function campoTexto(rotulo, id, valor, limite) {
   campo.value = valor;
   campo.maxLength = limite;
   campo.rows = 4;
+  campo.addEventListener("input", () => ajustarAltura(campo));
   return { label, campo };
+}
+
+function ajustarAltura(campo) {
+  campo.style.height = "auto";
+  campo.style.height = campo.scrollHeight + 2 + "px";
 }
 
 function criarQuestao(questao, indice) {
@@ -63,7 +82,7 @@ function criarQuestao(questao, indice) {
   const resposta = campoTexto("Sua resposta", "resposta-" + questao.id, registro.resposta, 20000);
   const feedback = campoTexto("Sua anotação de revisão", "feedback-" + questao.id, registro.feedback, 2000);
   feedback.campo.rows = 2;
-  const rotulo = criarElemento("label", "", "Autoavaliação");
+  const rotulo = criarElemento("label", "", "Autoavaliação (opcional)");
   const avaliacao = document.createElement("select");
   avaliacao.id = "avaliacao-" + questao.id;
   rotulo.htmlFor = avaliacao.id;
@@ -108,6 +127,7 @@ function mostrarAula(aula) {
     document.querySelector("#objetivos-aula").replaceChildren(...aula.objetivos.map(texto => criarElemento("li", "", texto)));
     document.querySelector("#checklist-aula").replaceChildren(...aula.checklist.map(texto => criarElemento("li", "", texto)));
     document.querySelector("#questoes-docs").replaceChildren(...aula.questoes.map(criarQuestao));
+    document.querySelectorAll("#questoes-docs textarea").forEach(ajustarAltura);
   }
   atualizarProgresso();
 }
@@ -148,7 +168,7 @@ async function importarRespostas(evento) {
 
 async function iniciarDocs() {
   try {
-    const resposta = await fetch("docs-dados.json");
+    const resposta = await fetch("docs-dados.json?v=ui-20261126-2", { cache: "no-cache" });
     if (!resposta.ok) throw new Error("Material de estudo indisponível.");
     dadosDocs = await resposta.json();
     const navegacao = document.querySelector("#navegacao-docs");
@@ -160,7 +180,7 @@ async function iniciarDocs() {
       navegacao.append(botao);
     }
     for (const aula of dadosDocs.aulas) {
-      for (const questao of aula.questoes) respostas[questao.id] = lerResposta(questao.id);
+      for (const questao of aula.questoes) respostas[questao.id] = lerResposta(questao.id, questao.resposta_inicial ?? questao.referencia);
       const link = criarElemento("a", "", "Aula " + aula.numero + " · " + aula.titulo + " · " + aula.slides + " slides");
       link.href = aula.fonte;
       link.target = "_blank";
@@ -170,13 +190,13 @@ async function iniciarDocs() {
       document.querySelector("#fontes-docs").append(item);
     }
     document.querySelector("#rastreabilidade").textContent = "Leitura integral em " + dadosDocs.consultado_em + ". Os cinco HTMLs publicados correspondem ao commit " + dadosDocs.sha + " do repositório público de materiais. " + dadosDocs.nota;
-    const retornoEvidencias = await fetch("docs-evidencias.json");
+    const retornoEvidencias = await fetch("docs-evidencias.json?v=ui-20261126-2", { cache: "no-cache" });
     if (!retornoEvidencias.ok) throw new Error("Evidências indisponíveis; recarregue a página.");
     const prova = await retornoEvidencias.json();
     const evidencias = [
-      ["Coding · EC2 / FastAPI / SQLite", "Implementado e testado", prova.testes.pytest + " testes aprovados localmente e na EC2; serviço ativo; SQLite íntegro e três produtos preservados."],
+      ["Coding · EC2 / FastAPI / SQLite", "Implementado e testado", (prova.revisao_respostas?.pytest ?? prova.revisao_visual?.pytest ?? prova.testes.pytest) + " testes aprovados na revisão indicada nas evidências; SQLite íntegro e três produtos preservados."],
       ["Carrinho individual", "Implementado e testado", "Dois clientes isolados; assinatura de sessão; cookies HttpOnly/Secure/SameSite; respostas no-store. Sessões expiram em 30 minutos e se perdem ao reiniciar o processo."],
-      ["S3 / CloudFront", "Implementado e testado", "Frontend funcional publicado por HTTPS; fontes e SVGs preservados. CRUD de produtos permanece restrito."],
+      ["S3 / CloudFront", "Implementado e testado", "Frontend funcional publicado por HTTPS; fontes e SVGs preservados. CRUD de produtos aberto para testes da demo."],
       ["S3 · Aula 10", "Implementado e testado", "Dez amostras isoladas, uma Standard-IA; regras Enabled conferidas. Transições de 30/90 dias não ocorreram. Limpeza: " + prova.s3.limpeza + "."],
       ["Cloud · DynamoDB / VPC", "Implementado e testado", "Catálogo real em tabela sob demanda; Lambda em duas sub-redes privadas; endpoints Gateway. Laboratório respondeu 500 antes e 200 depois do endpoint."],
       ["Cloud · SQS / consumidor", "Implementado e testado", prova.carga.enviados + " respostas 202; concorrência máxima " + prova.consumidor.concorrencia_observada + "; 101 conclusões únicas; duplicata reconhecida; três falhas sintéticas e DLQ."],
@@ -190,11 +210,13 @@ async function iniciarDocs() {
       tr.append(...linha.map(valor => criarElemento("td", "", valor)));
       return tr;
     }));
+    identificarColunas();
     mostrarAula(null);
     document.querySelector("#exportar-json").disabled = false;
     document.querySelector("#exportar-txt").disabled = false;
     document.querySelector("#importar-docs").disabled = false;
-    estadoDocs.textContent = "Caderno pronto. Rascunhos salvos automaticamente neste navegador.";
+    document.querySelector("#importar-arquivo").disabled = false;
+    estadoDocs.textContent = "Você pode revisar e editar quando quiser; suas alterações ficam salvas neste navegador.";
   } catch (erro) {
     estadoDocs.textContent = erro.message;
   }
@@ -203,4 +225,6 @@ async function iniciarDocs() {
 document.querySelector("#exportar-json").onclick = () => exportarRespostas("json");
 document.querySelector("#exportar-txt").onclick = () => exportarRespostas("txt");
 document.querySelector("#importar-docs").onchange = importarRespostas;
+document.querySelector("#importar-arquivo").onclick = () => document.querySelector("#importar-docs").click();
+window.addEventListener("resize", () => document.querySelectorAll("#questoes-docs textarea").forEach(ajustarAltura));
 iniciarDocs();

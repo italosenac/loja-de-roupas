@@ -23,8 +23,12 @@ function handler(event) {
     || (request.method === "DELETE" && (itemDaSacola || caminho === "/api/carrinho"));
   var demonstracaoCloud = request.method === "POST"
     && (caminho === "/cloud-api/carrinho/total" || caminho === "/cloud-api/pedidos");
+  var produtoDaDemo = /^\/api\/produtos\/[0-9]+$/.test(caminho);
+  var escritaDeProdutos = (request.method === "POST"
+      && (caminho === "/api/produtos" || caminho === "/cloud-api/produtos"))
+    || ((request.method === "PUT" || request.method === "DELETE") && produtoDaDemo);
 
-  if (((!leitura && !escritaNaSacola && !demonstracaoCloud) || documentacao || laboratorio)
+  if (((!leitura && !escritaNaSacola && !demonstracaoCloud && !escritaDeProdutos) || documentacao || laboratorio)
       && event.viewer.ip !== ipAutorizado) {
     return {
       statusCode: 403,

@@ -41,7 +41,6 @@ async function buscarProdutos() {
 
 async function iniciarGerenciamento() {
   try {
-    await requisitar("/openapi.json");
     document.querySelector("#area-administrativa").hidden = false;
     await buscarProdutos();
     const informacao = await requisitar("/");

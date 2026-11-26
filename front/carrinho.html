@@ -7,17 +7,17 @@
   <title>Minha sacola · Loja de Roupas</title>
   <link rel="icon" href="img/logo.svg" type="image/svg+xml">
   <link rel="preload" href="fonts/outfit-variable.ttf" as="font" type="font/ttf" crossorigin>
-  <link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="estilo.css?v=9b328740953c">
 </head>
 <body>
   <a class="pular" href="#conteudo">Pular para o conteúdo</a>
   <header class="cabecalho">
     <a class="marca" href="index.html" aria-label="Loja de Roupas · início"><img src="img/logo.svg" alt="" width="40" height="40"><span>loja <span class="marca-detalhe">de roupas.</span></span></a>
-    <div class="cabecalho-acoes">
+    <div class="cabecalho-acoes" hidden>
       <a class="sacola-compacta" href="carrinho.html"><svg width="22" height="24" viewBox="0 0 24 26" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 8h16l2 15H2L4 8Z"/><path d="M8 10V6a4 4 0 0 1 8 0v4"/></svg><span class="sr-only">Minha sacola: </span><span data-contador>…</span></a>
       <button class="menu-alternar" type="button" aria-expanded="false" aria-controls="navegacao-principal" aria-label="Abrir menu"><svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
     </div>
-    <nav id="navegacao-principal" aria-label="Principal"><a href="index.html">Vitrine</a><a href="carrinho.html" aria-current="page">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html">Gerenciar produtos</a><a href="cloud.html">Vitrine Cloud</a><a href="docs.html">Docs</a></nav>
+    <nav id="navegacao-principal" aria-label="Principal" hidden><a href="index.html">Vitrine</a><a href="carrinho.html" aria-current="page">Minha sacola (<span data-contador>…</span>)</a><a href="gerenciamento.html">Gerenciar produtos</a><a href="cloud.html">Vitrine Cloud</a><a href="docs.html">Docs</a></nav>
   </header>
   <main id="conteudo" class="pagina-interna">
     <p class="sobretitulo">SUAS ESCOLHAS, SEU ESTILO</p><h1>Minha sacola.</h1>
@@ -33,8 +33,8 @@
     </div>
   </main>
   <footer><span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span></footer>
-  <script src="config.js"></script>
-  <script src="comum.js"></script>
-  <script src="carrinho.js"></script>
+  <script src="config.js?v=b6a184c7e11d"></script>
+  <script src="comum.js?v=a46b524a19ff"></script>
+  <script src="carrinho.js?v=897104d43028"></script>
 </body>
 </html>

@@ -11,7 +11,7 @@ async function enviarProdutoCloud(dados) {
     method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(dados),
   });
   const produto = await resposta.json().catch(() => null);
-  if (!resposta.ok) throw new Error(resposta.status === 403 ? "Cadastro Cloud disponível somente para o acesso administrativo autorizado."
+  if (!resposta.ok) throw new Error(resposta.status === 403 ? "Não foi possível acessar o cadastro Cloud."
     : resposta.status >= 500 ? "A trilha Cloud está temporariamente indisponível." : produto?.erro || "Verifique os dados do produto.");
   return produto;
 }
@@ -29,7 +29,7 @@ function atualizarCampos() {
 async function prepararFormulario() {
   campos.disabled = true;
   try {
-    await requisitar("/openapi.json");
+    await requisitar("/");
     if (catalogoCloud) {
       document.querySelector("#campo-id-cloud").hidden = false;
       document.querySelector("#id-cloud").required = true;

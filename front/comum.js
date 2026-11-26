@@ -126,3 +126,21 @@ async function mostrarDetalhes(produtoId) {
     mostrarMensagem(estado, erro.message);
   }
 }
+
+const botaoMenu = document.querySelector(".menu-alternar");
+const cabecalho = document.querySelector(".cabecalho");
+const navegacaoPrincipal = document.querySelector("#navegacao-principal");
+function alternarMenu(aberto, devolverFoco = false) {
+  cabecalho.classList.toggle("menu-aberto", aberto);
+  botaoMenu.setAttribute("aria-expanded", String(aberto));
+  botaoMenu.setAttribute("aria-label", aberto ? "Fechar menu" : "Abrir menu");
+  if (devolverFoco) botaoMenu.focus();
+}
+botaoMenu.addEventListener("click", () => alternarMenu(botaoMenu.getAttribute("aria-expanded") !== "true"));
+navegacaoPrincipal.addEventListener("click", evento => {
+  if (evento.target.closest("a")) alternarMenu(false);
+});
+document.addEventListener("keydown", evento => {
+  if (evento.key === "Escape" && botaoMenu.getAttribute("aria-expanded") === "true") alternarMenu(false, true);
+});
+matchMedia("(min-width: 1100px)").addEventListener("change", () => alternarMenu(false));

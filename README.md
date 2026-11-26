@@ -113,7 +113,7 @@ Ao receber alerta, confira atraso, logs sanitizados e DLQ, corrija a causa e aut
 pytest -q
 ```
 
-Suíte atual: **159 testes aprovados, zero reprovados**. Há testes de domínio, filtros, CRUD, duplicidade, SQLite reaberto, duas sessões independentes, assinatura manipulada, expiração/capacidade, cookies, CORS, frontend, paginação DynamoDB, preço adulterado, condições, idempotência e cobertura dos subitens dos slides. Os testes Cloud usam objetos controlados; os smoke tests AWS são evidências separadas.
+Suíte atual: **166 testes aprovados, zero reprovados**. Há testes de domínio, filtros, CRUD, duplicidade, SQLite reaberto, duas sessões independentes, assinatura manipulada, expiração/capacidade, cookies, CORS, frontend, paginação DynamoDB, preço adulterado, condições, idempotência e cobertura dos subitens dos slides. Os testes Cloud usam objetos controlados; os smoke tests AWS são evidências separadas.
 
 Verificações de navegador em HTTPS: 38 fluxos Coding, 20 de Docs e 15 de Cloud. Incluem desktop/celular, exportação/importação, persistência, XSS, cadastro temporário Cloud e aparecimento na vitrine sem redeploy. Os dois HTMLs autorizados passaram no W3C sem erros ou avisos.
 
@@ -124,7 +124,7 @@ Resultados AWS de 26/11/2026:
 - No laboratório isolado de rede, HTTP **500 antes** e **200 depois** do endpoint. O 502 dos slides não foi observado neste HTTP API.
 - Carga protegida de 100 pedidos: **100 respostas 202**, paralelismo cinco pela cota real de dez execuções da conta. Média 318,76 ms; máximo 1.552,25 ms; 98 respostas abaixo de um segundo.
 - 101 pedidos válidos concluídos, contando o pedido inicial. Entrega duplicada manteve 101 efeitos e gerou um registro de duplicata. Concorrência observada no CloudWatch: máximo dois.
-- Quantidade 99 falhou três vezes e foi à DLQ. Alarme passou de OK para ALARM em 26/11/2026 19:34:01 UTC e executou ação SNS. Confirmação de assinatura/e-mail permanece pendente.
+- Quantidade 99 falhou três vezes e foi à DLQ. Alarme passou de OK para ALARM em 26/11/2026 19:34:01 UTC e executou ação SNS. Assinatura SNS confirmada na revisão posterior; recebimento do alerta histórico por e-mail não comprovado.
 - Amostras S3 isoladas: dez objetos, uma cópia em Standard-IA e regras Enabled para logs 30/90/365 dias e temporários sete dias. Não houve transição futura antecipada.
 
 As evidências públicas, sanitizadas e datadas ficam em [docs-evidencias.json](front/docs-evidencias.json). O gráfico em [fila-cloud.svg](front/img/fila-cloud.svg) deriva de métricas reais por minuto; não é captura de console. Os contadores SQS são aproximados e têm atraso. Backups e respostas operacionais completas ficam fora do Git.
@@ -155,7 +155,7 @@ O orçamento mensal `loja-cloud-aulas-10-14` é US$ 1, alerta a 80%, filtrado po
 
 O modelo reproduzível `python tools/estimar_custos_cloud.py` estima uma base mensal de US$ 0,49 para 100 pedidos/10 mil consultas e US$ 0,78 para 10 mil pedidos/100 mil consultas, sem franquias. Hipóteses: produtor 256 MB/0,1 s; consumidor 128 MB/1 s; catálogo 256 MB/0,2 s; 648 mil chamadas SQS ociosas/mês mais três por pedido; itens até 1 KB; duas métricas de alarme; 0,01/0,1 GB de logs. São cenários, não medição de fatura; não incluem Coding, CloudFront, S3 compartilhado, SNS, transferência ou impostos. Outra região com preços hipoteticamente iguais acrescentaria a mesma base, mais replicação e tráfego. Como referência portável em outro provedor, [VM DigitalOcean de 1 GiB](https://www.digitalocean.com/pricing/droplets) a US$ 6/mês mais [Spaces](https://docs.digitalocean.com/products/spaces/details/pricing/) a US$ 5/mês somam US$ 11/mês; duas VMs somam US$ 17 com Spaces. Preços consultados em 26/11/2026. Isso exige adaptação e operação própria, sem equivalência automática aos serviços gerenciados ou garantia de alta disponibilidade. Nenhum recurso foi contratado em outra região/provedor.
 
-Pendências externas: confirmação da assinatura SNS e prova de recebimento do e-mail; documento detalhado da atividade no Teams e eventual envio; capturas do console AWS (há evidência textual real); fotografia original da boutique, ainda não fornecida/localizada. Nenhuma imagem foi inventada nem ampliada para ser chamada de 4K nativa.
+Assinatura SNS confirmada pela AWS em 26/11/2026; não foi enviado e-mail de teste adicional. Recebimento do alerta histórico não comprovado. Documento complementar não publicado; roteiro público utilizado, conforme informado pelo aluno; nenhuma entrega no Teams. Há evidência textual real AWS, sem alegar capturas do console. Fotografia original anexada pelo aluno (1398 × 790), convertida para WebP de 191.948 bytes e ampliada para 3840 × 2160; não é 4K nativa.
 
 ## Referências acadêmicas
 
@@ -169,5 +169,15 @@ Cloud: leitura integral dos cinco HTMLs oficiais (269 slides). Os arquivos publi
 - [Aula 13 · pico](https://sebastrogers.github.io/assets/materiais/cloud/aula-13-cloud-loja-aguenta-pico.html)
 - [Aula 14 · confiabilidade](https://sebastrogers.github.io/assets/materiais/cloud/aula-14-cloud-confiabilidade-risco.html)
 
-[Relatório oficial AWS de outubro/2025](https://aws.amazon.com/message/101925/), [Builders’ Library](https://aws.amazon.com/builders-library/) e [Data Act europeu](https://eur-lex.europa.eu/eli/reg/2023/2854/oj) complementam o estudo. Dados de mercado são atribuídos aos slides e suas datas, sem alegar confirmação independente. A matriz de seis serviços é preliminar; o documento detalhado do Teams não foi acessado. Respostas de referência não são apresentadas como autoria pessoal do aluno.
+[Relatório oficial AWS de outubro/2025](https://aws.amazon.com/message/101925/), [Builders’ Library](https://aws.amazon.com/builders-library/) e [Data Act europeu](https://eur-lex.europa.eu/eli/reg/2023/2854/oj) complementam o estudo. Dados de mercado são atribuídos aos slides e suas datas, sem alegar confirmação independente. A matriz de seis serviços é preliminar; documento complementar não publicado; roteiro público utilizado. Respostas de referência não são apresentadas como autoria pessoal do aluno.
 
+
+## Refinamento global de interface (26/11/2026)
+
+As seis páginas compartilham menu compacto abaixo de 1100 px, botão acessível, fechamento com Escape e devolução do foco. O conteúdo usa largura máxima centralizada e margens laterais de 16 a 48 px. Campos, botões e painéis usam espaçamentos comuns; tabelas rolam somente em seu contêiner. Não se oculta overflow horizontal da página.
+
+Validação real em HTTPS: **433 verificações aprovadas, zero falhas e zero erros no console**, sendo 395 da matriz de seis páginas nas larguras 320, 360, 375, 390, 412, 430, 768, 1024, 1440 e 1920 px; 18 fluxos de busca, filtros, detalhes, quantidades, carrinho isolado, consulta administrativa e total Cloud; 20 verificações de Docs. A matriz verifica menu aberto/fechado, foco, margens, IDs e ausência de overflow. W3C novamente sem erros ou avisos para index/cadastro. Carga e falhas AWS anteriores não foram repetidas.
+
+[Resultados detalhados](evidencias/interface-2026-11-26.json), [Docs mobile](evidencias/docs-mobile.png), [menu mobile](evidencias/menu-mobile.png), [sacola mobile](evidencias/sacola-mobile.png) e [vitrine desktop](evidencias/vitrine-desktop.png). O script `tools/verificar_interface.mjs` usa o protocolo nativo de um Edge/Chromium aberto em modo de teste com porta 9222; recebe URL base e pasta de capturas como argumentos. Sem dependências npm.
+
+Codificação: arquivos UTF-8 e Content-Type explícito no S3. As duas APIs foram conferidas por decodificação UTF-8. Os nomes dos IDs 1 e 2 estavam corrompidos somente no DynamoDB; houve backup dos itens e atualização condicional apenas do atributo nome, preservando todos os demais campos. SQLite permaneceu intacto. As evidências históricas mantêm suas datas; `revisao_ui` registra a assinatura SNS confirmada e a auditoria atual, com filas vazias e alarmes OK.

@@ -180,10 +180,10 @@ async function iniciarDocs() {
       ["S3 · Aula 10", "Implementado e testado", "Dez amostras isoladas, uma Standard-IA; regras Enabled conferidas. Transições de 30/90 dias não ocorreram. Limpeza: " + prova.s3.limpeza + "."],
       ["Cloud · DynamoDB / VPC", "Implementado e testado", "Catálogo real em tabela sob demanda; Lambda em duas sub-redes privadas; endpoints Gateway. Laboratório respondeu 500 antes e 200 depois do endpoint."],
       ["Cloud · SQS / consumidor", "Implementado e testado", prova.carga.enviados + " respostas 202; concorrência máxima " + prova.consumidor.concorrencia_observada + "; 101 conclusões únicas; duplicata reconhecida; três falhas sintéticas e DLQ."],
-      ["CloudWatch / SNS", "Alarme testado; e-mail pendente", "Histórico real OK → ALARM e ação SNS executada. Assinatura de e-mail pendente de confirmação; recebimento não comprovado."],
+      ["CloudWatch / SNS", "Alarme testado; assinatura confirmada", "Histórico real OK → ALARM e ação SNS executada. Assinatura confirmada pela AWS; recebimento do alerta histórico não comprovado."],
       ["Cenários da Aula 14", "Simulação", "Dez situações explicadas no caderno, sem provocar incidente regional."],
       ["Orçamento", "Configurado", "US$ 1/mês com alerta a 80%, filtrado por Project=loja-de-roupas. Tag de custo ativada; faturamento pode levar tempo para refletir o escopo."],
-      ["Capturas de console / Teams", "Pendente", "Evidências textuais AWS e gráfico real disponíveis. Não houve captura do console, acesso ao documento detalhado ou entrega no Teams."]
+      ["Capturas de console / Teams", "Escopo registrado", "Evidências textuais AWS e gráfico real disponíveis. Documento complementar não publicado; roteiro público utilizado. Não houve captura do console ou entrega no Teams."]
     ];
     document.querySelector("#evidencias-docs").replaceChildren(...evidencias.map(linha => {
       const tr = document.createElement("tr");

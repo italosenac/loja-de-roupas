@@ -1,0 +1,1752 @@
+{
+  "responsividade": {
+    "base": "https://d35i4a7nhsg3b0.cloudfront.net",
+    "resultados": [
+      {
+        "nome": "320 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "320 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "320 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "320 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "320 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "320 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "320 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "320 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "320 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "320 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "320 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "320 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "320 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "320 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "320 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "320 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "320 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "320 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "320 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "320 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "320 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "320 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "320 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "320 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "320 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "320 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "320 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "320 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "320 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "320 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "320 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "320 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "320 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "320 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "320 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "320 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "320 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "320 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "320 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "320 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "320 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "320 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "320 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "360 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "360 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "360 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "360 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "360 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "360 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "360 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "360 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "360 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "360 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "360 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "360 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "360 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "360 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "360 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "360 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "360 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "360 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "360 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "360 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "360 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "360 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "360 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "360 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "360 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "360 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "360 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "360 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "360 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "360 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "360 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "360 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "360 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "360 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "360 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "360 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "360 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "360 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "360 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "360 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "360 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "360 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "360 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "375 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "375 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "375 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "375 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "375 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "375 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "375 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "375 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "375 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "375 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "375 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "375 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "375 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "375 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "375 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "375 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "375 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "375 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "375 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "375 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "375 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "375 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "375 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "375 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "375 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "375 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "375 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "375 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "375 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "375 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "375 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "375 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "375 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "375 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "375 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "375 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "375 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "375 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "375 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "375 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "375 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "375 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "375 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "390 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "390 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "390 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "390 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "390 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "390 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "390 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "390 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "390 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "390 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "390 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "390 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "390 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "390 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "390 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "390 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "390 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "390 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "390 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "390 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "390 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "390 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "390 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "390 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "390 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "390 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "390 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "390 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "390 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "390 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "390 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "390 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "390 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "390 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "390 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "390 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "390 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "390 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "390 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "390 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "390 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "390 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "390 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "412 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "412 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "412 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "412 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "412 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "412 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "412 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "412 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "412 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "412 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "412 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "412 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "412 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "412 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "412 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "412 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "412 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "412 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "412 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "412 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "412 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "412 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "412 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "412 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "412 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "412 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "412 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "412 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "412 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "412 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "412 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "412 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "412 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "412 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "412 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "412 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "412 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "412 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "412 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "412 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "412 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "412 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "412 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "430 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "430 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "430 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "430 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "430 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "430 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "430 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "430 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "430 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "430 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "430 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "430 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "430 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "430 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "430 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "430 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "430 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "430 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "430 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "430 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "430 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "430 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "430 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "430 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "430 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "430 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "430 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "430 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "430 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "430 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "430 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "430 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "430 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "430 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "430 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "430 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "430 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "430 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "430 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "430 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "430 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "430 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "430 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "768 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "768 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "768 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "768 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "768 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "768 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "768 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "768 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "768 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "768 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "768 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "768 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "768 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "768 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "768 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "768 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "768 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "768 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "768 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "768 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "768 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "768 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "768 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "768 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "768 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "768 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "768 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "768 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "768 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "768 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "768 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "768 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "768 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "768 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "768 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "768 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "768 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "768 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "768 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "768 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "768 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "768 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "768 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1024 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1024 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1024 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1024 index.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "1024 index.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "1024 index.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "1024 index.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "1024 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1024 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1024 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1024 carrinho.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "1024 carrinho.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "1024 carrinho.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "1024 carrinho.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "1024 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1024 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1024 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1024 cadastro.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "1024 cadastro.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "1024 cadastro.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "1024 cadastro.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "1024 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1024 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1024 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1024 gerenciamento.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "1024 gerenciamento.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "1024 gerenciamento.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "1024 gerenciamento.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "1024 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1024 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1024 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1024 cloud.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "1024 cloud.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "1024 cloud.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "1024 cloud.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "1024 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1024 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1024 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1024 docs.html marca livre",
+        "passou": true
+      },
+      {
+        "nome": "1024 docs.html menu fechado",
+        "passou": true
+      },
+      {
+        "nome": "1024 docs.html menu aberto com 5 links",
+        "passou": true
+      },
+      {
+        "nome": "1024 docs.html Escape devolve foco",
+        "passou": true
+      },
+      {
+        "nome": "1024 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1440 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1440 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1440 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1440 index.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1440 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1440 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1440 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1440 carrinho.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1440 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1440 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1440 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1440 cadastro.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1440 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1440 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1440 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1440 gerenciamento.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1440 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1440 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1440 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1440 cloud.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1440 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1440 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1440 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1440 docs.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1440 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1920 index.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1920 index.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1920 index.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1920 index.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1920 carrinho.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1920 carrinho.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1920 carrinho.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1920 carrinho.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1920 cadastro.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1920 cadastro.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1920 cadastro.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1920 cadastro.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1920 gerenciamento.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1920 gerenciamento.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1920 gerenciamento.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1920 gerenciamento.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1920 cloud.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1920 cloud.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1920 cloud.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1920 cloud.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1920 docs.html sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "1920 docs.html centralizada",
+        "passou": true
+      },
+      {
+        "nome": "1920 docs.html IDs unicos",
+        "passou": true
+      },
+      {
+        "nome": "1920 docs.html navegacao desktop",
+        "passou": true
+      },
+      {
+        "nome": "1920 Docs formulario sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "nenhum erro JavaScript",
+        "passou": true
+      }
+    ],
+    "erros": []
+  },
+  "fluxos": {
+    "base": "https://d35i4a7nhsg3b0.cloudfront.net",
+    "resultados": [
+      {
+        "nome": "Acentos reais nos produtos Coding",
+        "passou": true
+      },
+      {
+        "nome": "Busca e filtros combinados",
+        "passou": true
+      },
+      {
+        "nome": "Detalhes e quantidade em modal",
+        "passou": true
+      },
+      {
+        "nome": "Contadores reais sincronizados",
+        "passou": true
+      },
+      {
+        "nome": "Navegacao fecha o menu",
+        "passou": true
+      },
+      {
+        "nome": "Resumo com desconto da API",
+        "passou": true
+      },
+      {
+        "nome": "Visitante B permanece vazio",
+        "passou": true
+      },
+      {
+        "nome": "Aumentar quantidade atualiza servidor e contador",
+        "passou": true
+      },
+      {
+        "nome": "Diminuir quantidade",
+        "passou": true
+      },
+      {
+        "nome": "Sacola preenchida 320 sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "Sacola preenchida 390 sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "Sacola preenchida 768 sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "Sacola preenchida 1440 sem overflow",
+        "passou": true
+      },
+      {
+        "nome": "Remover item mostra estado vazio",
+        "passou": true
+      },
+      {
+        "nome": "Acentos reais corrigidos no DynamoDB",
+        "passou": true
+      },
+      {
+        "nome": "Total Cloud calculado pela API",
+        "passou": true
+      },
+      {
+        "nome": "Formulario administrativo consulta valores preservados",
+        "passou": true
+      },
+      {
+        "nome": "Nenhum erro no console",
+        "passou": true
+      }
+    ],
+    "erros": []
+  },
+  "docs": {
+    "base": "https://d35i4a7nhsg3b0.cloudfront.net",
+    "resultados": [
+      {
+        "nome": "115 questões em cinco aulas",
+        "passou": true
+      },
+      {
+        "nome": "Nenhuma questão previamente respondida",
+        "passou": true
+      },
+      {
+        "nome": "Cinco fontes e SHA",
+        "passou": true
+      },
+      {
+        "nome": "27 subquestões da aula 10",
+        "passou": true
+      },
+      {
+        "nome": "Referências inicialmente ocultas",
+        "passou": true
+      },
+      {
+        "nome": "Progresso somente com texto efetivo",
+        "passou": true
+      },
+      {
+        "nome": "Resposta e autoavaliação sobrevivem ao recarregamento",
+        "passou": true
+      },
+      {
+        "nome": "HTML digitado permanece texto sem XSS",
+        "passou": true
+      },
+      {
+        "nome": "Referência pode ser revelada sem substituir a resposta",
+        "passou": true
+      },
+      {
+        "nome": "Exportação JSON contém o rascunho",
+        "passou": true
+      },
+      {
+        "nome": "Exportação TXT contém o rascunho",
+        "passou": true
+      },
+      {
+        "nome": "Importação inválida é rejeitada sem alterar respostas",
+        "passou": true
+      },
+      {
+        "nome": "Importação válida restaura dados",
+        "passou": true
+      },
+      {
+        "nome": "Limpeza individual confirmada",
+        "passou": true
+      },
+      {
+        "nome": "Espaços não contam como resposta",
+        "passou": true
+      },
+      {
+        "nome": "Dez cenários rotulados simulação",
+        "passou": true
+      },
+      {
+        "nome": "Docs móvel sem rolagem horizontal",
+        "passou": true
+      },
+      {
+        "nome": "Rodapé exclusivo e centralizado",
+        "passou": true
+      },
+      {
+        "nome": "Menu liga Docs e Cloud",
+        "passou": true
+      },
+      {
+        "nome": "Nenhum erro no console",
+        "passou": true
+      }
+    ],
+    "erros": []
+  }
+}

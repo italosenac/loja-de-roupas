@@ -71,3 +71,23 @@ def test_rodape_contem_apenas_nome_e_instituicao(pagina):
     rodape = texto.split("<footer>")[1].split("</footer>")[0]
     assert rodape == "<span>Ítalo Rodrigues Pereira · Faculdade Senac Pernambuco</span>"
     assert "<a " not in rodape
+
+
+@pytest.mark.parametrize("pagina", PAGINAS)
+def test_menu_acessivel_sem_ids_duplicados(pagina):
+    elementos = ler(pagina)
+    ids = [a["id"] for _, a in elementos if "id" in a]
+    assert len(ids) == len(set(ids))
+    botoes = [a for tag, a in elementos if tag == "button" and a.get("aria-controls") == "navegacao-principal"]
+    assert len(botoes) == 1
+    assert botoes[0]["aria-expanded"] == "false"
+    assert botoes[0]["aria-label"] == "Abrir menu"
+    assert "navegacao-principal" in ids
+
+
+def test_arquivos_publicados_sao_utf8_sem_texto_corrompido():
+    for arquivo in PASTA_FRONT.rglob("*"):
+        if arquivo.suffix in {".html", ".js", ".json", ".css", ".svg"}:
+            texto = arquivo.read_text(encoding="utf-8")
+            for corrompido in ("\ufffd", "\u00c3\u00a1", "\u00c3\u00a7", "\u00c3\u00a3", "\u00c2\u00b7", "\u00e2\u20ac\u2122"):
+                assert corrompido not in texto, arquivo

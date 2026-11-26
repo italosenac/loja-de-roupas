@@ -135,7 +135,8 @@
         "summary": "SNS acionado"
       }
     ],
-    "entrega_email_comprovada": false
+    "entrega_email_comprovada": false,
+    "nota_historica": "Estado durante o teste inicial; confirmacao posterior da assinatura e estado atual em revisao_ui."
   },
   "seguranca": {
     "publico_externo": {
@@ -199,7 +200,7 @@
       "escritas": 0.625
     },
     "sqs_milhao": 0.4,
-    "lambda_gb_s_x86": 0.0000166667,
+    "lambda_gb_s_x86": 1.66667e-05,
     "alarme_padrao_mes": 0.1,
     "logs_gb_ingestao": 0.5,
     "nota": "Preços de lista, antes de franquias, impostos, recuperação e transferência. Free Tier da conta mostrou franquias de Lambda e CloudWatch disponíveis na consulta; isso não garante fatura futura zero."
@@ -306,7 +307,8 @@
         "state": "OK"
       }
     ],
-    "sns_pending": true
+    "sns_pending": false,
+    "sns_verificado_em": "2026-11-26T20:28:30.927931+00:00"
   },
   "persistencia_sqlite": {
     "integridade": "ok",
@@ -338,5 +340,77 @@
       "total": 0.78
     },
     "nota": "Hipóteses didáticas antes de franquias. Exclui Coding, CloudFront, S3 compartilhado, SNS, transferência e impostos."
+  },
+  "revisao_ui": {
+    "verificado_em": "2026-11-26T20:28:30.927931+00:00",
+    "sns_confirmado": true,
+    "sns_confirmacao_fonte": "ListSubscriptionsByTopic; nenhum teste de e-mail adicional",
+    "recebimento_alerta_historico_comprovado": false,
+    "cloudfront": "Deployed",
+    "ec2": "running; sistema e instancia ok",
+    "alarmes": {
+      "loja-pedido-atrasado": "OK",
+      "loja-pedido-perdido": "OK"
+    },
+    "filas": {
+      "loja-pedidos": {
+        "visiveis": 0,
+        "em_voo": 0
+      },
+      "loja-pedidos-dlq": {
+        "visiveis": 0,
+        "em_voo": 0
+      }
+    },
+    "codificacao": {
+      "sqlite": "Nomes corretos, banco preservado",
+      "dynamodb": "Backup dos itens; corrigidos somente nomes dos IDs 1 e 2 com condicao sobre valor anterior; nenhum produto recriado"
+    },
+    "imagem": {
+      "origem": "Fotografia anexada pelo aluno, 1398 x 790 pixels",
+      "arquivo": "img/boutique.webp",
+      "dimensoes": [
+        3840,
+        2160
+      ],
+      "bytes": 191948,
+      "observacao": "Ampliada; nao e 4K nativa. Retirada somente a margem branca externa."
+    },
+    "teams": "Documento complementar nao publicado; roteiro publico utilizado. Nenhuma entrega no Teams.",
+    "pytest_local": {
+      "aprovados": 166,
+      "reprovados": 0
+    },
+    "navegador_https": {
+      "responsividade": 395,
+      "fluxos": 18,
+      "docs": 20,
+      "total_aprovados": 433,
+      "reprovados": 0,
+      "erros_console": 0,
+      "larguras": [
+        320,
+        360,
+        375,
+        390,
+        412,
+        430,
+        768,
+        1024,
+        1440,
+        1920
+      ],
+      "paginas": 6
+    },
+    "w3c": {
+      "index.html": {
+        "erros": 0,
+        "avisos": 0
+      },
+      "cadastro.html": {
+        "erros": 0,
+        "avisos": 0
+      }
+    }
   }
 }

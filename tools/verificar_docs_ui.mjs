@@ -71,4 +71,3 @@ try {
  conferir('Nenhum erro no console',erros.length===0);
  const saida={base,resultados,erros};await writeFile(join(pasta,'docs-verificacao.json'),JSON.stringify(saida,null,2));process.stdout.write(JSON.stringify(saida));await comando('Target.disposeBrowserContext',{browserContextId:contextoB});ws.close();
 } catch(erro) {process.stdout.write(JSON.stringify({erro:String(erro),resultados,erros,pagina:await avaliar('document.body.innerText').catch(()=>null)}));ws.close();process.exitCode=1;}
-

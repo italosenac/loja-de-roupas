@@ -1,5 +1,5 @@
 {
-  "verificado_em": "2026-11-26T19:45:00Z",
+  "verificado_em": "2026-11-26T19:53:24.987842+00:00",
   "fonte": "Chamadas reais AWS SDK pelo conector AWS e requisições HTTPS; dados sanitizados.",
   "s3": {
     "situacao": "implementado e testado",
@@ -180,7 +180,10 @@
     "w3c_erros": 0,
     "w3c_avisos": 0,
     "navegador_docs_https": 20,
-    "navegador_cloud_https": 15
+    "navegador_cloud_https": 15,
+    "pytest_ec2": 159,
+    "github_actions": "success",
+    "github_actions_execucao": "https://github.com/italosenac/loja-de-roupas/actions/runs/45886730011"
   },
   "precos": {
     "consultados_em": "2026-11-26",
@@ -239,5 +242,101 @@
       "removed_identified_poison_message": 1,
       "purge_executed": false
     }
+  },
+  "estado_final": {
+    "at": "2026-11-26T19:53:24.987842+00:00",
+    "cloudfront": "Deployed",
+    "other_distribution_unchanged_since": "2026-11-24T23:55:18.252000+00:00",
+    "ec2": [
+      {
+        "state": "running",
+        "system": "ok",
+        "instance": "ok"
+      }
+    ],
+    "lambdas": [
+      {
+        "name": "loja-api",
+        "state": "Active",
+        "update": "Successful",
+        "timeout": 5,
+        "memory": 256,
+        "private_subnets": 2
+      },
+      {
+        "name": "loja-pedidos",
+        "state": "Active",
+        "update": "Successful",
+        "timeout": 5,
+        "memory": 256,
+        "private_subnets": 0
+      },
+      {
+        "name": "loja-processa",
+        "state": "Active",
+        "update": "Successful",
+        "timeout": 5,
+        "memory": 128,
+        "private_subnets": 0
+      }
+    ],
+    "queues": [
+      {
+        "name": "loja-pedidos",
+        "attributes": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0"
+        }
+      },
+      {
+        "name": "loja-pedidos-dlq",
+        "attributes": {
+          "ApproximateNumberOfMessages": "0",
+          "ApproximateNumberOfMessagesNotVisible": "0"
+        }
+      }
+    ],
+    "alarms": [
+      {
+        "name": "loja-pedido-atrasado",
+        "state": "OK"
+      },
+      {
+        "name": "loja-pedido-perdido",
+        "state": "OK"
+      }
+    ],
+    "sns_pending": true
+  },
+  "persistencia_sqlite": {
+    "integridade": "ok",
+    "ids_preservados": [
+      1,
+      2,
+      3
+    ]
+  },
+  "modelo_custo_mensal": {
+    "normal": {
+      "lambda": 0.010623,
+      "api_gateway": 0.0101,
+      "sqs": 0.25932,
+      "dynamodb": 0.0007,
+      "armazenamento": 0.00025,
+      "logs": 0.005,
+      "alarmes": 0.2,
+      "total": 0.49
+    },
+    "pico": {
+      "lambda": 0.132334,
+      "api_gateway": 0.11,
+      "sqs": 0.2712,
+      "dynamodb": 0.01375,
+      "armazenamento": 0.0025,
+      "logs": 0.05,
+      "alarmes": 0.2,
+      "total": 0.78
+    },
+    "nota": "Hipóteses didáticas antes de franquias. Exclui Coding, CloudFront, S3 compartilhado, SNS, transferência e impostos."
   }
 }

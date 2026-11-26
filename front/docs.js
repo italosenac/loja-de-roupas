@@ -174,7 +174,7 @@ async function iniciarDocs() {
     if (!retornoEvidencias.ok) throw new Error("Evidências indisponíveis; recarregue a página.");
     const prova = await retornoEvidencias.json();
     const evidencias = [
-      ["Coding · EC2 / FastAPI / SQLite", "Implementado e testado", "108 testes aprovados na EC2 na publicação funcional; suíte ampliada para " + prova.testes.pytest + " testes locais. Três produtos preservados."],
+      ["Coding · EC2 / FastAPI / SQLite", "Implementado e testado", prova.testes.pytest + " testes aprovados localmente e na EC2; serviço ativo; SQLite íntegro e três produtos preservados."],
       ["Carrinho individual", "Implementado e testado", "Dois clientes isolados; assinatura de sessão; cookies HttpOnly/Secure/SameSite; respostas no-store. Sessões expiram em 30 minutos e se perdem ao reiniciar o processo."],
       ["S3 / CloudFront", "Implementado e testado", "Frontend funcional publicado por HTTPS; fontes e SVGs preservados. CRUD de produtos permanece restrito."],
       ["S3 · Aula 10", "Implementado e testado", "Dez amostras isoladas, uma Standard-IA; regras Enabled conferidas. Transições de 30/90 dias não ocorreram. Limpeza: " + prova.s3.limpeza + "."],
